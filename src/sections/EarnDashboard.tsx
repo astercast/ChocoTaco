@@ -33,7 +33,7 @@ function ConnectedView() {
     setClaiming(false)
     if (result.success) {
       setClaimed(true)
-      setToast({ msg: `Claimed ${result.amount?.toFixed(2) ?? ''} CHOCO. Sweet.`, variant: 'success' })
+      setToast({ msg: `Claimed ${result.amount?.toFixed(2) ?? ''} $🍫🌮. Sweet.`, variant: 'success' })
       setTimeout(() => setClaimed(false), 4000)
     } else {
       setToast({ msg: result.error ?? 'Claim failed', variant: 'error' })
@@ -104,7 +104,7 @@ function ConnectedView() {
               {claimableCAT.toFixed(2)}
             </p>
             <p className="font-serif text-2xl text-cream-300">
-              <span className="display-italic">CHOCO</span>
+              <span className="mono">$🍫🌮</span>
             </p>
           </div>
           <p className="hand text-cream-400 text-xl mt-2 rotate-n2 inline-block">
@@ -123,14 +123,14 @@ function ConnectedView() {
             disabled={claiming || claimableCAT <= 0}
             className="btn-gold text-lg px-8 py-4 self-start disabled:opacity-40"
           >
-            {claiming ? 'pouring chocolate...' : `Claim ${claimableCAT.toFixed(2)} CHOCO →`}
+            {claiming ? 'pouring chocolate...' : `Claim ${claimableCAT.toFixed(2)} $🍫🌮 →`}
           </button>
         )}
 
         {/* Payday explainer */}
         <div className="pt-4 border-t border-cream-500/10 mono text-xs text-cream-500 space-y-1">
           <p>next snapshot · wednesday {PAYDAY.snapshotHourUTC}:00 utc</p>
-          <p>estimated weekly · ~{weeklyEstimateCAT} CHOCO</p>
+          <p>estimated weekly · ~{weeklyEstimateCAT} $🍫🌮</p>
           <p>full payout window · {PAYDAY.gracePeriodDays} days after snapshot</p>
           <p>after grace · {PAYDAY.postGraceDecayPct}% decay per day on that week's portion</p>
           <p>unclaimed weeks stack · they never disappear, just shrink</p>

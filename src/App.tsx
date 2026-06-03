@@ -8,7 +8,6 @@ import Stats from './sections/Stats'
 import HowItWorks from './sections/HowItWorks'
 import EarnDashboard from './sections/EarnDashboard'
 import OgMint from './sections/WeeklyMint'
-import Generator from './sections/Generator'
 import Gallery from './sections/Gallery'
 import Footer from './sections/Footer'
 
@@ -16,18 +15,10 @@ const MARQUEE_ITEMS = [
   '500 OG BADGES · 0.5 XCH EACH',
   '50 PRE-MINTED GOLDEN TICKETS',
   '100% OF MINT → TIBETSWAP LP',
-  'PAYDAY EVERY WEDNESDAY 17:00 UTC',
+  '$🍫🌮 PAYDAY EVERY WEDNESDAY 17:00 UTC',
   'COME CLAIM WITHIN 3 DAYS FOR FULL',
   'LP MULTIPLIER HAS NO CEILING',
   'BUILT ON CHIA · NO BRIDGES · NO BS',
-]
-
-const MARQUEE_ALT = [
-  'STILL MELTING',
-  'STILL MINTING',
-  'STILL EATING',
-  'CLOCK IN WEDNESDAY',
-  'FACTORY OPEN 24/7',
 ]
 
 function PairingOverlay() {
@@ -48,10 +39,8 @@ export default function App() {
         <HowItWorks />
         <ChocolateDrip flip opacity={0.85} />
         <EarnDashboard />
-        <Marquee items={MARQUEE_ALT} variant="cream" />
-        <OgMint />
         <ChocolateDrip opacity={0.85} />
-        <Generator />
+        <OgMint />
         <ChocolateDrip flip opacity={0.85} />
         <Gallery />
       </main>

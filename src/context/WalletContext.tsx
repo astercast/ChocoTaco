@@ -19,7 +19,7 @@ import {
 } from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
 import { submitClaim } from '../api/claims'
-import { mintOg, type MintResult } from '../api/mint'
+import { mintOg, type MintResult, type MintTraits } from '../api/mint'
 
 export interface WalletState {
   connected:         boolean
@@ -44,7 +44,7 @@ interface WalletCtx extends WalletState {
   connect:           () => Promise<void>
   disconnect:        () => void
   claimRewards:      () => Promise<{ success: boolean; amount?: number; error?: string }>
-  mint:              (quantity: number) => Promise<MintResult>
+  mint:              (traits?: MintTraits) => Promise<MintResult>
   dismissPairingUri: () => void
 }
 
@@ -152,8 +152,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     return result
   }, [state.session, state.claimableCAT])
 
-  const mint = useCallback(async (quantity: number) => {
-    return mintOg(state.session, quantity)
+  const mint = useCallback(async (traits: MintTraits = {}) => {
+    return mintOg(state.session, traits)
   }, [state.session])
 
   const dismissPairingUri = useCallback(() => {

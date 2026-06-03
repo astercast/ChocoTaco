@@ -15,7 +15,7 @@
 import { handleSnapshot, handleNetworkStats } from './routes/snapshot'
 import { handleClaim }                         from './routes/claim'
 import { handleSocialVerify }                  from './routes/social'
-import { handleMintReserve }                   from './routes/mint'
+import { handleMint, handleMintReserve }       from './routes/mint'
 import { computeWeeklySnapshot }               from './snapshot'
 
 export interface Env {
@@ -60,6 +60,10 @@ export default {
       if (url.pathname === '/api/social/verify' && req.method === 'POST') {
         const body = await req.json() as { address: string; tweetUrl: string }
         return json(await handleSocialVerify(env, body.address, body.tweetUrl), cors)
+      }
+      if (url.pathname === '/api/mint' && req.method === 'POST') {
+        const body = await req.json() as { address: string; traits?: Record<string, number> }
+        return json(await handleMint(env, body), cors)
       }
       if (url.pathname === '/api/mint/reserve' && req.method === 'POST') {
         const body = await req.json() as { address: string; quantity: number }

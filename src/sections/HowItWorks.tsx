@@ -5,15 +5,15 @@ import { Plus, Minus } from 'lucide-react'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim CHOCO CATs based on your Cocoa Unit points. 50 of the OGs are pre-minted Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
+    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 50 of the OGs are pre-minted Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
   },
   {
     q: 'How are rewards actually paid out?',
-    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. Your share of that week's CHOCO emission is calculated and made available to claim. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, so you can let them pile up, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout.",
+    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. Your share of that week's $🍫🌮 emission is calculated and made available to claim. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, so you can let them pile up, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout.",
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',
-    a: "Every XCH from the OG mint goes directly into the TibetSwap CHOCO/XCH liquidity pool. 100% of it. No team allocation, no marketing slush. Straight into making the token deep and tradeable.",
+    a: "Every XCH from the OG mint goes directly into the TibetSwap $🍫🌮/XCH liquidity pool. 100% of it. No team allocation, no marketing slush. Straight into making the token deep and tradeable.",
   },
   {
     q: 'How do Golden Tickets work?',

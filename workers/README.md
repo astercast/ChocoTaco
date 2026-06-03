@@ -64,23 +64,49 @@ to sign offers from a mnemonic. You need a tiny sidecar service.
 Recommended: deploy this to **Fly.io**, **Railway**, or a $5 VPS:
 
 ```js
-// signer/index.js
+// signer/index.js — needs two endpoints
 import express from 'express'
-import { createCATAssetOffer } from '@dignetwork/dig-cli'  // or chia-rpc, @rigidity/chia, etc.
+import { createCATOffer, mintNftFromCollection } from 'chia-rpc-wrapper'  // pick any: @rigidity/chia, chia-rpc, custom
 
 const app = express()
 app.use(express.json())
 
+// (1) /api/claim hits this — build a CHOCO offer for the claim
 app.post('/build-claim', async (req, res) => {
   const { recipient_address, cat_amount_mojos, cat_asset_id } = req.body
-  const offer = await createCATAssetOffer({
-    mnemonic:        process.env.TREASURY_MNEMONIC,
-    catAssetId:      cat_asset_id,
-    catAmountMojos:  cat_amount_mojos,
+  const offer = await createCATOffer({
+    mnemonic:         process.env.TREASURY_MNEMONIC,
+    catAssetId:       cat_asset_id,
+    catAmountMojos:   cat_amount_mojos,
     recipientAddress: recipient_address,
-    feeMojos:        0,
   })
   res.json({ offer })
+})
+
+// (2) /api/mint hits this — mint a new OG NFT with user's chosen traits
+app.post('/build-mint', async (req, res) => {
+  const {
+    recipient_address, traits, og_collection_id,
+    treasury_address, price_xch_mojos, royalty_percent, edition_total,
+  } = req.body
+
+  // a) Compose metadata JSON from traits, upload to IPFS (or R2)
+  const metadata = composeMetadata(traits, edition_total)
+  const metadataUri = await uploadToIpfs(metadata)
+
+  // b) Mint the NFT to treasury with 25% royalty puzzle hash, then offer it
+  //    for price_xch_mojos. Treasury_address receives the XCH (which you
+  //    then immediately seed into TibetSwap LP).
+  const { offer, nft_id } = await mintNftFromCollection({
+    mnemonic:         process.env.TREASURY_MNEMONIC,
+    collectionId:     og_collection_id,
+    metadataUri,
+    royaltyAddress:   treasury_address,
+    royaltyPercent:   royalty_percent,
+    priceXchMojos:    price_xch_mojos,
+    recipient:        recipient_address,
+  })
+  res.json({ offer, nft_id })
 })
 
 app.listen(8080)

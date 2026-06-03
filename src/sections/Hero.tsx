@@ -81,7 +81,7 @@ export default function Hero() {
             <p className="text-2xl md:text-3xl text-cream-100 font-serif font-light leading-tight max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="display-italic text-cream-300">500 OG badges, weekly CHOCO paydays, no roadmap.</span>
+              <span className="display-italic text-cream-300">500 OG badges, weekly <span className="mono">$🍫🌮</span> paydays.</span>
             </p>
             <p className="hand text-gold text-3xl mt-4 ml-1 rotate-n2 inline-block">
               ↳ all mint proceeds → LP. all of it.
@@ -103,8 +103,8 @@ export default function Hero() {
                   {loading ? 'one sec…' : '→ Connect wallet'}
                 </button>
               )}
-              <a href="https://dexie.space" target="_blank" rel="noopener noreferrer" className="btn-outline">
-                Get CHOCO
+              <a href="https://dexie.space/offers/%F0%9F%8D%AB%F0%9F%8C%AE/XCH" target="_blank" rel="noopener noreferrer" className="btn-outline">
+                Get $🍫🌮
               </a>
             </div>
 

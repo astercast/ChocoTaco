@@ -19,7 +19,7 @@ export default function Stats() {
           <span className="text-cream-300">OG badges,</span>{' '}
           <span className="display text-gold inline-block">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
-          weekly CHOCO paydays{' '}
+          weekly <span className="mono text-cream-300">$🍫🌮</span> paydays{' '}
           <span className="display-italic text-gold">forever</span>.{' '}
           <span className="hand text-cream-400 text-3xl md:text-4xl">the math is simple.</span>
         </motion.p>
