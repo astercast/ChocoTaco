@@ -63,11 +63,13 @@ export async function handleNetworkStats(env: Env) {
 }
 
 function nextSundayIso(): string {
+  // Wednesday = 3
   const now = new Date()
   const day = now.getUTCDay()
-  const daysUntilSunday = day === 0 ? 7 : (7 - day)
+  let daysUntil = (3 - day + 7) % 7
+  if (daysUntil === 0 && now.getUTCHours() >= 17) daysUntil = 7
   const next = new Date(now)
-  next.setUTCDate(now.getUTCDate() + daysUntilSunday)
+  next.setUTCDate(now.getUTCDate() + daysUntil)
   next.setUTCHours(17, 0, 0, 0)
   return next.toISOString()
 }

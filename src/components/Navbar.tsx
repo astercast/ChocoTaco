@@ -26,7 +26,9 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <a href="#" className="flex items-baseline gap-2 group">
           <span className="display text-2xl text-cream-50">ChocoTaco</span>
-          <span className="hand text-gold text-xl -ml-1 rotate-n4 inline-block">co.</span>
+          <span className="hand text-gold text-base -ml-1 rotate-n4 inline-block hidden sm:inline">
+            by BearMarket
+          </span>
         </a>
 
         <nav className="hidden md:flex items-center gap-7">

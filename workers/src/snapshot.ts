@@ -1,5 +1,5 @@
 /**
- * Weekly snapshot — runs Sunday 17:00 UTC.
+ * Weekly snapshot, runs Wednesday 17:00 UTC.
  *
  * For every known holder:
  *   1. read on-chain holdings
@@ -95,9 +95,10 @@ function isoWeekDiff(a: string, b: string): number {
 }
 
 async function computeVaultRemaining(env: Env): Promise<number> {
-  // Total vault = 1011; remaining = 1011 - sum of all snapshots' claimable
+  // Vault total is whatever you fund the treasury with. Configure once.
+  const VAULT_TOTAL = 5000
   const r = await env.DB.prepare(
     `SELECT COALESCE(SUM(claimable_cat), 0) AS total FROM snapshots`
   ).first<{ total: number }>()
-  return 1011 - (r?.total ?? 0)
+  return VAULT_TOTAL - (r?.total ?? 0)
 }

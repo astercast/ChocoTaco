@@ -14,7 +14,7 @@ export interface Holdings {
   standardOgs:   number
   goldenOgs:     number
   limitedPoints: number
-  hasLP:         boolean
+  lpBalance:     number  // uncapped LP CAT balance → drives multiplier
 }
 
 export async function readHoldings(env: Env, address: string): Promise<Holdings> {
@@ -26,7 +26,7 @@ export async function readHoldings(env: Env, address: string): Promise<Holdings>
     standardOgs,
     goldenOgs,
     limitedPoints,
-    hasLP: lpBalance > 0.001,
+    lpBalance,
   }
 }
 
@@ -98,6 +98,6 @@ async function readCatBalance(env: Env, address: string, assetId: string): Promi
 
 export function computeCocoaPoints(h: Holdings, weeklyBonus = 0): number {
   const ogPoints   = h.standardOgs * 10 + h.goldenOgs * 30
-  const multiplied = h.hasLP ? ogPoints * 3 : ogPoints
-  return multiplied + h.limitedPoints + weeklyBonus
+  const multiplier = h.lpBalance > 0.001 ? 1 + h.lpBalance * 2 : 1  // no cap
+  return ogPoints * multiplier + h.limitedPoints + weeklyBonus
 }

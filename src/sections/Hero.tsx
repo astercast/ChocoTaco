@@ -28,10 +28,7 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto relative">
         {/* Top label row */}
         <div className="flex items-center justify-between mb-12 mt-6">
-          <div className="flex items-center gap-3">
-            <span className="hand text-cream-300 text-2xl">est. 2025 —</span>
-            <span className="mono text-xs text-cream-500 uppercase tracking-widest">Vol. 1, Issue 42</span>
-          </div>
+          <span className="hand text-cream-300 text-2xl">est. 2026</span>
           <span className="mono text-xs text-cream-500 hidden sm:block">
             Made fresh on Chia
           </span>
@@ -84,7 +81,7 @@ export default function Hero() {
             <p className="text-2xl md:text-3xl text-cream-100 font-serif font-light leading-tight max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="display-italic text-cream-300">500 OG badges, a 1011 CHOCO vault, payday every Sunday.</span>
+              <span className="display-italic text-cream-300">500 OG badges, weekly CHOCO paydays, no roadmap.</span>
             </p>
             <p className="hand text-gold text-3xl mt-4 ml-1 rotate-n2 inline-block">
               ↳ all mint proceeds → LP. all of it.

@@ -5,31 +5,31 @@ import { Plus, Minus } from 'lucide-react'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (1 XCH each) act as Factory Employee badges — every Sunday the Factory sends CHOCO CATs to holders based on Cocoa Unit points. 50 of the OGs are random Golden Tickets that earn 3× forever. Hold LP and your whole OG stack also gets a 3× multiplier. That's the engine.",
+    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim CHOCO CATs based on your Cocoa Unit points. 50 of the OGs are pre-minted Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
   },
   {
     q: 'How are rewards actually paid out?',
-    a: "Every Sunday 17:00 UTC the backend snapshots all OG + Limited Edition NFTs + LP holders, computes Cocoa Units per wallet, and divides ~15 CHOCO from the 1011-CAT vault that week. You see your claimable amount in the Factory Floor section and one-click claim it via Chia offer. Emissions decay 1%/week so the vault lasts 2.5+ years.",
+    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. Your share of that week's CHOCO emission is calculated and made available to claim. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, so you can let them pile up, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout.",
   },
   {
-    q: 'What happens to my 1 XCH when I mint?',
-    a: "Every XCH from the OG mint goes directly into the TibetSwap CHOCO/XCH liquidity pool. 100% of it. No team allocation, no marketing slush — straight into making the token deep and tradeable. 500 XCH from a single mint will be the deepest memecoin pool Chia has ever seen.",
+    q: 'What happens to my 0.5 XCH when I mint?',
+    a: "Every XCH from the OG mint goes directly into the TibetSwap CHOCO/XCH liquidity pool. 100% of it. No team allocation, no marketing slush. Straight into making the token deep and tradeable.",
   },
   {
     q: 'How do Golden Tickets work?',
-    a: "50 of the 500 OG mints are Golden Tickets — but the assignment is provably random, generated from the first mint transaction hash + block height. After the mint closes, the seed is published on-chain and everyone can verify. Golden Tickets get 30 Cocoa Units (vs 10 for standard) and a shiny metadata flag.",
+    a: "50 of the 500 OG NFTs are pre-minted with the Golden Ticket flag baked into the metadata. They're shuffled randomly into the mint order so nobody knows which mint number will be golden until it happens. Golden Tickets are worth 30 Cocoa Units instead of 10. The shiny flag is permanent and on-chain.",
+  },
+  {
+    q: 'How does the LP multiplier work?',
+    a: "Your Cocoa Units from OG NFTs get multiplied by (1 + LP balance × 2). So holding 0.5 LP gives 2x, 1 LP gives 3x, 5 LP gives 11x, 100 LP gives 201x. There is no cap. The deeper you go into the pool the bigger your share of every weekly payday. This is the main lever for power users.",
   },
   {
     q: 'Wait, do I need to send you my coins?',
-    a: "No. Never. We read your wallet through WalletConnect + SpaceScan — your keys stay where they are, we just check what you own. Snapshots happen server-side from public chain data. Claims come through Chia Offers that you sign in your own wallet.",
-  },
-  {
-    q: 'What about the 25% royalties?',
-    a: "Every secondary sale (forever, enforced on-chain by NFT1) sends 25% to the Factory Treasury. That fund tops up LP, pays for future Limited Edition artist drops, and eventually goes to a DAO vote of OG + LP holders.",
+    a: "No. Never. We read your wallet through WalletConnect and SpaceScan. Your keys stay where they are, we just check what you own. Snapshots happen server-side from public chain data. Claims come through Chia Offers that you sign in your own wallet.",
   },
   {
     q: 'I made it this far. What now?',
-    a: "Mint window isn't open yet — follow @ChocoTacoChia on X and you'll know the minute it goes live. Right now you can connect your wallet to see how the dashboard will look once you're holding.",
+    a: "Mint window isn't open yet. Follow @ChiaChocoTaco on X and you'll know the minute it goes live. Right now you can connect your wallet to see how the dashboard will look once you're holding.",
   },
 ]
 

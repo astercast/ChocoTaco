@@ -11,7 +11,7 @@ import {
 } from 'react'
 import {
   TIERS, type TierId,
-  computeCocoaPoints, resolveTier,
+  computeCocoaPoints, resolveTier, computeLpMultiplier,
 } from '../constants'
 import {
   connectWallet, resolveAddress, disconnectWallet,
@@ -28,7 +28,8 @@ export interface WalletState {
   standardOgs:       number
   goldenOgs:         number
   limitedPoints:     number
-  hasLP:             boolean
+  lpBalance:         number
+  lpMultiplier:      number
   cocoaPoints:       number
   tier:              TierId
   weeklyEstimateCAT: number
@@ -54,7 +55,8 @@ const DEFAULT: WalletState = {
   standardOgs:       0,
   goldenOgs:         0,
   limitedPoints:     0,
-  hasLP:             false,
+  lpBalance:         0,
+  lpMultiplier:      1,
   cocoaPoints:       0,
   tier:              'visitor',
   weeklyEstimateCAT: 0,
@@ -75,19 +77,21 @@ function buildHoldingsState(h: Holdings): Partial<WalletState> {
     standardOgs:   h.standardOgs,
     goldenOgs:     h.goldenOgs,
     limitedPoints: h.limitedPoints,
-    hasLP:         h.hasLP,
+    lpBalance:     h.lpBalance,
     weeklyBonus:   0,
   }
-  const cocoaPoints = computeCocoaPoints(inp)
-  const tier        = resolveTier(cocoaPoints).id
-  const share       = cocoaPoints / Math.max(1, NETWORK_POINTS_ESTIMATE + cocoaPoints)
-  const weeklyPool  = 15  // Worker will provide real value via /api/snapshot
+  const cocoaPoints  = computeCocoaPoints(inp)
+  const lpMultiplier = computeLpMultiplier(h.lpBalance)
+  const tier         = resolveTier(cocoaPoints).id
+  const share        = cocoaPoints / Math.max(1, NETWORK_POINTS_ESTIMATE + cocoaPoints)
+  const weeklyPool   = 15  // Worker will provide real value via /api/snapshot
 
   return {
     standardOgs:       h.standardOgs,
     goldenOgs:         h.goldenOgs,
     limitedPoints:     h.limitedPoints,
-    hasLP:             h.hasLP,
+    lpBalance:         h.lpBalance,
+    lpMultiplier,
     cocoaPoints,
     tier,
     weeklyEstimateCAT: parseFloat((share * weeklyPool).toFixed(3)),

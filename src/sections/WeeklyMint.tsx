@@ -24,7 +24,7 @@ export default function OgMint() {
     const result = await mint(mintCount)
     setMinting(false)
     if (result.success) {
-      setToast({ msg: `Minted ${mintCount} OG${mintCount > 1 ? 's' : ''} — welcome to the factory.`, variant: 'success' })
+      setToast({ msg: `Minted ${mintCount} OG${mintCount > 1 ? 's' : ''}. Welcome to the factory.`, variant: 'success' })
     } else {
       setToast({ msg: result.error ?? 'Mint failed', variant: 'error' })
     }
@@ -47,13 +47,13 @@ export default function OgMint() {
             className="md:col-span-8"
           >
             <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-              <span className="chip">02 — the launch</span>
+              <span className="chip">02 · the launch</span>
               <span className="hand text-gold text-2xl rotate-p2 inline-block">one-time only</span>
             </div>
             <h2 className="display text-5xl md:text-7xl text-cream-50 leading-none">
               500 OG badges.
               <br />
-              <span className="display-italic text-gold">One XCH each.</span>
+              <span className="display-italic text-gold">Half an XCH each.</span>
             </h2>
           </motion.div>
           <motion.div
@@ -84,7 +84,7 @@ export default function OgMint() {
               </div>
               <div className="pt-3 pb-1 text-center">
                 <p className="display text-cocoa-900 text-xl">OG Badge</p>
-                <p className="hand text-cocoa-700 text-lg">— factory employee —</p>
+                <p className="hand text-cocoa-700 text-lg">factory employee</p>
               </div>
             </div>
             <div className="absolute top-6 -right-2 md:-right-6 stamp text-chili rotate-p4 z-20 hidden sm:flex">
@@ -94,10 +94,10 @@ export default function OgMint() {
             {/* Golden ticket callout */}
             <div className="mt-6 max-w-md mx-auto text-center">
               <p className="hand text-gold text-2xl">
-                ↑ 50 of these are random Golden Tickets
+                ↑ 50 of these are pre-minted Golden Tickets
               </p>
               <p className="font-serif italic text-cream-400 text-sm mt-1">
-                3× points forever · revealed publicly post-mint via on-chain seed
+                3× points forever · shuffled into the mint order, you find out when you mint
               </p>
             </div>
           </div>
@@ -116,12 +116,8 @@ export default function OgMint() {
                 <span className="text-cream-50 text-base">{OG_MINT.priceXCH} XCH each</span>
               </div>
               <div className="flex justify-between border-b border-cream-500/10 pb-2">
-                <span className="text-cream-500 uppercase tracking-widest text-xs">royalties</span>
-                <span className="text-cream-50 text-base">{OG_MINT.royaltyPercent}% forever</span>
-              </div>
-              <div className="flex justify-between border-b border-cream-500/10 pb-2">
                 <span className="text-cream-500 uppercase tracking-widest text-xs">golden tickets</span>
-                <span className="text-gold text-base">{OG_MINT.goldenTickets} random</span>
+                <span className="text-gold text-base">{OG_MINT.goldenTickets} pre-minted</span>
               </div>
               <div className="flex justify-between pt-1">
                 <span className="text-cream-500 uppercase tracking-widest text-xs">all proceeds</span>

@@ -6,7 +6,7 @@ node_compat = true
 [vars]
 SPACESCAN_BASE       = "https://api2.spacescan.io"
 MINTGARDEN_BASE      = "https://api.mintgarden.io"
-CHOCO_ASSET_ID       = "8df67763ad273f4a08f8f19f8a172d80b38ad940f32fe20b0b2ed3d665edf575"
+CHOCO_ASSET_ID       = "46ec3dc25b32221e88fad0ee20f84f7dfff13dbee844497232cb08c8df532b15"
 LP_ASSET_ID          = "3a622700d70111506823d5aa0bfd5c2d7937ed5552ef204f8a55105cf48f95ab"
 OG_COLLECTION_ID     = ""   # ← paste your MintGarden collection ID
 LIMITED_COLLECTION_ID = ""
@@ -15,9 +15,9 @@ WEEKLY_DECAY         = "0.99"
 TREASURY_ADDRESS     = ""   # ← treasury wallet xch1… address
 ALLOWED_ORIGIN       = "https://chocotaco.xyz"  # ← your deployed site origin
 
-# Cron: every Sunday at 17:00 UTC
+# Cron: every Wednesday at 17:00 UTC
 [triggers]
-crons = ["0 17 * * 0"]
+crons = ["0 17 * * 3"]
 
 # D1 binding
 [[d1_databases]]

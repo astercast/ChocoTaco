@@ -9,7 +9,6 @@ export default function Stats() {
     <section ref={ref} className="py-20 px-6 relative grain">
       <div className="max-w-6xl mx-auto">
 
-        {/* Inline stat sentence — not a card grid */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -20,20 +19,17 @@ export default function Stats() {
           <span className="text-cream-300">OG badges,</span>{' '}
           <span className="display text-gold inline-block">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
-          a{' '}
-          <span className="display text-gold inline-block">1011 CHOCO</span>{' '}
-          <span className="text-cream-300">reward vault paying out for</span>{' '}
-          <span className="display-italic text-gold">2.5+ years</span>.{' '}
-          <span className="hand text-cream-400 text-3xl md:text-4xl">— the math is simple.</span>
+          weekly CHOCO paydays{' '}
+          <span className="display-italic text-gold">forever</span>.{' '}
+          <span className="hand text-cream-400 text-3xl md:text-4xl">the math is simple.</span>
         </motion.p>
 
-        {/* Tiny stat row at bottom — feels like the bottom of an old chocolate bar wrapper */}
         <div className="mt-16 pt-8 border-t border-cream-500/10 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">
           {[
-            { num: '500',         label: 'OG NFTs' },
-            { num: '1 XCH',       label: 'mint price' },
-            { num: '50',          label: 'golden tickets' },
-            { num: '25%',         label: 'royalties forever' },
+            { num: '500',     label: 'OG NFTs' },
+            { num: '0.5 XCH', label: 'mint price' },
+            { num: '50',      label: 'golden tickets' },
+            { num: '∞',       label: 'LP multiplier ceiling' },
           ].map((s, i) => (
             <motion.div
               key={s.label}

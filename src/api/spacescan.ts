@@ -14,9 +14,9 @@ import { CHOCO_LP_ASSET_ID, COCOA, SPACESCAN_API, MINTGARDEN_API } from '../cons
 
 export interface Holdings {
   standardOgs:   number       // OG NFTs without Golden Ticket flag
-  goldenOgs:     number       // OG NFTs with Golden Ticket flag
+  goldenOgs:     number       // OG NFTs with Golden Ticket flag (pre-minted at launch)
   limitedPoints: number       // sum of point values from Limited Edition NFTs
-  hasLP:         boolean      // CHOCO/XCH LP CAT > dust threshold
+  lpBalance:     number       // CHOCO/XCH LP CAT balance (drives uncapped multiplier)
   claimableCAT:  number       // latest snapshot's pending claim (backend-supplied)
 }
 
@@ -39,7 +39,7 @@ export async function fetchHoldings(address: string): Promise<Holdings> {
     standardOgs,
     goldenOgs,
     limitedPoints,
-    hasLP:        lpBalance > COCOA.lpDustThreshold,
+    lpBalance,
     claimableCAT: 0, // backend Worker supplies this from snapshot table
   }
 }
@@ -120,7 +120,7 @@ function mockHoldings(): Holdings {
     standardOgs:   2,
     goldenOgs:     1,
     limitedPoints: 50,
-    hasLP:         true,
+    lpBalance:     1.5,   // 1.5 LP → 4× OG multiplier
     claimableCAT:  4.2,
   }
 }

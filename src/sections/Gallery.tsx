@@ -39,7 +39,7 @@ export default function Gallery() {
         >
           <div>
             <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-              <span className="chip">04 — the wall</span>
+              <span className="chip">04 · the wall</span>
               <span className="hand text-gold text-2xl rotate-p2 inline-block">every one a keeper</span>
             </div>
             <h2 className="display text-5xl md:text-7xl text-cream-50 leading-none">

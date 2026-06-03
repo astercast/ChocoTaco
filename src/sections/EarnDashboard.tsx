@@ -18,7 +18,7 @@ function PointLine({ label, value, sub }: { label: string; value: string; sub?: 
 
 function ConnectedView() {
   const {
-    standardOgs, goldenOgs, limitedPoints, hasLP,
+    standardOgs, goldenOgs, limitedPoints, lpBalance, lpMultiplier,
     cocoaPoints, tier, weeklyEstimateCAT, claimableCAT,
     claimRewards,
   } = useWallet()
@@ -28,12 +28,12 @@ function ConnectedView() {
 
   async function handleClaim() {
     setClaiming(true)
-    setToast({ msg: 'Building your claim offer…', variant: 'loading' })
+    setToast({ msg: 'Building your claim offer...', variant: 'loading' })
     const result = await claimRewards()
     setClaiming(false)
     if (result.success) {
       setClaimed(true)
-      setToast({ msg: `Claimed ${result.amount?.toFixed(2) ?? ''} CHOCO — sweet.`, variant: 'success' })
+      setToast({ msg: `Claimed ${result.amount?.toFixed(2) ?? ''} CHOCO. Sweet.`, variant: 'success' })
       setTimeout(() => setClaimed(false), 4000)
     } else {
       setToast({ msg: result.error ?? 'Claim failed', variant: 'error' })
@@ -42,16 +42,16 @@ function ConnectedView() {
   }
 
   const ogPoints = standardOgs * COCOA.perOg + goldenOgs * COCOA.perGolden
-  const lpBonus  = hasLP ? ogPoints * (COCOA.lpMultiplier - 1) : 0
+  const lpBonus  = ogPoints * (lpMultiplier - 1)
 
   return (
     <div className="grid md:grid-cols-12 gap-8">
-      {/* Receipt — left */}
+      {/* Receipt */}
       <div className="md:col-span-5">
         <div className="bg-cream-50 text-cocoa-900 p-6 rounded-lg shadow-2xl rotate-n2">
           <div className="text-center pb-3 border-b border-dashed border-cocoa-700/30">
             <p className="display text-2xl">Factory Floor</p>
-            <p className="mono text-xs opacity-60">— Cocoa Units breakdown —</p>
+            <p className="mono text-xs opacity-60">Cocoa Units breakdown</p>
           </div>
           <div className="py-4 mono text-sm">
             <PointLine
@@ -70,19 +70,24 @@ function ConnectedView() {
             />
             <PointLine
               label="LP multiplier"
-              value={hasLP ? `${COCOA.lpMultiplier}× on OGs` : 'inactive'}
-              sub={hasLP ? `(+${lpBonus})` : '(need LP)'}
+              value={lpMultiplier > 1 ? `${lpMultiplier.toFixed(2)}× on OGs` : 'inactive'}
+              sub={lpMultiplier > 1 ? `(+${Math.floor(lpBonus)})` : '(add LP)'}
             />
           </div>
           <div className="pt-3 border-t-2 border-double border-cocoa-700/40 flex justify-between items-baseline">
             <span className="font-serif text-cocoa-900">Total</span>
-            <span className="display text-3xl text-chili">{cocoaPoints}</span>
+            <span className="display text-3xl text-chili">{Math.floor(cocoaPoints)}</span>
           </div>
-          <p className="text-center hand text-cocoa-700 text-lg mt-3">— Cocoa Units —</p>
+          <p className="text-center hand text-cocoa-700 text-lg mt-3">Cocoa Units</p>
+        </div>
+
+        {/* Tiny LP breakdown */}
+        <div className="mt-4 mono text-xs text-cream-500 text-center">
+          you hold {lpBalance.toFixed(3)} LP · multiplier scales with LP, no cap
         </div>
       </div>
 
-      {/* Claim — right */}
+      {/* Claim */}
       <div className="md:col-span-7 flex flex-col justify-center gap-6">
         <div>
           <p className="mono text-xs text-cream-500 uppercase tracking-widest mb-2">
@@ -103,14 +108,14 @@ function ConnectedView() {
             </p>
           </div>
           <p className="hand text-cream-400 text-xl mt-2 rotate-n2 inline-block">
-            ready to claim from sunday's snapshot
+            unclaimed from past paydays
           </p>
         </div>
 
         {claimed ? (
           <div className="flex items-center gap-3">
-            <span className="sticker sticker-mint text-base">★ Claimed!</span>
-            <span className="hand text-cream-300 text-xl">see you next sunday</span>
+            <span className="sticker sticker-mint text-base">★ Claimed</span>
+            <span className="hand text-cream-300 text-xl">see you next wednesday</span>
           </div>
         ) : (
           <button
@@ -118,15 +123,17 @@ function ConnectedView() {
             disabled={claiming || claimableCAT <= 0}
             className="btn-gold text-lg px-8 py-4 self-start disabled:opacity-40"
           >
-            {claiming ? 'pouring chocolate…' : `Claim ${claimableCAT.toFixed(2)} CHOCO →`}
+            {claiming ? 'pouring chocolate...' : `Claim ${claimableCAT.toFixed(2)} CHOCO →`}
           </button>
         )}
 
-        {/* Estimate + math */}
+        {/* Payday explainer */}
         <div className="pt-4 border-t border-cream-500/10 mono text-xs text-cream-500 space-y-1">
-          <p>next snapshot · sunday {PAYDAY.snapshotHourUTC}:00 utc</p>
+          <p>next snapshot · wednesday {PAYDAY.snapshotHourUTC}:00 utc</p>
           <p>estimated weekly · ~{weeklyEstimateCAT} CHOCO</p>
-          <p>vault remaining · {PAYDAY.vaultTotalCAT} CHOCO total · 1% weekly decay</p>
+          <p>full payout window · {PAYDAY.gracePeriodDays} days after snapshot</p>
+          <p>after grace · {PAYDAY.postGraceDecayPct}% decay per day on that week's portion</p>
+          <p>unclaimed weeks stack · they never disappear, just shrink</p>
         </div>
       </div>
       <Toast message={toast?.msg ?? null} variant={toast?.variant ?? 'loading'} onDismiss={() => setToast(null)} />
@@ -149,17 +156,18 @@ export default function EarnDashboard() {
           className="mb-12"
         >
           <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-            <span className="chip">01 — the factory floor</span>
-            <span className="hand text-gold text-2xl rotate-n2 inline-block">payday every sunday</span>
+            <span className="chip">01 · the factory floor</span>
+            <span className="hand text-gold text-2xl rotate-n2 inline-block">payday every wednesday</span>
           </div>
           <h2 className="display text-5xl md:text-7xl text-cream-50 max-w-3xl leading-none">
             Stack Cocoa, <span className="display-italic text-gold">claim chocolate.</span>
           </h2>
           <p className="font-serif text-xl text-cream-300 mt-4 max-w-2xl">
-            Every OG NFT = 10 Cocoa Units. Golden Tickets = 30. Holding LP triples your OG total.
+            Every OG NFT is 10 Cocoa Units. Golden Tickets are 30. Holding LP multiplies
+            your OG total: more LP, bigger boost, no cap.
             <br />
             <span className="hand text-cream-400 text-lg">
-              ↑ that's it. that's the whole point system.
+              ↑ stack more LP to mint more chocolate every week.
             </span>
           </p>
         </motion.div>
@@ -167,7 +175,7 @@ export default function EarnDashboard() {
         {verifying && (
           <div className="flex items-center gap-3 mb-6 text-cream-300">
             <div className="w-3 h-3 rounded-full border-2 border-gold border-t-transparent animate-spin" />
-            <p className="font-serif italic">checking your holdings…</p>
+            <p className="font-serif italic">checking your holdings...</p>
           </div>
         )}
 
@@ -186,7 +194,7 @@ export default function EarnDashboard() {
           >
             <div className="max-w-md">
               <p className="font-serif text-2xl text-cream-100 leading-tight">
-                <span className="display-italic">Pssst —</span> clock in to see your Cocoa stack.
+                <span className="display-italic">Pssst,</span> clock in to see your Cocoa stack.
               </p>
               <p className="text-cream-400 mt-2">
                 We read your NFTs and LP on-chain. Nothing leaves your wallet.
