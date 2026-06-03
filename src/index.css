@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #1a0d05;
+    color: #fef4e2;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    /* subtle paper grain */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% 5%, rgba(232,156,59,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 60%, rgba(192,86,38,0.05) 0%, transparent 60%);
+  }
+
+  ::selection {
+    background: #e89c3b;
+    color: #1a0d05;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #1a0d05; }
+  ::-webkit-scrollbar-thumb { background: #5a3a24; border-radius: 3px; }
+}
+
+@layer components {
+  /* Display heading — Fraunces with personality */
+  .display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .display-italic {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+
+  /* Handwritten accent */
+  .hand {
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+  }
+
+  /* Old-school buttons */
+  .btn-cream {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: #fef4e2;
+    color: #1a0d05;
+    font-weight: 600;
+    border-radius: 9999px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+  }
+  .btn-cream:hover { background: #f9dfa6; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1a0d05; }
+  .btn-cream:active { transform: translate(0, 0); box-shadow: none; }
+  .btn-cream:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    color: #fef4e2;
+    font-weight: 500;
+    border-radius: 9999px;
+    border: 1px solid rgba(249, 223, 166, 0.3);
+    transition: all 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-outline:hover { border-color: #f9dfa6; background: rgba(249, 223, 166, 0.05); }
+
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: #e89c3b;
+    color: #1a0d05;
+    font-weight: 700;
+    border-radius: 9999px;
+    border: none;
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  .btn-gold:hover { background: #f4d2a3; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1a0d05; }
+
+  /* Paper/wrapper card */
+  .wrapper {
+    background: #2a1810;
+    border: 1px solid rgba(249, 223, 166, 0.1);
+    border-radius: 1.25rem;
+    position: relative;
+  }
+
+  /* Sticker — rotated label */
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: #e89c3b;
+    color: #1a0d05;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0.25rem;
+    transform: rotate(-4deg);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+  }
+  .sticker-mint  { background: #7fb069; }
+  .sticker-chili { background: #c05626; color: #fef4e2; }
+  .sticker-cream { background: #fef4e2; color: #1a0d05; }
+
+  /* Old shop ticker / pill chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(249, 223, 166, 0.08);
+    color: #c9a880;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
+    border: 1px solid rgba(249, 223, 166, 0.15);
+  }
+
+  /* "Stamp" — vintage seal aesthetic */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 2px solid currentColor;
+    border-radius: 9999px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transform: rotate(-6deg);
+  }
+}
+
+@layer utilities {
+  .text-gold-grad {
+    background: linear-gradient(135deg, #f4d2a3 0%, #e89c3b 50%, #c05626 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Paper grain overlay */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5' /%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  .rotate-n2 { transform: rotate(-2deg); }
+  .rotate-n4 { transform: rotate(-4deg); }
+  .rotate-n6 { transform: rotate(-6deg); }
+  .rotate-p2 { transform: rotate(2deg); }
+  .rotate-p4 { transform: rotate(4deg); }
+}
