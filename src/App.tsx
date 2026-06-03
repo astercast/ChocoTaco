@@ -1,7 +1,8 @@
-import { WalletProvider } from './context/WalletContext'
+import { WalletProvider, useWallet } from './context/WalletContext'
 import Navbar from './components/Navbar'
 import ChocolateDrip from './components/ChocolateDrip'
 import Marquee from './components/Marquee'
+import QrModal from './components/QrModal'
 import Hero from './sections/Hero'
 import Stats from './sections/Stats'
 import HowItWorks from './sections/HowItWorks'
@@ -29,6 +30,11 @@ const MARQUEE_ALT = [
   'FACTORY OPEN 24/7',
 ]
 
+function PairingOverlay() {
+  const { pairingUri, dismissPairingUri } = useWallet()
+  return <QrModal uri={pairingUri} onClose={dismissPairingUri} />
+}
+
 export default function App() {
   return (
     <WalletProvider>
@@ -50,6 +56,7 @@ export default function App() {
         <Gallery />
       </main>
       <Footer />
+      <PairingOverlay />
     </WalletProvider>
   )
 }

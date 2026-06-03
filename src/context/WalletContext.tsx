@@ -1,54 +1,55 @@
 /**
- * WalletContext — connect / verify / claim (V2: Cocoa Units + CHOCO CAT payday)
+ * WalletContext — full lifecycle: connect → verify → mint → claim
  *
- * Verification reads (no custody):
- *   1. OG NFT count        — by collection (filter golden flag via metadata)
- *   2. Limited Edition NFTs — sum of per-NFT point values
- *   3. CHOCO/XCH LP CAT     — boolean: above dust threshold = 3× multiplier
- *
- * Claim (weekly): backend Worker snapshots Sunday 17:00 UTC, computes
- *   (your points / total network points) × weekly emission, then issues a
- *   CHOCO CAT offer the user accepts.
+ * Holds the WalletConnect session in memory and exposes mint + claim methods
+ * that proxy through to api/mint.ts and api/claims.ts (which use the session
+ * to ask the wallet to sign offers).
  */
 import {
-  createContext, useContext, useState, useCallback, type ReactNode,
+  createContext, useContext, useState, useCallback,
+  type ReactNode,
 } from 'react'
 import {
   TIERS, type TierId,
   computeCocoaPoints, resolveTier,
 } from '../constants'
-import { connectWallet } from '../api/walletconnect'
+import {
+  connectWallet, resolveAddress, disconnectWallet,
+  type ChiaSession,
+} from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
 import { submitClaim } from '../api/claims'
+import { mintOg, type MintResult } from '../api/mint'
 
 export interface WalletState {
-  connected:        boolean
-  address:          string | null
-  // Raw on-chain holdings
-  standardOgs:      number
-  goldenOgs:        number
-  limitedPoints:    number
-  hasLP:            boolean
-  // Derived
-  cocoaPoints:      number
-  tier:             TierId
-  weeklyEstimateCAT: number  // estimated weekly CHOCO payout
-  claimableCAT:     number   // currently claimable from last snapshot
-  // Bonuses
-  weeklyBonus:      number   // 0 or COCOA.weeklySocial
-  // Flow
-  verifying:        boolean
-  error:            string | null
+  connected:         boolean
+  session:           ChiaSession | null
+  address:           string | null
+  standardOgs:       number
+  goldenOgs:         number
+  limitedPoints:     number
+  hasLP:             boolean
+  cocoaPoints:       number
+  tier:              TierId
+  weeklyEstimateCAT: number
+  claimableCAT:      number
+  weeklyBonus:       number
+  verifying:         boolean
+  error:             string | null
+  pairingUri:        string | null
 }
 
 interface WalletCtx extends WalletState {
-  connect:      () => Promise<void>
-  disconnect:   () => void
-  claimRewards: () => Promise<boolean>
+  connect:           () => Promise<void>
+  disconnect:        () => void
+  claimRewards:      () => Promise<{ success: boolean; amount?: number; error?: string }>
+  mint:              (quantity: number) => Promise<MintResult>
+  dismissPairingUri: () => void
 }
 
 const DEFAULT: WalletState = {
   connected:         false,
+  session:           null,
   address:           null,
   standardOgs:       0,
   goldenOgs:         0,
@@ -61,29 +62,28 @@ const DEFAULT: WalletState = {
   weeklyBonus:       0,
   verifying:         false,
   error:             null,
+  pairingUri:        null,
 }
 
 const WalletContext = createContext<WalletCtx | null>(null)
 
-// Network-wide points estimate — replace with real sum from backend
+// Rough estimate — replace with /api/network-stats once Worker is live
 const NETWORK_POINTS_ESTIMATE = 12_000
 
-function buildState(address: string, h: Holdings): Partial<WalletState> {
+function buildHoldingsState(h: Holdings): Partial<WalletState> {
   const inp = {
     standardOgs:   h.standardOgs,
     goldenOgs:     h.goldenOgs,
     limitedPoints: h.limitedPoints,
     hasLP:         h.hasLP,
-    weeklyBonus:   0, // backend reports if user has claimed weekly bonus
+    weeklyBonus:   0,
   }
   const cocoaPoints = computeCocoaPoints(inp)
   const tier        = resolveTier(cocoaPoints).id
   const share       = cocoaPoints / Math.max(1, NETWORK_POINTS_ESTIMATE + cocoaPoints)
-  const weeklyPool  = 15 // CHOCO CATs (week 1 emission; backend supplies real value)
+  const weeklyPool  = 15  // Worker will provide real value via /api/snapshot
 
   return {
-    connected:         true,
-    address,
     standardOgs:       h.standardOgs,
     goldenOgs:         h.goldenOgs,
     limitedPoints:     h.limitedPoints,
@@ -93,8 +93,6 @@ function buildState(address: string, h: Holdings): Partial<WalletState> {
     weeklyEstimateCAT: parseFloat((share * weeklyPool).toFixed(3)),
     claimableCAT:      h.claimableCAT ?? 0,
     weeklyBonus:       0,
-    verifying:         false,
-    error:             null,
   }
 }
 
@@ -102,33 +100,66 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<WalletState>(DEFAULT)
 
   const connect = useCallback(async () => {
-    setState(s => ({ ...s, verifying: true, error: null }))
+    setState(s => ({ ...s, verifying: true, error: null, pairingUri: null }))
     try {
-      const { address } = await connectWallet()
-      const holdings    = await fetchHoldings(address)
-      setState(s => ({ ...s, ...buildState(address, holdings) }))
+      const session = await connectWallet(uri => {
+        setState(s => ({ ...s, pairingUri: uri }))
+      })
+      // QR served its purpose, dismiss it
+      setState(s => ({ ...s, pairingUri: null }))
+
+      // Resolve bech32 address (placeholder if mock)
+      const address  = session.address || await resolveAddress(session)
+      const holdings = await fetchHoldings(address)
+
+      setState(s => ({
+        ...s,
+        ...buildHoldingsState(holdings),
+        connected:  true,
+        session:    { ...session, address },
+        address,
+        verifying:  false,
+        error:      null,
+      }))
     } catch (err) {
       setState(s => ({
         ...s,
-        verifying: false,
-        connected: false,
-        error: err instanceof Error ? err.message : 'Connection failed',
+        connected:  false,
+        verifying:  false,
+        pairingUri: null,
+        error:      err instanceof Error ? err.message : 'Connection failed',
       }))
     }
   }, [])
 
-  const disconnect = useCallback(() => setState(DEFAULT), [])
+  const disconnect = useCallback(() => {
+    if (state.session) disconnectWallet(state.session).catch(() => {})
+    setState(DEFAULT)
+  }, [state.session])
 
-  const claimRewards = useCallback(async (): Promise<boolean> => {
-    if (!state.connected || !state.address || state.claimableCAT <= 0) return false
-    const ok = await submitClaim(state.address, state.claimableCAT)
-    if (!ok) return false
-    setState(s => ({ ...s, claimableCAT: 0 }))
-    return true
-  }, [state.connected, state.address, state.claimableCAT])
+  const claimRewards = useCallback(async () => {
+    if (!state.session || state.claimableCAT <= 0) {
+      return { success: false, error: 'Nothing to claim' }
+    }
+    const result = await submitClaim(state.session)
+    if (result.success) {
+      setState(s => ({ ...s, claimableCAT: 0 }))
+    }
+    return result
+  }, [state.session, state.claimableCAT])
+
+  const mint = useCallback(async (quantity: number) => {
+    return mintOg(state.session, quantity)
+  }, [state.session])
+
+  const dismissPairingUri = useCallback(() => {
+    setState(s => ({ ...s, pairingUri: null }))
+  }, [])
 
   return (
-    <WalletContext.Provider value={{ ...state, connect, disconnect, claimRewards }}>
+    <WalletContext.Provider value={{
+      ...state, connect, disconnect, claimRewards, mint, dismissPairingUri,
+    }}>
       {children}
     </WalletContext.Provider>
   )
@@ -140,5 +171,4 @@ export function useWallet() {
   return ctx
 }
 
-// Re-export tier list shape for sections
 export { TIERS }

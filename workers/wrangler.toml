@@ -1,0 +1,30 @@
+name = "chocotaco-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+node_compat = true
+
+[vars]
+SPACESCAN_BASE       = "https://api2.spacescan.io"
+MINTGARDEN_BASE      = "https://api.mintgarden.io"
+CHOCO_ASSET_ID       = "8df67763ad273f4a08f8f19f8a172d80b38ad940f32fe20b0b2ed3d665edf575"
+LP_ASSET_ID          = "3a622700d70111506823d5aa0bfd5c2d7937ed5552ef204f8a55105cf48f95ab"
+OG_COLLECTION_ID     = ""   # ← paste your MintGarden collection ID
+LIMITED_COLLECTION_ID = ""
+WEEKLY_EMISSION_W1   = "15"  # CHOCO CATs distributed in week 1
+WEEKLY_DECAY         = "0.99"
+TREASURY_ADDRESS     = ""   # ← treasury wallet xch1… address
+ALLOWED_ORIGIN       = "https://chocotaco.xyz"  # ← your deployed site origin
+
+# Cron: every Sunday at 17:00 UTC
+[triggers]
+crons = ["0 17 * * 0"]
+
+# D1 binding
+[[d1_databases]]
+binding       = "DB"
+database_name = "chocotaco"
+database_id   = ""   # ← paste after `wrangler d1 create chocotaco`
+
+# Secrets (set via `wrangler secret put NAME`):
+#   TREASURY_MNEMONIC   — hot wallet seed for building & signing CHOCO claim offers
+#   SPACESCAN_KEY       — optional, for higher rate limits

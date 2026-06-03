@@ -52,8 +52,9 @@
     font-weight: 500;
   }
 
-  /* Old-school buttons */
+  /* Drippy primary button — chocolate drips off the bottom on hover */
   .btn-cream {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -62,12 +63,37 @@
     color: #1a0d05;
     font-weight: 600;
     border-radius: 9999px;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
     cursor: pointer;
     border: none;
     text-decoration: none;
+    overflow: visible;
   }
-  .btn-cream:hover { background: #f9dfa6; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1a0d05; }
+  .btn-cream::after {
+    content: '';
+    position: absolute;
+    left: 12%; right: 12%;
+    bottom: -2px;
+    height: 6px;
+    background:
+      radial-gradient(circle 4px at 10% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 5px at 35% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 3px at 60% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 6px at 85% 0%, #2a1810 50%, transparent 51%);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+  }
+  .btn-cream:hover {
+    background: #f9dfa6;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a0d05;
+  }
+  .btn-cream:hover::after {
+    opacity: 1;
+    transform: translateY(2px);
+  }
   .btn-cream:active { transform: translate(0, 0); box-shadow: none; }
   .btn-cream:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
@@ -88,19 +114,45 @@
   .btn-outline:hover { border-color: #f9dfa6; background: rgba(249, 223, 166, 0.05); }
 
   .btn-gold {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.5rem;
-    background: #e89c3b;
+    background: linear-gradient(180deg, #ffb84d 0%, #e89c3b 100%);
     color: #1a0d05;
     font-weight: 700;
     border-radius: 9999px;
     border: none;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
     cursor: pointer;
+    overflow: visible;
   }
-  .btn-gold:hover { background: #f4d2a3; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1a0d05; }
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    left: 12%; right: 12%;
+    bottom: -3px;
+    height: 7px;
+    background:
+      radial-gradient(circle 5px at 15% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 4px at 40% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 6px at 65% 0%, #2a1810 50%, transparent 51%),
+      radial-gradient(circle 4px at 88% 0%, #2a1810 50%, transparent 51%);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+  }
+  .btn-gold:hover {
+    background: linear-gradient(180deg, #ffc66b 0%, #f4d2a3 100%);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a0d05;
+  }
+  .btn-gold:hover::after {
+    opacity: 1;
+    transform: translateY(2px);
+  }
 
   /* Paper/wrapper card */
   .wrapper {
@@ -108,6 +160,30 @@
     border: 1px solid rgba(249, 223, 166, 0.1);
     border-radius: 1.25rem;
     position: relative;
+  }
+
+  /* Drippy card — chocolate drips down the right edge */
+  .wrapper-drip {
+    position: relative;
+  }
+  .wrapper-drip::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem; bottom: 1.5rem; right: -1px;
+    width: 8px;
+    background:
+      linear-gradient(180deg,
+        transparent 0%,
+        #5a3a24 8%,
+        #3a2418 18%,
+        #5a3a24 32%,
+        #3a2418 48%,
+        #5a3a24 65%,
+        #3a2418 82%,
+        transparent 100%);
+    border-radius: 0 1.25rem 1.25rem 0;
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   /* Sticker — rotated label */

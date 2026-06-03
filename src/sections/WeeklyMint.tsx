@@ -2,23 +2,33 @@ import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { useWallet } from '../context/WalletContext'
 import { OG_MINT } from '../constants'
+import Toast, { type ToastVariant } from '../components/Toast'
 
 // Mint state — overwrite when launch is live
-const MINT_STATE: 'pre' | 'live' | 'sold-out' = 'pre'
-const MINTED_COUNT = 0  // backend supplies real value
+const MINT_STATE: 'pre' | 'live' | 'sold-out' =
+  (import.meta.env.VITE_MINT_STATE as 'pre' | 'live' | 'sold-out' | undefined) ?? 'pre'
+
+const MINTED_COUNT = Number(import.meta.env.VITE_MINTED_COUNT ?? 0)  // overridden at build or via /api/network-stats
 
 export default function OgMint() {
-  const { connected, connect } = useWallet()
+  const { connected, connect, mint } = useWallet()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const [minting, setMinting] = useState(false)
   const [mintCount, setMintCount] = useState(1)
+  const [toast, setToast] = useState<{ msg: string; variant: ToastVariant } | null>(null)
 
   async function handleMint() {
     setMinting(true)
-    await new Promise(r => setTimeout(r, 2000))
+    setToast({ msg: `Reserving ${mintCount} OG${mintCount > 1 ? 's' : ''}…`, variant: 'loading' })
+    const result = await mint(mintCount)
     setMinting(false)
-    // TODO: trigger MintGarden bulk mint / Chia RPC nft_mint
+    if (result.success) {
+      setToast({ msg: `Minted ${mintCount} OG${mintCount > 1 ? 's' : ''} — welcome to the factory.`, variant: 'success' })
+    } else {
+      setToast({ msg: result.error ?? 'Mint failed', variant: 'error' })
+    }
+    setTimeout(() => setToast(null), 4500)
   }
 
   const remaining = OG_MINT.supply - MINTED_COUNT
@@ -180,6 +190,7 @@ export default function OgMint() {
           </div>
         </motion.div>
       </div>
+      <Toast message={toast?.msg ?? null} variant={toast?.variant ?? 'loading'} onDismiss={() => setToast(null)} />
     </section>
   )
 }

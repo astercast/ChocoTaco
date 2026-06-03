@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { useWallet } from '../context/WalletContext'
 import { COCOA, PAYDAY } from '../constants'
+import Toast, { type ToastVariant } from '../components/Toast'
 
 function PointLine({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
@@ -23,12 +24,21 @@ function ConnectedView() {
   } = useWallet()
   const [claiming, setClaiming] = useState(false)
   const [claimed, setClaimed]   = useState(false)
+  const [toast, setToast]       = useState<{ msg: string; variant: ToastVariant } | null>(null)
 
   async function handleClaim() {
     setClaiming(true)
-    const ok = await claimRewards()
+    setToast({ msg: 'Building your claim offer…', variant: 'loading' })
+    const result = await claimRewards()
     setClaiming(false)
-    if (ok) { setClaimed(true); setTimeout(() => setClaimed(false), 4000) }
+    if (result.success) {
+      setClaimed(true)
+      setToast({ msg: `Claimed ${result.amount?.toFixed(2) ?? ''} CHOCO — sweet.`, variant: 'success' })
+      setTimeout(() => setClaimed(false), 4000)
+    } else {
+      setToast({ msg: result.error ?? 'Claim failed', variant: 'error' })
+    }
+    setTimeout(() => setToast(null), 4500)
   }
 
   const ogPoints = standardOgs * COCOA.perOg + goldenOgs * COCOA.perGolden
@@ -119,6 +129,7 @@ function ConnectedView() {
           <p>vault remaining · {PAYDAY.vaultTotalCAT} CHOCO total · 1% weekly decay</p>
         </div>
       </div>
+      <Toast message={toast?.msg ?? null} variant={toast?.variant ?? 'loading'} onDismiss={() => setToast(null)} />
     </div>
   )
 }
@@ -171,7 +182,7 @@ export default function EarnDashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="wrapper p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+            className="wrapper wrapper-drip p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
           >
             <div className="max-w-md">
               <p className="font-serif text-2xl text-cream-100 leading-tight">
