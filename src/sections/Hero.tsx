@@ -41,7 +41,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="display text-[clamp(4rem,16vw,11rem)] text-cream-50">
+            <h1 className="display text-[clamp(3rem,12vw,8.5rem)] text-cream-50">
               Choco<span className="display-italic text-gold">Taco</span>.
             </h1>
           </motion.div>

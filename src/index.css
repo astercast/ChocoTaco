@@ -4,7 +4,13 @@
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    font-size: 87.5%;   /* scale everything down ~12% so more fits on screen */
+  }
+  @media (min-width: 1024px) {
+    html { font-size: 90%; }
+  }
 
   body {
     background-color: #1a0d05;
