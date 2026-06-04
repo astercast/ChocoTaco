@@ -6,12 +6,12 @@ import Toast, { type ToastVariant } from '../components/Toast'
 
 function PointLine({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="flex items-baseline justify-between py-2 border-b border-cocoa-700/30 last:border-0">
-      <div>
+    <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between py-2 border-b border-cocoa-700/30 last:border-0">
+      <div className="min-w-0">
         <span className="font-serif text-cocoa-900">{label}</span>
-        {sub && <span className="ml-2 hand text-cocoa-700 text-base">{sub}</span>}
+        {sub && <span className="ml-0 sm:ml-2 hand text-cocoa-700 text-sm sm:text-base block sm:inline">{sub}</span>}
       </div>
-      <span className="display text-cocoa-900 text-lg">{value}</span>
+      <span className="display text-cocoa-900 text-base sm:text-lg shrink-0">{value}</span>
     </div>
   )
 }
@@ -48,14 +48,14 @@ function ConnectedView() {
     <div className="grid md:grid-cols-12 gap-8">
       {/* Receipt */}
       <div className="md:col-span-5">
-        <div className="bg-cream-50 text-cocoa-900 p-6 rounded-lg shadow-2xl rotate-n2">
+        <div className="bg-cream-50 text-cocoa-900 p-5 sm:p-6 rounded-lg shadow-2xl md:rotate-n2 max-w-full">
           <div className="text-center pb-3 border-b border-dashed border-cocoa-700/30">
             <p className="display text-2xl">Payroll Slip</p>
             <p className="mono text-xs opacity-60">Cocoa Units breakdown</p>
           </div>
           <div className="py-4 mono text-sm">
             <PointLine
-              label="Kitchen Tacos"
+              label="Factory Tacos"
               value={`${standardOgs} × ${COCOA.perOg}`}
               sub={standardOgs === 0 ? '(none yet)' : ''}
             />
@@ -70,7 +70,7 @@ function ConnectedView() {
             />
             <PointLine
               label="LP multiplier"
-              value={lpMultiplier > 1 ? `${lpMultiplier.toFixed(2)}× on kitchen tacos` : 'inactive'}
+              value={lpMultiplier > 1 ? `${lpMultiplier.toFixed(2)}× tacos` : 'inactive'}
               sub={lpMultiplier > 1 ? `(+${Math.floor(lpBonus)})` : '(add LP)'}
             />
           </div>
@@ -165,7 +165,7 @@ export default function EarnDashboard() {
             </span>
           </div>
           <p className="modern-light text-xl text-cream-300 max-w-2xl">
-            10 Cocoa Units per kitchen taco. 30 per Golden Ticket. LP multiplies your kitchen taco total
+            10 Cocoa Units per factory taco. 30 per Golden Ticket. LP multiplies your factory taco total
             by 1 + √LP, with diminishing returns so no whale eats the pool.
           </p>
         </motion.div>

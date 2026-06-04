@@ -37,6 +37,9 @@ export default {
         'wobble':     'wobble 4s ease-in-out infinite',
         'sticker-in': 'stickerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
       },
+      fontSize: {
+        '2xs': ['0.65rem', { lineHeight: '1rem' }],
+      },
       keyframes: {
         marquee: {
           '0%':   { transform: 'translateX(0)' },

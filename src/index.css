@@ -18,6 +18,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    overflow-x: hidden;
     /* subtle paper grain */
     background-image:
       radial-gradient(ellipse 80% 50% at 10% 5%, rgba(232,156,59,0.06) 0%, transparent 60%),
@@ -298,4 +299,10 @@
   .rotate-n6 { transform: rotate(-6deg); }
   .rotate-p2 { transform: rotate(2deg); }
   .rotate-p4 { transform: rotate(4deg); }
+
+  /* Consistent page gutters */
+  .page-x { padding-left: 1rem; padding-right: 1rem; }
+  @media (min-width: 640px) {
+    .page-x { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
 }

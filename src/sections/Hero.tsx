@@ -18,7 +18,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-[92vh] pt-20 pb-12 px-6 overflow-hidden grain">
+    <section className="relative min-h-[min(92vh,900px)] pt-20 pb-12 page-x overflow-hidden grain">
       {/* Off-center warm glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -32,13 +32,13 @@ export default function Hero() {
         </div>
 
         {/* Headline */}
-        <div className="relative mb-12">
+        <div className="relative mb-12 pr-28 sm:pr-36 md:pr-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="modern-display text-[clamp(3.5rem,15vw,10rem)] text-cream-50 uppercase">
+            <h1 className="modern-display text-[clamp(3rem,14vw,10rem)] text-cream-50 uppercase">
               The
               <br />
               <span className="text-gold">Factory</span>
@@ -50,7 +50,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
             animate={{ opacity: 1, scale: 1, rotate: -8 }}
             transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-            className="absolute top-2 right-2 sm:top-4 sm:right-8 md:right-12 z-10"
+            className="absolute top-0 right-0 sm:top-4 sm:right-8 md:right-12 z-10"
           >
             <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
               ★ Fresh weekly
@@ -70,9 +70,9 @@ export default function Hero() {
             <p className="modern-light text-xl md:text-2xl text-cream-100 leading-snug max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="text-cream-300">500 kitchen tacos, weekly <span className="mono">$🍫🌮</span> paydays.</span>
+              <span className="text-cream-300">500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays.</span>
             </p>
-            <p className="hand text-gold text-3xl mt-4 ml-1 rotate-n2 inline-block">
+            <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">
               ↳ all mint proceeds → LP. all of it.
             </p>
           </motion.div>

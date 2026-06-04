@@ -5,15 +5,15 @@ import { Plus, Minus } from 'lucide-react'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 kitchen tacos (0.5 XCH each, cooked on demand in the kitchen) act as Factory Employee badges. Every Wednesday for 3 years the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 1011 tokens total, distributed across 156 weeks with annual halvings so early participation pays the most. 50 of the kitchen tacos come out as Golden Tickets that earn 3x for life. Holding LP multiplies your kitchen taco total with no cap. That's the engine.",
+    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 factory tacos (0.5 XCH each, cooked on demand at the factory) act as Factory Employee badges. Every Wednesday for 3 years the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 1011 tokens total, distributed across 156 weeks with annual halvings so early participation pays the most. 50 of the factory tacos come out as Golden Tickets that earn 3x for life. Holding LP multiplies your factory taco total with no cap. That's the engine.",
   },
   {
     q: 'How are rewards actually paid out?',
-    a: "Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (kitchen tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more. The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the 1011 vault is empty and snapshots end.",
+    a: "Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (factory tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more. The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the 1011 vault is empty and snapshots end.",
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',
-    a: "Every XCH from the kitchen taco mint goes directly into the TibetSwap $🍫🌮/XCH liquidity pool. 100% of it. No team allocation, no marketing slush. Straight into making the token deep and tradeable.",
+    a: "Every XCH from the factory taco mint goes directly into the TibetSwap $🍫🌮/XCH liquidity pool. 100% of it. No team allocation, no marketing slush. Straight into making the token deep and tradeable.",
   },
   {
     q: 'How do Golden Tickets work?',
@@ -25,7 +25,7 @@ const FAQS = [
   },
   {
     q: 'How does the LP multiplier work?',
-    a: "Your kitchen-taco Cocoa Units get multiplied by 1 + √(LP balance). So 1 LP = 2x, 4 LP = 3x, 9 LP = 4x, 25 LP = 6x, 100 LP = 11x, 1000 LP = ~32x. There's no hard cap, but the diminishing returns mean a single whale can't eat the whole pool. Adding more LP always helps, it just stops scaling linearly past a certain point. This is the main lever for power users.",
+    a: "Your factory-taco Cocoa Units get multiplied by 1 + √(LP balance). So 1 LP = 2x, 4 LP = 3x, 9 LP = 4x, 25 LP = 6x, 100 LP = 11x, 1000 LP = ~32x. There's no hard cap, but the diminishing returns mean a single whale can't eat the whole pool. Adding more LP always helps, it just stops scaling linearly past a certain point. This is the main lever for power users.",
   },
   {
     q: 'Wait, do I need to send you my coins?',

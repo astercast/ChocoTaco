@@ -267,7 +267,7 @@ export default function DistributionPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatTile value={String(stats.totalHolders ?? 0)} label="active holders" />
             <StatTile value={String(Math.floor(stats.totalPoints ?? 0))} label="network cocoa units" />
-            <StatTile value={String(stats.mintedCount ?? 0) + ' / ' + (stats.supply ?? 500)} label="kitchen tacos minted" />
+            <StatTile value={String(stats.mintedCount ?? 0) + ' / ' + (stats.supply ?? 500)} label="factory tacos minted" />
             <StatTile
               value={currentEmission.toFixed(2)}
               label="this week's emission"

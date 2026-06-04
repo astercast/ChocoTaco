@@ -4,27 +4,21 @@ import { useRef } from 'react'
 // Placeholder feed - real version pulls from MintGarden:
 //   GET https://api.mintgarden.io/collections/{OG_COLLECTION_ID}/nfts
 //   ?sort=mint_date_desc&size=12
-// Each entry below will be replaced with: { id, edition, rarity, thumbnail }
+// Each entry below will be replaced with: { id, edition, thumbnail }
 const RECENT_MINTS = [
-  { edition: 1,   rarity: 'common',    tilt: -2 },
-  { edition: 2,   rarity: 'rare',      tilt:  3 },
-  { edition: 3,   rarity: 'common',    tilt: -1 },
-  { edition: 4,   rarity: 'golden',    tilt:  4 },
-  { edition: 5,   rarity: 'common',    tilt: -3 },
-  { edition: 6,   rarity: 'rare',      tilt:  2 },
-  { edition: 7,   rarity: 'common',    tilt: -4 },
-  { edition: 8,   rarity: 'common',    tilt:  1 },
-  { edition: 9,   rarity: 'golden',    tilt: -2 },
-  { edition: 10,  rarity: 'rare',      tilt:  3 },
-  { edition: 11,  rarity: 'common',    tilt: -1 },
-  { edition: 12,  rarity: 'common',    tilt:  2 },
+  { edition: 1,   tilt: -2 },
+  { edition: 2,   tilt:  3 },
+  { edition: 3,   tilt: -1 },
+  { edition: 4,   tilt:  4 },
+  { edition: 5,   tilt: -3 },
+  { edition: 6,   tilt:  2 },
+  { edition: 7,   tilt: -4 },
+  { edition: 8,   tilt:  1 },
+  { edition: 9,   tilt: -2 },
+  { edition: 10,  tilt:  3 },
+  { edition: 11,  tilt: -1 },
+  { edition: 12,  tilt:  2 },
 ]
-
-const RARITY: Record<string, string> = {
-  common: 'text-cream-500',
-  rare:   'text-mint',
-  golden: 'text-gold',
-}
 
 export default function Gallery() {
   const ref = useRef(null)
@@ -47,8 +41,7 @@ export default function Gallery() {
               <span className="text-gold">the oven.</span>
             </h2>
             <p className="modern-light text-lg text-cream-300 mt-4 max-w-xl">
-              Every kitchen taco that gets cooked lands here.
-              <span className="hand text-gold ml-2">gold ones are the Goldens.</span>
+              Every factory taco that gets cooked lands here.
             </p>
           </div>
           <a href="https://mintgarden.io" target="_blank" rel="noopener noreferrer"
@@ -73,16 +66,8 @@ export default function Gallery() {
                 <div className="w-8 h-8 border border-cream-300/15 rounded-md" />
               </div>
               {/* Caption */}
-              <div className="px-1 pt-2 pb-1 flex items-baseline justify-between">
-                <span className="display text-cocoa-900 text-base">
-                  #{String(nft.edition).padStart(3, '0')}
-                </span>
-                <span className={`mono text-2xs uppercase tracking-widest ${RARITY[nft.rarity]}`}>
-                  {nft.rarity === 'golden' ? '★ golden' : nft.rarity}
-                </span>
-              </div>
-              <p className="hand text-cocoa-700 px-1 pb-1 text-sm">
-                {nft.rarity === 'golden' ? 'lucky one' : 'fresh batch'}
+              <p className="display text-cocoa-900 text-base px-1 pt-2 pb-2 text-center">
+                #{String(nft.edition).padStart(3, '0')}
               </p>
             </motion.div>
           ))}
