@@ -57,8 +57,10 @@ export default function QrModal({ uri, onClose }: Props) {
             <div className="text-center mb-4">
               <p className="hand text-gold text-2xl rotate-n2 inline-block">knock knock</p>
               <p className="display text-3xl text-cocoa-900 mt-1">Scan with your wallet</p>
-              <p className="font-serif italic text-cocoa-700 text-sm mt-1">
-                Sage · Chia Reference Wallet
+              <p className="font-serif italic text-cocoa-700 text-sm mt-1 leading-relaxed">
+                Open Sage → WalletConnect → scan QR
+                <br />
+                or paste the URI below
               </p>
             </div>
 

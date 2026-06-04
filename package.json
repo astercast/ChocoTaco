@@ -11,8 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@walletconnect/sign-client": "^2.17.0",
-    "@walletconnect/utils": "^2.17.0",
+    "@walletconnect/sign-client": "^2.17.4",
+    "@walletconnect/utils": "^2.17.4",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.460.0",
     "qrcode": "^1.5.4",

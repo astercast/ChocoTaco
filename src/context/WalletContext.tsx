@@ -15,6 +15,7 @@ import {
 } from '../constants'
 import {
   connectWallet, resolveAddress, disconnectWallet,
+  tryRestoreSession, isUserRejected, wcErrorMessage,
   type ChiaSession,
 } from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
@@ -131,12 +132,16 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         error:      null,
       }))
     } catch (err) {
+      if (isUserRejected(err)) {
+        setState(s => ({ ...s, verifying: false, pairingUri: null, error: null }))
+        return
+      }
       setState(s => ({
         ...s,
         connected:  false,
         verifying:  false,
         pairingUri: null,
-        error:      err instanceof Error ? err.message : 'Connection failed',
+        error:      wcErrorMessage(err) || 'Connection failed',
       }))
     }
   }, [])
@@ -177,6 +182,33 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }))
     }
   }, [state.address])
+
+  // Restore WalletConnect session after refresh (Caster-101 pattern)
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const session = await tryRestoreSession()
+        if (!session || cancelled) return
+        setState(s => ({ ...s, verifying: true, error: null }))
+        const address = session.address || await resolveAddress(session)
+        const holdings = await fetchHoldings(address)
+        if (cancelled) return
+        setState(s => ({
+          ...s,
+          ...buildHoldingsState(holdings),
+          connected: true,
+          session:   { ...session, address },
+          address,
+          verifying: false,
+          error:     null,
+        }))
+      } catch {
+        if (!cancelled) setState(s => ({ ...s, verifying: false }))
+      }
+    })()
+    return () => { cancelled = true }
+  }, [])
 
   // Auto-refresh snapshot every 60s while connected
   useEffect(() => {
