@@ -52,8 +52,6 @@
     <path d="M55 285 Q160 200 265 285 L255 320 Q160 360 65 320 Z" fill="#c05626"/>
     <path d="M70 290 Q160 240 250 290 L242 315 Q160 345 78 315 Z" fill="#7fb069"/>
     <path d="M40 280 Q160 140 280 280 L280 330 Q160 400 40 330 Z" fill="#e8b878" stroke="#5a3a24" stroke-width="3"/>
-    <rect x="200" y="60" width="120" height="44" rx="22" fill="#fef4e2"/>
-    <text x="260" y="90" fill="#1a0d05" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">$CT</text>
   </g>
 
   <line x1="96" y1="460" x2="520" y2="460" stroke="#5a3a24" stroke-width="2" stroke-dasharray="8 10" opacity="0.6"/>
