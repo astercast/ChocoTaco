@@ -12,9 +12,9 @@ export default defineConfig(({ mode }) => {
         name: 'html-og-absolute-url',
         transformIndexHtml(html) {
           if (!siteUrl) return html
-          const ogImage = `${siteUrl}/og-banner.png`
+          const ogImage = `${siteUrl}/og-banner.png?v=2`
           return html
-            .replace(/content="\/og-banner.png"/g, `content="${ogImage}"`)
+            .replace(/content="\/og-banner\.png\?v=2"/g, `content="${ogImage}"`)
         },
       },
     ],
