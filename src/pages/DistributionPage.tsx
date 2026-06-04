@@ -267,7 +267,7 @@ export default function DistributionPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatTile value={String(stats.totalHolders ?? 0)} label="active holders" />
             <StatTile value={String(Math.floor(stats.totalPoints ?? 0))} label="network cocoa units" />
-            <StatTile value={String(stats.mintedCount ?? 0) + ' / ' + (stats.supply ?? 500)} label="OG NFTs minted" />
+            <StatTile value={String(stats.mintedCount ?? 0) + ' / ' + (stats.supply ?? 500)} label="kitchen tacos minted" />
             <StatTile
               value={currentEmission.toFixed(2)}
               label="this week's emission"
@@ -282,10 +282,10 @@ export default function DistributionPage() {
           <h3 className="modern-display text-3xl text-cream-50 mb-4">the weekly emission is split between every holder</h3>
           <div className="space-y-3 modern-light text-cream-300">
             <p>Each Wednesday the Factory snapshots every wallet's Cocoa Units
-              and slices that week's emission proportionally.
-              {' '}<span className="text-cream-50 font-medium">10% of the points = 10% of the slice.</span>
-              {' '}All slices add up to the emission exactly, never more.</p>
-            <p className="mono text-cream-50">your slice = (your points ÷ network total) × weekly emission</p>
+              and splits that week's emission proportionally.
+              {' '}<span className="text-cream-50 font-medium">10% of the points = 10% of the share.</span>
+              {' '}All shares add up to the emission exactly, never more.</p>
+            <p className="mono text-cream-50">your share = (your points ÷ network total) × weekly emission</p>
             <p>3 days to claim full. Then 10% decay per day. Unclaimed weeks
               stack but keep shrinking. After week 156 the vault is empty.</p>
           </div>

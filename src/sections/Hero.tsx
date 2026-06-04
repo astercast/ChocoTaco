@@ -70,7 +70,7 @@ export default function Hero() {
             <p className="modern-light text-xl md:text-2xl text-cream-100 leading-snug max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="text-cream-300">500 OG badges, weekly <span className="mono">$🍫🌮</span> paydays.</span>
+              <span className="text-cream-300">500 kitchen tacos, weekly <span className="mono">$🍫🌮</span> paydays.</span>
             </p>
             <p className="hand text-gold text-3xl mt-4 ml-1 rotate-n2 inline-block">
               ↳ all mint proceeds → LP. all of it.

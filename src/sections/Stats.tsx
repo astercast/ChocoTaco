@@ -16,7 +16,7 @@ export default function Stats() {
           className="modern-light text-2xl md:text-4xl leading-tight text-cream-100 max-w-4xl"
         >
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">500</span>{' '}
-          <span className="text-cream-300">OG badges,</span>{' '}
+          <span className="text-cream-300">kitchen tacos,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">1011</span>{' '}
@@ -27,7 +27,7 @@ export default function Stats() {
 
         <div className="mt-16 pt-8 border-t border-cream-500/10 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">
           {[
-            { num: '500',     label: 'OG NFTs' },
+            { num: '500',     label: 'kitchen tacos' },
             { num: '0.5 XCH', label: 'mint price' },
             { num: '50',      label: 'golden tickets' },
             { num: '∞',       label: 'LP multiplier ceiling' },

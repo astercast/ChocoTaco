@@ -134,7 +134,7 @@ export default function OgMint() {
                   </motion.div>
                 </div>
                 <div className="py-3 px-2 text-center">
-                  <p className="display text-cocoa-900 text-xl">OG Badge</p>
+                  <p className="display text-cocoa-900 text-xl">Kitchen Taco</p>
                   <p className="hand text-cocoa-700 text-lg">your one-of-one</p>
                   <p className="mono text-xs text-cocoa-700 mt-1">
                     {keys.map(() => '???').join(' · ')}
@@ -219,7 +219,7 @@ export default function OgMint() {
               <p className="font-serif italic text-cream-400 text-sm mt-1 max-w-md leading-relaxed">
                 Very rare community artist drops happen at random. No schedule, no warning.
                 If you're holding when they go live, you get first dibs. Each Limited NFT
-                stacks 15 to 40 Cocoa Units on top of your OGs.
+                stacks 15 to 40 Cocoa Units on top of your kitchen tacos.
               </p>
             </div>
           </div>

@@ -47,7 +47,7 @@ export default function Gallery() {
               <span className="text-gold">the oven.</span>
             </h2>
             <p className="modern-light text-lg text-cream-300 mt-4 max-w-xl">
-              Every OG that gets cooked lands here.
+              Every kitchen taco that gets cooked lands here.
               <span className="hand text-gold ml-2">gold ones are the Goldens.</span>
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function Gallery() {
               {/* Caption */}
               <div className="px-1 pt-2 pb-1 flex items-baseline justify-between">
                 <span className="display text-cocoa-900 text-base">
-                  OG #{String(nft.edition).padStart(3, '0')}
+                  #{String(nft.edition).padStart(3, '0')}
                 </span>
                 <span className={`mono text-2xs uppercase tracking-widest ${RARITY[nft.rarity]}`}>
                   {nft.rarity === 'golden' ? '★ golden' : nft.rarity}

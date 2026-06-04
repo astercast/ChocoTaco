@@ -285,7 +285,7 @@ export default function ClaimPage() {
               {/* Wallet snapshot */}
               <div className="wrapper p-6">
                 <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
-                  your factory floor
+                  your payroll
                 </p>
                 <div className="space-y-2.5">
                   <div className="flex items-baseline justify-between">

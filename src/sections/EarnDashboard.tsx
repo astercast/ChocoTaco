@@ -50,12 +50,12 @@ function ConnectedView() {
       <div className="md:col-span-5">
         <div className="bg-cream-50 text-cocoa-900 p-6 rounded-lg shadow-2xl rotate-n2">
           <div className="text-center pb-3 border-b border-dashed border-cocoa-700/30">
-            <p className="display text-2xl">Factory Floor</p>
+            <p className="display text-2xl">Payroll Slip</p>
             <p className="mono text-xs opacity-60">Cocoa Units breakdown</p>
           </div>
           <div className="py-4 mono text-sm">
             <PointLine
-              label="Standard OGs"
+              label="Kitchen Tacos"
               value={`${standardOgs} × ${COCOA.perOg}`}
               sub={standardOgs === 0 ? '(none yet)' : ''}
             />
@@ -70,7 +70,7 @@ function ConnectedView() {
             />
             <PointLine
               label="LP multiplier"
-              value={lpMultiplier > 1 ? `${lpMultiplier.toFixed(2)}× on OGs` : 'inactive'}
+              value={lpMultiplier > 1 ? `${lpMultiplier.toFixed(2)}× on kitchen tacos` : 'inactive'}
               sub={lpMultiplier > 1 ? `(+${Math.floor(lpBonus)})` : '(add LP)'}
             />
           </div>
@@ -158,14 +158,14 @@ export default function EarnDashboard() {
         >
           <div className="flex items-end justify-between gap-6 flex-wrap mb-4">
             <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase">
-              Floor.
+              Payroll.
             </h2>
             <span className="hand text-gold text-2xl md:text-3xl rotate-n2 inline-block mb-3">
               payday every wednesday →
             </span>
           </div>
           <p className="modern-light text-xl text-cream-300 max-w-2xl">
-            10 Cocoa Units per OG. 30 per Golden Ticket. LP multiplies your OG total
+            10 Cocoa Units per kitchen taco. 30 per Golden Ticket. LP multiplies your kitchen taco total
             by 1 + √LP, with diminishing returns so no whale eats the pool.
           </p>
         </motion.div>
