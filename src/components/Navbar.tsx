@@ -7,7 +7,7 @@ import { useWallet } from '../context/WalletContext'
 const NAV = [
   { label: 'mint',   to: '/#mint' },
   { label: 'claim',  to: '/claim' },
-  { label: 'wall',   to: '/#gallery' },
+  { label: 'faq',    to: '/faq' },
 ]
 
 export default function Navbar() {
@@ -34,7 +34,7 @@ export default function Navbar() {
 
         <nav className="hidden md:flex items-center gap-7">
           {NAV.map(l => {
-            const isActive = (l.to === '/claim' && location.pathname === '/claim')
+            const isActive = !l.to.startsWith('/#') && location.pathname === l.to
             return l.to.startsWith('/#') ? (
               <a key={l.to} href={l.to} className="modern text-sm text-cream-300 hover:text-gold transition-colors">
                 {l.label}

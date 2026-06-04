@@ -2,7 +2,6 @@ import ChocolateDrip from '../components/ChocolateDrip'
 import Marquee from '../components/Marquee'
 import Hero from '../sections/Hero'
 import Stats from '../sections/Stats'
-import HowItWorks from '../sections/HowItWorks'
 import EarnDashboard from '../sections/EarnDashboard'
 import OgMint from '../sections/WeeklyMint'
 import Gallery from '../sections/Gallery'
@@ -26,12 +25,10 @@ export default function HomePage() {
       <Marquee items={MARQUEE_ITEMS} variant="gold" />
       <Stats />
       <ChocolateDrip opacity={0.85} />
-      <HowItWorks />
-      <ChocolateDrip flip opacity={0.85} />
       <EarnDashboard />
-      <ChocolateDrip opacity={0.85} />
-      <OgMint />
       <ChocolateDrip flip opacity={0.85} />
+      <OgMint />
+      <ChocolateDrip opacity={0.85} />
       <Gallery />
     </main>
   )
