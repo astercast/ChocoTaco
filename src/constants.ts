@@ -52,7 +52,7 @@ export function computeLpMultiplier(lpBalance: number): number {
 
 // ─── Weekly payday + distribution schedule ───────────────────────────────────
 //
-// Total vault: 1011 $🍫🌮, distributed over exactly 3 years (156 weeks).
+// Token supply: 2022 $🍫🌮 total. Holder vault = 1011 (exactly half), over 3 years (156 weeks).
 // Annual halvings reward early participation.
 //
 //   Year 1 (weeks   1-52): 11.11/week  ·  577.72 total  ·  57.1% of vault
@@ -66,7 +66,8 @@ export function computeLpMultiplier(lpBalance: number): number {
 const E = 1011 / 91   // 11.1098901098...
 
 export const PAYDAY = {
-  vaultTotalCAT:     1011,
+  totalSupplyCAT:    2022,
+  vaultTotalCAT:     1011,   // 50% of total supply — weekly holder distribution
   totalWeeks:        156,
   year1WeeklyCAT:    E,           // 11.1099 (display as 11.11)
   year2WeeklyCAT:    E / 2,       //  5.5549 (display as  5.55)

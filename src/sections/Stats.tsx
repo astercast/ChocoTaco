@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { PAYDAY } from '../constants'
 
 export default function Stats() {
   const ref = useRef(null)
@@ -19,18 +20,20 @@ export default function Stats() {
           <span className="text-cream-300">factory tacos,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
-          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">1011</span>{' '}
-          <span className="text-cream-300"><span className="mono">$🍫🌮</span> distributed over</span>{' '}
+          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.totalSupplyCAT}</span>{' '}
+          <span className="text-cream-300"><span className="mono">$🍫🌮</span> total supply —</span>{' '}
+          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.vaultTotalCAT}</span>{' '}
+          <span className="text-cream-300">(half) to holders over</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>.{' '}
           <span className="hand text-cream-400 text-2xl md:text-3xl">show up early.</span>
         </motion.p>
 
         <div className="mt-16 pt-8 border-t border-cream-500/10 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">
           {[
+            { num: String(PAYDAY.totalSupplyCAT), label: 'total supply' },
+            { num: String(PAYDAY.vaultTotalCAT), label: 'to holders (50%)' },
             { num: '500',     label: 'factory tacos' },
-            { num: '0.5 XCH', label: 'mint price' },
             { num: '50',      label: 'golden tickets' },
-            { num: '∞',       label: 'LP multiplier ceiling' },
           ].map((s, i) => (
             <motion.div
               key={s.label}
