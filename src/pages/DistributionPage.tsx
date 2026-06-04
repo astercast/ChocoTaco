@@ -166,15 +166,26 @@ export default function DistributionPage() {
       .catch(() => setStats(null))
   }, [])
 
-  const currentWeek = useMemo(() => weekIndexFromIso(currentWeekIso()), [])
-  const currentEmission = weeklyEmission(currentWeek)
+  // Pre-launch: gate everything that depends on distribution being active
+  const launched = PAYDAY.distributionLaunched
+  const currentWeek = useMemo(
+    () => launched ? weekIndexFromIso(currentWeekIso()) : -1,
+    [launched]
+  )
+  const currentEmission = launched ? weeklyEmission(currentWeek) : 0
 
-  // Compute distributed = vault total - remaining
-  const vaultRemaining = stats?.vaultRemaining ?? PAYDAY.vaultTotalCAT
+  // Compute distributed = vault total - remaining (always 0 pre-launch)
+  const vaultRemaining = launched ? (stats?.vaultRemaining ?? PAYDAY.vaultTotalCAT) : PAYDAY.vaultTotalCAT
   const distributed    = Math.max(0, PAYDAY.vaultTotalCAT - vaultRemaining)
   const distPct        = Math.round((distributed / PAYDAY.vaultTotalCAT) * 100)
 
-  const currentYear = currentWeek < 0 ? 0 : currentWeek < 52 ? 1 : currentWeek < 104 ? 2 : currentWeek < 156 ? 3 : 4
+  // Year: 0 = pre-launch, 1/2/3 = active, 4 = ended
+  const currentYear = !launched ? 0
+    : currentWeek < 0   ? 0
+    : currentWeek < 52  ? 1
+    : currentWeek < 104 ? 2
+    : currentWeek < 156 ? 3
+    : 4
 
   return (
     <main ref={ref} className="pt-24 pb-24 px-6 grain min-h-screen">
@@ -196,6 +207,14 @@ export default function DistributionPage() {
             1011 $🍫🌮 paid out across 156 weeks (3 years). Halvings every 52 weeks
             so early holders earn the most. Every token is publicly accounted for.
           </p>
+          {!launched && (
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
+              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+              <span className="modern text-sm text-gold uppercase tracking-widest">
+                distribution starts after mint closes
+              </span>
+            </div>
+          )}
         </motion.div>
 
         {/* Headline stat tiles */}
@@ -208,12 +227,14 @@ export default function DistributionPage() {
           <StatTile
             value={distributed.toFixed(2)}
             label="distributed so far"
-            sub={`${distPct}% of vault`}
+            sub={launched ? `${distPct}% of vault` : 'not started yet'}
           />
           <StatTile
             value={vaultRemaining.toFixed(2)}
             label="remaining in vault"
-            sub={currentYear > 3 ? 'distribution ended' : `currently ${currentEmission.toFixed(2)} / week`}
+            sub={!launched ? 'launches after the mint closes'
+              : currentYear > 3 ? 'distribution ended'
+              : `currently ${currentEmission.toFixed(2)} / week`}
           />
         </div>
 
@@ -231,18 +252,18 @@ export default function DistributionPage() {
             yearly breakdown
           </p>
           <YearRow year={1} weekly={PAYDAY.year1WeeklyCAT} total={PAYDAY.year1TotalCAT} pct="57.1%"
-                   current={currentYear === 1}
-                   status={currentYear === 1 ? 'active now' : currentYear > 1 ? 'completed' : 'upcoming'} />
+                   current={launched && currentYear === 1}
+                   status={!launched ? 'starts at launch' : currentYear === 1 ? 'active now' : currentYear > 1 ? 'completed' : 'upcoming'} />
           <YearRow year={2} weekly={PAYDAY.year2WeeklyCAT} total={PAYDAY.year2TotalCAT} pct="28.6%"
-                   current={currentYear === 2}
-                   status={currentYear === 2 ? 'active now' : currentYear > 2 ? 'completed' : 'upcoming'} />
+                   current={launched && currentYear === 2}
+                   status={!launched ? 'starts 52 weeks after launch' : currentYear === 2 ? 'active now' : currentYear > 2 ? 'completed' : 'upcoming'} />
           <YearRow year={3} weekly={PAYDAY.year3WeeklyCAT} total={PAYDAY.year3TotalCAT} pct="14.3%"
-                   current={currentYear === 3}
-                   status={currentYear === 3 ? 'active now' : currentYear > 3 ? 'completed' : 'upcoming'} />
+                   current={launched && currentYear === 3}
+                   status={!launched ? 'starts 104 weeks after launch' : currentYear === 3 ? 'active now' : currentYear > 3 ? 'completed' : 'upcoming'} />
         </div>
 
-        {/* Live network stats */}
-        {stats && (
+        {/* Live network stats (only after launch) */}
+        {launched && stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatTile value={String(stats.totalHolders ?? 0)} label="active holders" />
             <StatTile value={String(Math.floor(stats.totalPoints ?? 0))} label="network cocoa units" />

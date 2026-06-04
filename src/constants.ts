@@ -83,6 +83,10 @@ export const PAYDAY = {
   // formatted as ISO week 'YYYY-Www'. Worker reads it; client uses it for
   // countdowns and the distribution chart.
   launchWeekIso:     '2026-W01',
+  // Flip to true once the mint closes and weekly snapshots begin.
+  // While false, the site shows pre-launch state (no countdowns, 0 distributed,
+  // all 3 years marked upcoming, "claims open after mint" messaging).
+  distributionLaunched: false as boolean,
 } as const
 
 /**
