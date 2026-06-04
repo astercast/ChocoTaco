@@ -52,6 +52,27 @@
     letter-spacing: -0.01em;
   }
 
+  /* Modern sleek display — Geist with tight tracking. Used on hero, stats,
+     marquee. Pairs with Fraunces serif for editorial accents elsewhere. */
+  .modern {
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    font-feature-settings: 'ss01', 'cv01', 'cv11';
+  }
+  .modern-display {
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    font-feature-settings: 'ss01', 'cv01', 'cv11';
+  }
+  .modern-light {
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
   /* Handwritten accent — Caveat with sane fallbacks for Safari iOS.
      We do NOT use generic 'cursive' as fallback because Safari renders that
      as Snell Roundhand which looks like a wedding invitation. */

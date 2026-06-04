@@ -38,10 +38,10 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="display text-[clamp(3rem,14vw,9rem)] text-cream-50 leading-[0.9]">
-              THE
+            <h1 className="modern-display text-[clamp(3.5rem,15vw,10rem)] text-cream-50 uppercase">
+              The
               <br />
-              <span className="display-italic text-gold">FACTORY.</span>
+              <span className="text-gold">Factory</span>
             </h1>
           </motion.div>
 
@@ -67,10 +67,10 @@ export default function Hero() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="md:col-span-7"
           >
-            <p className="text-2xl md:text-3xl text-cream-100 font-serif font-light leading-tight max-w-xl">
+            <p className="modern-light text-xl md:text-2xl text-cream-100 leading-snug max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="display-italic text-cream-300">500 OG badges, weekly <span className="mono">$🍫🌮</span> paydays.</span>
+              <span className="text-cream-300">500 OG badges, weekly <span className="mono">$🍫🌮</span> paydays.</span>
             </p>
             <p className="hand text-gold text-3xl mt-4 ml-1 rotate-n2 inline-block">
               ↳ all mint proceeds → LP. all of it.

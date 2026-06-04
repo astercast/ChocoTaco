@@ -1,19 +1,21 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
 import { useWallet } from '../context/WalletContext'
 
 const NAV = [
-  { label: 'shop',       href: '#earn' },
-  { label: 'menu',       href: '#mint' },
-  { label: 'lab',        href: '#generator' },
-  { label: 'wall',       href: '#gallery' },
+  { label: 'mint',     to: '/#mint' },
+  { label: 'claim',    to: '/claim' },
+  { label: 'shop',     to: '/#earn' },
+  { label: 'wall',     to: '/#gallery' },
 ]
 
 export default function Navbar() {
   const { connected, address, connect, disconnect } = useWallet()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const location = useLocation()
 
   async function handleConnect() {
     setLoading(true); try { await connect() } finally { setLoading(false) }
@@ -24,20 +26,30 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-cocoa-900/85 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-        <a href="#" className="flex items-baseline gap-2 group">
-          <span className="display text-2xl text-cream-50">ChocoTaco</span>
+        <Link to="/" className="flex items-baseline gap-2 group">
+          <span className="modern text-xl text-cream-50 tracking-tight">ChocoTaco</span>
           <span className="hand text-gold text-base -ml-1 rotate-n4 inline-block hidden sm:inline">
             by BearMarket
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-7">
-          {NAV.map(l => (
-            <a key={l.href} href={l.href}
-              className="font-serif italic text-base text-cream-300 hover:text-gold transition-colors">
-              {l.label}
-            </a>
-          ))}
+          {NAV.map(l => {
+            const isActive = (l.to === '/claim' && location.pathname === '/claim')
+            return l.to.startsWith('/#') ? (
+              <a key={l.to} href={l.to} className="modern text-sm text-cream-300 hover:text-gold transition-colors">
+                {l.label}
+              </a>
+            ) : (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={`modern text-sm transition-colors ${isActive ? 'text-gold' : 'text-cream-300 hover:text-gold'}`}
+              >
+                {l.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -72,12 +84,19 @@ export default function Navbar() {
             className="md:hidden overflow-hidden bg-cocoa-900 border-t border-cream-500/10"
           >
             <div className="px-6 py-4 flex flex-col gap-3">
-              {NAV.map(l => (
-                <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-                  className="font-serif italic text-lg text-cream-300 hover:text-gold">
-                  {l.label}
-                </a>
-              ))}
+              {NAV.map(l =>
+                l.to.startsWith('/#') ? (
+                  <a key={l.to} href={l.to} onClick={() => setOpen(false)}
+                    className="modern text-lg text-cream-300 hover:text-gold">
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link key={l.to} to={l.to} onClick={() => setOpen(false)}
+                    className="modern text-lg text-cream-300 hover:text-gold">
+                    {l.label}
+                  </Link>
+                )
+              )}
             </div>
           </motion.div>
         )}

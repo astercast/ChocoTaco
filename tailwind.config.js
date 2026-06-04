@@ -26,10 +26,11 @@ export default {
         mint:  '#7fb069',  // FRESH! sticker green
       },
       fontFamily: {
-        serif:  ['"Fraunces"', 'Georgia', 'serif'],
-        sans:   ['"Inter"', 'system-ui', 'sans-serif'],
-        mono:   ['"JetBrains Mono"', 'monospace'],
-        hand:   ['"Caveat"', '"Bradley Hand"', '"Marker Felt"', '"Segoe Print"', 'sans-serif'],
+        serif:   ['"Fraunces"', 'Georgia', 'serif'],
+        sans:    ['"Inter"', 'system-ui', 'sans-serif'],
+        modern:  ['"Geist"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono:    ['"JetBrains Mono"', 'monospace'],
+        hand:    ['"Caveat"', '"Bradley Hand"', '"Marker Felt"', '"Segoe Print"', 'sans-serif'],
       },
       animation: {
         'marquee':    'marquee 40s linear infinite',

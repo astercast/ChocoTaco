@@ -12,7 +12,7 @@
  *   computeWeeklySnapshot()         → reads chain, writes snapshots table
  */
 
-import { handleSnapshot, handleNetworkStats } from './routes/snapshot'
+import { handleSnapshot, handleNetworkStats, handleHistory } from './routes/snapshot'
 import { handleClaim }                         from './routes/claim'
 import { handleSocialVerify }                  from './routes/social'
 import { handleMint, handleMintReserve }       from './routes/mint'
@@ -49,6 +49,10 @@ export default {
       if (url.pathname.startsWith('/api/snapshot/') && req.method === 'GET') {
         const address = url.pathname.replace('/api/snapshot/', '')
         return json(await handleSnapshot(env, address), cors)
+      }
+      if (url.pathname.startsWith('/api/history/') && req.method === 'GET') {
+        const address = url.pathname.replace('/api/history/', '')
+        return json(await handleHistory(env, address), cors)
       }
       if (url.pathname === '/api/network-stats' && req.method === 'GET') {
         return json(await handleNetworkStats(env), cors)

@@ -17,9 +17,9 @@ export default function Marquee({ items, variant = 'gold' }: Props) {
     <div className={`${bg} overflow-hidden py-3 border-y border-cocoa-950/20`}>
       <div className="flex animate-marquee whitespace-nowrap">
         {looped.map((item, i) => (
-          <span key={i} className="inline-flex items-center mx-6 font-serif font-bold text-lg tracking-tight">
+          <span key={i} className="modern inline-flex items-center mx-6 text-base uppercase tracking-wider">
             {item}
-            <span className="ml-12 opacity-50">✦</span>
+            <span className="ml-12 opacity-40">✦</span>
           </span>
         ))}
       </div>

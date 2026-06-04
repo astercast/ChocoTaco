@@ -6,7 +6,7 @@
  * to ask the wallet to sign offers).
  */
 import {
-  createContext, useContext, useState, useCallback,
+  createContext, useContext, useState, useCallback, useEffect,
   type ReactNode,
 } from 'react'
 import {
@@ -18,7 +18,7 @@ import {
   type ChiaSession,
 } from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
-import { submitClaim } from '../api/claims'
+import { submitClaim, fetchSnapshot, type SnapshotData } from '../api/claims'
 import { mintOg, type MintResult, type MintTraits } from '../api/mint'
 
 export interface WalletState {
@@ -35,6 +35,8 @@ export interface WalletState {
   weeklyEstimateCAT: number
   claimableCAT:      number
   weeklyBonus:       number
+  snapshot:          SnapshotData | null
+  nextSnapshotIso:   string | null
   verifying:         boolean
   error:             string | null
   pairingUri:        string | null
@@ -46,6 +48,7 @@ interface WalletCtx extends WalletState {
   claimRewards:      () => Promise<{ success: boolean; amount?: number; error?: string }>
   mint:              (traits?: MintTraits) => Promise<MintResult>
   dismissPairingUri: () => void
+  refreshSnapshot:   () => Promise<void>
 }
 
 const DEFAULT: WalletState = {
@@ -62,6 +65,8 @@ const DEFAULT: WalletState = {
   weeklyEstimateCAT: 0,
   claimableCAT:      0,
   weeklyBonus:       0,
+  snapshot:          null,
+  nextSnapshotIso:   null,
   verifying:         false,
   error:             null,
   pairingUri:        null,
@@ -160,9 +165,30 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setState(s => ({ ...s, pairingUri: null }))
   }, [])
 
+  const refreshSnapshot = useCallback(async () => {
+    if (!state.address) return
+    const snap = await fetchSnapshot(state.address)
+    if (snap) {
+      setState(s => ({
+        ...s,
+        snapshot:        snap,
+        claimableCAT:    snap.claimableCAT,
+        nextSnapshotIso: snap.nextSnapshotIso,
+      }))
+    }
+  }, [state.address])
+
+  // Auto-refresh snapshot every 60s while connected
+  useEffect(() => {
+    if (!state.connected || !state.address) return
+    refreshSnapshot()
+    const id = setInterval(refreshSnapshot, 60_000)
+    return () => clearInterval(id)
+  }, [state.connected, state.address, refreshSnapshot])
+
   return (
     <WalletContext.Provider value={{
-      ...state, connect, disconnect, claimRewards, mint, dismissPairingUri,
+      ...state, connect, disconnect, claimRewards, mint, dismissPairingUri, refreshSnapshot,
     }}>
       {children}
     </WalletContext.Provider>

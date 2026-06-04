@@ -8,6 +8,29 @@
 import type { Env } from '../index'
 import { currentWeekIso, weeklyEmission } from '../snapshot'
 
+const GRACE_DAYS = 3
+const POST_GRACE_DECAY = 0.10
+
+function isoWeekToWednesdayMs(weekIso: string): number {
+  const [yearStr, weekStr] = weekIso.split('-W')
+  const year = Number(yearStr); const week = Number(weekStr)
+  const jan4 = new Date(Date.UTC(year, 0, 4))
+  const jan4Day = jan4.getUTCDay() || 7
+  const mondayWeek1 = new Date(jan4)
+  mondayWeek1.setUTCDate(jan4.getUTCDate() - jan4Day + 1)
+  const wed = new Date(mondayWeek1)
+  wed.setUTCDate(mondayWeek1.getUTCDate() + (week - 1) * 7 + 2)
+  wed.setUTCHours(17, 0, 0, 0)
+  return wed.getTime()
+}
+
+function ageMultiplier(ageMs: number): number {
+  const ageDays = ageMs / (1000 * 60 * 60 * 24)
+  if (ageDays <= GRACE_DAYS) return 1
+  const daysPastGrace = Math.floor(ageDays - GRACE_DAYS)
+  return Math.max(0, 1 - daysPastGrace * POST_GRACE_DECAY)
+}
+
 export async function handleSnapshot(env: Env, address: string) {
   if (!address || !address.startsWith('xch1')) {
     return { error: 'invalid_address' }
@@ -19,23 +42,61 @@ export async function handleSnapshot(env: Env, address: string) {
      VALUES (?1, COALESCE((SELECT first_seen FROM known_holders WHERE address = ?1), ?2), ?2)`
   ).bind(address, Date.now()).run()
 
-  // Sum all unclaimed snapshots
-  const totalClaimable = await env.DB.prepare(
-    `SELECT COALESCE(SUM(claimable_cat), 0) AS amt
-     FROM snapshots WHERE address = ?1 AND claimed_at IS NULL`
-  ).bind(address).first<{ amt: number }>()
+  // Pull every unclaimed snapshot with per-week breakdown + decay applied
+  const rows = await env.DB.prepare(
+    `SELECT week_iso, claimable_cat FROM snapshots
+     WHERE address = ?1 AND claimed_at IS NULL ORDER BY week_iso DESC`
+  ).bind(address).all<{ week_iso: string; claimable_cat: number }>()
 
-  // Estimate this week's payout from last snapshot row + current points share
+  const now = Date.now()
+  const breakdown = (rows.results ?? []).map(r => {
+    const age = now - isoWeekToWednesdayMs(r.week_iso)
+    const mult = ageMultiplier(age)
+    return {
+      week:       r.week_iso,
+      raw:        r.claimable_cat,
+      effective:  r.claimable_cat * mult,
+      multiplier: mult,
+    }
+  })
+
+  const claimableCAT = breakdown.reduce((sum, b) => sum + b.effective, 0)
+
+  // Estimate next week's payout from current week's row (if exists)
   const currentWeek = currentWeekIso()
   const currentRow = await env.DB.prepare(
     `SELECT claimable_cat FROM snapshots WHERE address = ?1 AND week_iso = ?2`
   ).bind(address, currentWeek).first<{ claimable_cat: number }>()
 
   return {
-    claimableCAT:     totalClaimable?.amt ?? 0,
+    claimableCAT,
     estimatedNextCAT: currentRow?.claimable_cat ?? weeklyEmission(env, currentWeek) / 100,
     nextSnapshotIso:  nextSundayIso(),
+    breakdown,
   }
+}
+
+/** GET /api/history/:address — full claim history (claimed + unclaimed) */
+export async function handleHistory(env: Env, address: string) {
+  if (!address || !address.startsWith('xch1')) {
+    return []
+  }
+  const rows = await env.DB.prepare(
+    `SELECT week_iso, claimable_cat, claimed_at FROM snapshots
+     WHERE address = ?1 ORDER BY week_iso DESC LIMIT 52`
+  ).bind(address).all<{ week_iso: string; claimable_cat: number; claimed_at: number | null }>()
+
+  const now = Date.now()
+  return (rows.results ?? []).map(r => {
+    const age = now - isoWeekToWednesdayMs(r.week_iso)
+    const decay = ageMultiplier(age)
+    return {
+      week:    r.week_iso,
+      amount:  r.claimable_cat,
+      claimed: r.claimed_at,
+      decay,
+    }
+  })
 }
 
 export async function handleNetworkStats(env: Env) {
