@@ -9,7 +9,7 @@ const FAQS = [
   },
   {
     q: 'How are rewards actually paid out?',
-    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. That week's $🍫🌮 emission is then SPLIT between every holder in proportion to their Cocoa Units. If you have 10% of the network's points, you get 10% of that week's emission. Every holder's slice added together equals the weekly emission exactly, never more. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout. After 156 weeks (3 years) the entire 1011 vault has been distributed and weekly snapshots end.",
+    a: "Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (OGs, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the slice. All slices add up to the emission exactly, never more. The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the 1011 vault is empty and snapshots end.",
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',

@@ -281,22 +281,13 @@ export default function DistributionPage() {
           <p className="hand text-gold text-2xl mb-2 rotate-n2 inline-block">how shares work</p>
           <h3 className="modern-display text-3xl text-cream-50 mb-4">the weekly emission is split between every holder</h3>
           <div className="space-y-3 modern-light text-cream-300">
-            <p>Every Wednesday at 17:00 UTC the Factory snapshots every wallet's
-              Cocoa Units (OG NFTs, Limited Editions, LP balance).</p>
-            <p>That week's emission (e.g. 11.11 $🍫🌮 in year 1) is then sliced
-              up among all holders <span className="text-cream-50 font-medium">in proportion to their points</span>.
-              If your wallet has 10% of the network's total Cocoa Units, you get
-              10% of that week's emission. If you have 1%, you get 1%. Every
-              holder's slice added together equals exactly the weekly emission,
-              never more.</p>
-            <p>So your slice for the week =
-              <span className="mono text-cream-50"> (your points ÷ network total points) × weekly emission</span>.
-              The bigger your share of the network points, the bigger your slice.
-              You never compete with the emission size, only for share.</p>
-            <p>You then have 3 days to come claim 100%, after which your slice
-              shrinks 10% per day. Anything unclaimed after the next snapshot
-              keeps stacking but keeps decaying.</p>
-            <p>After week 156 the vault is empty and the truck stops coming.</p>
+            <p>Each Wednesday the Factory snapshots every wallet's Cocoa Units
+              and slices that week's emission proportionally.
+              {' '}<span className="text-cream-50 font-medium">10% of the points = 10% of the slice.</span>
+              {' '}All slices add up to the emission exactly, never more.</p>
+            <p className="mono text-cream-50">your slice = (your points ÷ network total) × weekly emission</p>
+            <p>3 days to claim full. Then 10% decay per day. Unclaimed weeks
+              stack but keep shrinking. After week 156 the vault is empty.</p>
           </div>
         </div>
       </div>
