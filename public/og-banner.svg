@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="ChocoTaco - The Factory on Chia">
+  <defs>
+    <radialGradient id="warmGlow" cx="22%" cy="28%" r="50%">
+      <stop offset="0%" stop-color="#e89c3b" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#1a0d05" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="chiliGlow" cx="88%" cy="72%" r="42%">
+      <stop offset="0%" stop-color="#c05626" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#1a0d05" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f4d2a3"/>
+      <stop offset="50%" stop-color="#e89c3b"/>
+      <stop offset="100%" stop-color="#c05626"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#1a0d05"/>
+  <rect width="1200" height="630" fill="url(#warmGlow)"/>
+  <rect width="1200" height="630" fill="url(#chiliGlow)"/>
+  <rect width="1200" height="630" filter="url(#grain)" opacity="0.55"/>
+
+  <rect x="56" y="56" width="1088" height="518" rx="28" fill="#2a1810" stroke="rgba(249,223,166,0.14)" stroke-width="2"/>
+  <rect x="56" y="56" width="1088" height="518" rx="28" fill="none" stroke="#e89c3b" stroke-opacity="0.12" stroke-width="1"/>
+
+  <rect x="96" y="120" width="120" height="8" rx="4" fill="url(#goldBar)"/>
+
+  <text x="96" y="220" fill="#fef4e2" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="96" font-weight="800" letter-spacing="-3">CHOCOTACO</text>
+  <text x="96" y="300" fill="#e89c3b" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="64" font-weight="800" letter-spacing="-2">THE FACTORY</text>
+  <text x="96" y="368" fill="#f4d2a3" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="32" font-weight="400">The sweetest memecoin on Chia</text>
+  <text x="96" y="418" fill="#c9a880" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="400">500 factory tacos / weekly paydays / mint to LP</text>
+
+  <text x="96" y="500" fill="#e89c3b" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="34" transform="rotate(-3 96 500)">by BearMarket</text>
+
+  <g transform="translate(96 540) rotate(-6)">
+    <rect x="0" y="0" width="168" height="36" rx="6" fill="#7fb069"/>
+    <text x="84" y="24" fill="#1a0d05" font-family="system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="0.08em">FRESH WEEKLY</text>
+  </g>
+
+  <g transform="translate(820 140)">
+    <ellipse cx="160" cy="400" rx="130" ry="22" fill="#0d0703" opacity="0.45"/>
+    <path d="M40 280 Q160 120 280 280 L280 340 Q160 420 40 340 Z" fill="#8b5a36"/>
+    <path d="M55 285 Q160 200 265 285 L255 320 Q160 360 65 320 Z" fill="#c05626"/>
+    <path d="M70 290 Q160 240 250 290 L242 315 Q160 345 78 315 Z" fill="#7fb069"/>
+    <path d="M40 280 Q160 140 280 280 L280 330 Q160 400 40 330 Z" fill="#e8b878" stroke="#5a3a24" stroke-width="3"/>
+    <path d="M200 150 Q210 200 195 250 Q188 290 205 330" fill="none" stroke="#3a2418" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="205" cy="340" r="10" fill="#3a2418"/>
+    <circle cx="192" cy="360" r="7" fill="#3a2418"/>
+    <circle cx="218" cy="355" r="8" fill="#3a2418"/>
+    <rect x="200" y="60" width="120" height="44" rx="22" fill="#fef4e2"/>
+    <text x="260" y="90" fill="#1a0d05" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">$CT</text>
+  </g>
+
+  <line x1="96" y1="460" x2="520" y2="460" stroke="#5a3a24" stroke-width="2" stroke-dasharray="8 10" opacity="0.6"/>
+</svg>
