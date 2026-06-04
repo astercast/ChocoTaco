@@ -1,22 +1,61 @@
 /**
- * IPFS pinning via NFT.Storage (free tier)
+ * IPFS pinning via Pinata
  *
- * Get a free API token at https://nft.storage
- * Set NFT_STORAGE_KEY env var.
+ * Get a free API key at https://app.pinata.cloud (1 GB free, perfect for 500 NFTs).
+ * Set PINATA_JWT env var to the JWT token from the API Keys page.
  */
-import { NFTStorage, File } from 'nft.storage'
+import fetch from 'node-fetch'
+import FormData from 'form-data'
 
-const client = new NFTStorage({ token: process.env.NFT_STORAGE_KEY ?? '' })
+const JWT = process.env.PINATA_JWT ?? ''
+const PUBLIC_GATEWAY = process.env.PINATA_GATEWAY ?? 'https://gateway.pinata.cloud'
 
-/** Upload a PNG buffer, return ipfs:// URI */
-export async function uploadImage(buffer, filename = 'image.png') {
-  const cid = await client.storeBlob(new File([buffer], filename, { type: 'image/png' }))
-  return `ipfs://${cid}`
+function ensureJwt() {
+  if (!JWT) throw new Error('Missing PINATA_JWT env var')
 }
 
-/** Upload metadata JSON, return ipfs:// URI */
+/** Upload a PNG buffer, return { cid, ipfs (ipfs://), https (gateway URL) } */
+export async function uploadImage(buffer, filename = 'image.png') {
+  ensureJwt()
+  const form = new FormData()
+  form.append('file', buffer, { filename, contentType: 'image/png' })
+  form.append('pinataMetadata', JSON.stringify({ name: filename }))
+
+  const res = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+    method:  'POST',
+    headers: { Authorization: `Bearer ${JWT}` },
+    body:    form,
+  })
+  if (!res.ok) throw new Error(`pinata_image_${res.status}: ${await res.text()}`)
+  const data = await res.json()
+  const cid  = data.IpfsHash
+  return {
+    cid,
+    ipfs:  `ipfs://${cid}`,
+    https: `${PUBLIC_GATEWAY}/ipfs/${cid}`,
+  }
+}
+
+/** Upload metadata JSON, return { cid, ipfs, https } */
 export async function uploadMetadata(metadata) {
-  const blob = new Blob([JSON.stringify(metadata)], { type: 'application/json' })
-  const cid  = await client.storeBlob(blob)
-  return `ipfs://${cid}`
+  ensureJwt()
+  const res = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+    method:  'POST',
+    headers: {
+      'Authorization': `Bearer ${JWT}`,
+      'Content-Type':  'application/json',
+    },
+    body: JSON.stringify({
+      pinataContent:  metadata,
+      pinataMetadata: { name: `${metadata.name ?? 'metadata'}.json` },
+    }),
+  })
+  if (!res.ok) throw new Error(`pinata_json_${res.status}: ${await res.text()}`)
+  const data = await res.json()
+  const cid  = data.IpfsHash
+  return {
+    cid,
+    ipfs:  `ipfs://${cid}`,
+    https: `${PUBLIC_GATEWAY}/ipfs/${cid}`,
+  }
 }

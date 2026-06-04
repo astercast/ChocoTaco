@@ -29,7 +29,7 @@ export default {
         serif:  ['"Fraunces"', 'Georgia', 'serif'],
         sans:   ['"Inter"', 'system-ui', 'sans-serif'],
         mono:   ['"JetBrains Mono"', 'monospace'],
-        hand:   ['"Caveat"', 'cursive'],
+        hand:   ['"Caveat"', '"Bradley Hand"', '"Marker Felt"', '"Segoe Print"', 'sans-serif'],
       },
       animation: {
         'marquee':    'marquee 40s linear infinite',

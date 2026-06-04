@@ -63,9 +63,16 @@ chia start full_node
 chia show -s    # check sync progress
 ```
 
-### 5. Get an NFT.Storage token
+### 5. Get a Pinata JWT (free)
 
-Free at [nft.storage](https://nft.storage) — sign in with GitHub, create an API token.
+NFT.Storage stopped accepting new uploads in 2024. We use Pinata instead — same idea, free tier gives you 1 GB which is plenty for 500 NFTs at ~1 MB each.
+
+- Sign up at [app.pinata.cloud](https://app.pinata.cloud)
+- API Keys → New Key → enable `pinFileToIPFS` and `pinJSONToIPFS` scopes
+- Copy the **JWT** (long string starting `eyJhbGc...`)
+- Paste into `.env` as `PINATA_JWT`
+
+For faster image loads on your site, also create a dedicated gateway in Pinata's dashboard (Settings → Gateways) and set `PINATA_GATEWAY` to that URL.
 
 ### 6. Get a MintGarden DID (collection identifier)
 

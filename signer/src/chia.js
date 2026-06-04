@@ -45,12 +45,28 @@ export async function getNftWalletId() {
   return nftWallet.id
 }
 
-/** Get the CAT wallet ID for $🍫🌮 */
+/** Get the CAT wallet ID for the given asset ID (cached on first call) */
+const _catWalletCache = new Map()
 export async function getCatWalletId(assetId) {
-  const wallets = await rpc('get_wallets', { type: 6 })  // CAT wallet type
-  for (const w of wallets.wallets ?? []) {
-    const info = await rpc('cat_get_asset_id', { wallet_id: w.id })
-    if (info.asset_id === assetId) return w.id
+  if (_catWalletCache.has(assetId)) return _catWalletCache.get(assetId)
+
+  // Allow override via env to skip discovery
+  if (process.env.CHIA_CAT_WALLET_ID) {
+    const id = Number(process.env.CHIA_CAT_WALLET_ID)
+    _catWalletCache.set(assetId, id)
+    return id
   }
-  throw new Error(`no_cat_wallet_for_${assetId}`)
+
+  // CAT wallets are type 6. Each has an asset_id we can query.
+  const wallets = await rpc('get_wallets', { type: 6 })
+  for (const w of wallets.wallets ?? []) {
+    try {
+      const info = await rpc('cat_get_asset_id', { wallet_id: w.id })
+      if (info.asset_id === assetId) {
+        _catWalletCache.set(assetId, w.id)
+        return w.id
+      }
+    } catch { /* skip wallets that fail to introspect */ }
+  }
+  throw new Error(`no_cat_wallet_for_${assetId}. Set CHIA_CAT_WALLET_ID env to skip discovery.`)
 }

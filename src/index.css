@@ -52,10 +52,15 @@
     letter-spacing: -0.01em;
   }
 
-  /* Handwritten accent */
+  /* Handwritten accent — Caveat with sane fallbacks for Safari iOS.
+     We do NOT use generic 'cursive' as fallback because Safari renders that
+     as Snell Roundhand which looks like a wedding invitation. */
   .hand {
-    font-family: 'Caveat', cursive;
+    font-family: 'Caveat', 'Bradley Hand', 'Marker Felt', 'Segoe Print', sans-serif;
     font-weight: 500;
+    /* Prevent Safari from synthesizing fake italic on the fallback */
+    font-style: normal;
+    font-synthesis: none;
   }
 
   /* Drippy primary button — chocolate drips off the bottom on hover */
