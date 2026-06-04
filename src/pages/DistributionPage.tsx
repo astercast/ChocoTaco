@@ -204,9 +204,8 @@ export default function DistributionPage() {
             <span className="text-gold">distribution.</span>
           </h1>
           <p className="modern-light text-lg text-cream-300 mt-4 max-w-2xl">
-            {PAYDAY.totalSupplyCAT} $🍫🌮 total supply. {PAYDAY.vaultTotalCAT} (half) paid out
-            across 156 weeks (3 years). Halvings every 52 weeks so early holders earn the most.
-            Every vault token is publicly accounted for.
+            {PAYDAY.vaultTotalCAT} $🍫🌮 paid out across 156 weeks (3 years). Halvings every 52 weeks
+            so early holders earn the most. Every token is publicly accounted for.
           </p>
           {!launched && (
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
@@ -222,8 +221,8 @@ export default function DistributionPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           <StatTile
             value={PAYDAY.vaultTotalCAT.toString()}
-            label="holder vault (50% of supply)"
-            sub={`${PAYDAY.vaultTotalCAT} of ${PAYDAY.totalSupplyCAT} $🍫🌮 · 3 years`}
+            label="total vault"
+            sub="$🍫🌮 over 3 years"
           />
           <StatTile
             value={distributed.toFixed(2)}

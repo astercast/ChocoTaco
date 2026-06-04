@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Copy, Check } from 'lucide-react'
 import { useWallet } from '../context/WalletContext'
-import { CHOCO_TACO_ASSET_ID, PAYDAY } from '../constants'
+import { CHOCO_TACO_ASSET_ID } from '../constants'
 
 export default function Hero() {
   const { connect, connected, pairingUri, verifying } = useWallet()
@@ -65,10 +65,7 @@ export default function Hero() {
             <p className="modern-light text-xl md:text-2xl text-cream-100 leading-snug max-w-xl">
               The sweetest memecoin on Chia.
               {' '}
-              <span className="text-cream-300">
-                500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays from{' '}
-                {PAYDAY.vaultTotalCAT} tokens, half of the {PAYDAY.totalSupplyCAT} supply.
-              </span>
+              <span className="text-cream-300">500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays.</span>
             </p>
             <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">
               ↳ all mint proceeds → LP. all of it.
