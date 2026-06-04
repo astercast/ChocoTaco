@@ -2,7 +2,11 @@
 
 The on-demand NFT minting service. Sits between your Cloudflare Worker and a Chia full node + wallet. Composes images, pins to IPFS, mints NFTs with user-chosen traits, builds offers.
 
-This is the only piece of the system that needs to run somewhere with a Chia node. Everything else is serverless.
+This is the only piece of the system that needs persistent infrastructure.
+Everything else (Vercel + Cloudflare Worker) is serverless.
+
+> **You do NOT need a Chia full node.** Just a wallet, which syncs in minutes
+> on a $5/mo VPS. See "Setup" below for the actual requirements.
 
 ---
 
@@ -29,20 +33,23 @@ Vercel frontend → Cloudflare Worker /api/mint → THIS service /build-mint
 
 ## Setup (one-time)
 
-### 1. Get a VPS (Hetzner $5/mo, DigitalOcean $20/mo, or similar)
+### 1. Get a small VPS
 
-Minimum specs:
+You only need to run a Chia **wallet**, not a full node. The wallet syncs
+through Chia's public full nodes, so resource requirements are tiny:
+
 - Ubuntu 22.04
-- 8 GB RAM
-- 500 GB SSD (to hold the Chia chain)
-- 4 vCPU
+- 1-2 GB RAM
+- 5 GB SSD
+- 1 vCPU
 
-### 2. Install Chia
+A $5/mo Hetzner CX11 or any basic droplet is plenty.
+
+### 2. Install Chia (wallet mode only)
 
 ```bash
 curl -sL https://repo.chia.net/install.sh | sudo bash
 chia init
-chia start wallet
 ```
 
 ### 3. Import treasury wallet
@@ -50,18 +57,20 @@ chia start wallet
 ```bash
 chia keys add
 # paste your 24-word treasury mnemonic
-chia wallet show
-# note the fingerprint, NFT wallet id (usually 2), and CAT wallet id once funded
 ```
 
-### 4. Sync the chain
-
-This takes 12-48 hours the first time:
+### 4. Start the wallet (NOT the full node)
 
 ```bash
-chia start full_node
-chia show -s    # check sync progress
+chia start wallet
+chia wallet show
+# wait ~5-10 minutes for the wallet to find and sync your coins
+# note the NFT wallet id (usually 2), and CAT wallet id once funded
 ```
+
+**You do NOT need `chia start full_node`.** Running a full node would
+require ~500 GB disk + 24 hours of chain sync. The wallet alone uses
+remote full nodes and is ready in minutes.
 
 ### 5. Get a Pinata JWT (free)
 
