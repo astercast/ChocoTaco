@@ -10,7 +10,7 @@ const FAQS = [
   },
   {
     q: 'How are rewards actually paid out?',
-    a: `Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (factory tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more. The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the ${PAYDAY.vaultTotalCAT} vault is empty and snapshots end.`,
+    a: `Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (factory tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more. The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the distribution vault is empty and snapshots end.`,
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',
@@ -22,7 +22,7 @@ const FAQS = [
   },
   {
     q: 'Why halvings? Why 3 years?',
-    a: `${PAYDAY.vaultTotalCAT} $🍫🌮 total, distributed over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page so anyone can see exactly where every token went.`,
+    a: `50% of the ${PAYDAY.totalSupplyCAT} token supply (${PAYDAY.vaultTotalCAT} $🍫🌮) is paid out over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire distribution vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page so anyone can see exactly where every token went.`,
   },
   {
     q: 'How does the LP multiplier work?',

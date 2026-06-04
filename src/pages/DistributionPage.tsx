@@ -145,7 +145,7 @@ function YearRow({ year, weekly, total, pct, current, status }: {
       </div>
       <div className="text-right">
         <p className="modern-display text-xl text-cream-50 tabular-nums">{total.toFixed(2)}</p>
-        <p className="mono text-2xs text-cream-500">{pct} of vault</p>
+        <p className="mono text-2xs text-cream-500">{pct} of distribution vault</p>
       </div>
     </div>
   )
@@ -204,8 +204,9 @@ export default function DistributionPage() {
             <span className="text-gold">distribution.</span>
           </h1>
           <p className="modern-light text-lg text-cream-300 mt-4 max-w-2xl">
-            {PAYDAY.vaultTotalCAT} $🍫🌮 paid out across 156 weeks (3 years). Halvings every 52 weeks
-            so early holders earn the most. Every token is publicly accounted for.
+            Distribution vault: 50% of {PAYDAY.totalSupplyCAT} total supply ({PAYDAY.vaultTotalCAT} $🍫🌮)
+            paid out across 156 weeks (3 years). Halvings every 52 weeks so early holders earn the most.
+            Every distribution vault token is publicly accounted for.
           </p>
           {!launched && (
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
@@ -221,17 +222,17 @@ export default function DistributionPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           <StatTile
             value={PAYDAY.vaultTotalCAT.toString()}
-            label="total vault"
+            label="distribution vault"
             sub="$🍫🌮 over 3 years"
           />
           <StatTile
             value={distributed.toFixed(2)}
             label="distributed so far"
-            sub={launched ? `${distPct}% of vault` : 'not started yet'}
+            sub={launched ? `${distPct}% of distribution vault` : 'not started yet'}
           />
           <StatTile
             value={vaultRemaining.toFixed(2)}
-            label="remaining in vault"
+            label="remaining in distribution vault"
             sub={!launched ? 'launches after the mint closes'
               : currentYear > 3 ? 'distribution ended'
               : `currently ${currentEmission.toFixed(2)} / week`}
@@ -287,7 +288,7 @@ export default function DistributionPage() {
               {' '}All shares add up to the emission exactly, never more.</p>
             <p className="mono text-cream-50">your share = (your points ÷ network total) × weekly emission</p>
             <p>3 days to claim full. Then 10% decay per day. Unclaimed weeks
-              stack but keep shrinking. After week 156 the vault is empty.</p>
+              stack but keep shrinking. After week 156 the distribution vault is empty.</p>
           </div>
         </div>
       </div>
