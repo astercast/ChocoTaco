@@ -67,7 +67,7 @@ export default function Hero() {
               {' '}
               <span className="text-cream-300">
                 500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays from{' '}
-                {PAYDAY.vaultTotalCAT} tokens — half of the {PAYDAY.totalSupplyCAT} supply.
+                {PAYDAY.vaultTotalCAT} tokens, half of the {PAYDAY.totalSupplyCAT} supply.
               </span>
             </p>
             <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">

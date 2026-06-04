@@ -21,7 +21,7 @@ export default function Stats() {
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.totalSupplyCAT}</span>{' '}
-          <span className="text-cream-300"><span className="mono">$🍫🌮</span> total supply —</span>{' '}
+          <span className="text-cream-300"><span className="mono">$🍫🌮</span> total supply,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.vaultTotalCAT}</span>{' '}
           <span className="text-cream-300">(half) to holders over</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>.{' '}

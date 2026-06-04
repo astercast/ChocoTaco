@@ -1,5 +1,5 @@
 /**
- * Chia WalletConnect v2 (CHIP-0002) — aligned with Caster-101 / bow-app patterns.
+ * Chia WalletConnect v2 (CHIP-0002), aligned with Caster-101 / bow-app patterns.
  *
  *   initClient()        → SignClient + relay + stale session purge
  *   tryRestoreSession() → reuse active session on page load

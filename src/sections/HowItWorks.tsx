@@ -6,11 +6,11 @@ import { PAYDAY } from '../constants'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: `ChocoTaco is a Chia memecoin with a real reward loop. There are ${PAYDAY.totalSupplyCAT} $🍫🌮 tokens total. Exactly half — ${PAYDAY.vaultTotalCAT} — goes to holders through weekly paydays over 3 years (156 weeks, with annual halvings). 500 factory tacos (0.5 XCH each, cooked on demand at the factory) act as Factory Employee badges. Every Wednesday the Factory snapshots Cocoa Units and you claim your share. 50 factory tacos come out as Golden Tickets that earn 3x for life. Holding LP multiplies your factory taco total with no cap. That's the engine.`,
+    a: `ChocoTaco is a Chia memecoin with a real reward loop. There are ${PAYDAY.totalSupplyCAT} $🍫🌮 tokens total. Exactly half (${PAYDAY.vaultTotalCAT}) goes to holders through weekly paydays over 3 years (156 weeks, with annual halvings). 500 factory tacos (0.5 XCH each, cooked on demand at the factory) act as Factory Employee badges. Every Wednesday the Factory snapshots Cocoa Units and you claim your share. 50 factory tacos come out as Golden Tickets that earn 3x for life. Holding LP multiplies your factory taco total with no cap. That's the engine.`,
   },
   {
     q: 'How are rewards actually paid out?',
-    a: `Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (factory tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more — drawn only from the ${PAYDAY.vaultTotalCAT}-token holder vault (50% of ${PAYDAY.totalSupplyCAT} total supply). The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the vault is empty and snapshots end.`,
+    a: `Each Wednesday at 17:00 UTC we snapshot every wallet's Cocoa Units (factory tacos, Limited Editions, LP). That week's emission is split between holders proportionally: 10% of network points = 10% of the share. All shares add up to the emission exactly, never more, drawn only from the ${PAYDAY.vaultTotalCAT}-token holder vault (50% of ${PAYDAY.totalSupplyCAT} total supply). The Factory doesn't auto-send anything; you come to the site and claim it. 3 days for full payout, then 10% decay per day. Unclaimed weeks stack but keep shrinking. After 156 weeks the vault is empty and snapshots end.`,
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',
@@ -22,11 +22,11 @@ const FAQS = [
   },
   {
     q: 'Why halvings? Why 3 years?',
-    a: `Only ${PAYDAY.vaultTotalCAT} of the ${PAYDAY.totalSupplyCAT} tokens are in the holder vault — the other half of supply is not part of this schedule. Those ${PAYDAY.vaultTotalCAT} are distributed over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page.`,
+    a: `Only ${PAYDAY.vaultTotalCAT} of the ${PAYDAY.totalSupplyCAT} tokens are in the holder vault. The other half of supply is not part of this schedule. Those ${PAYDAY.vaultTotalCAT} are distributed over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page.`,
   },
   {
     q: 'How many tokens exist?',
-    a: `${PAYDAY.totalSupplyCAT} $🍫🌮 total supply. ${PAYDAY.vaultTotalCAT} — exactly 50% — funds the 3-year holder distribution (weekly snapshots, halvings, claims). The remaining ${PAYDAY.totalSupplyCAT - PAYDAY.vaultTotalCAT} tokens are outside that vault and are not paid out through this weekly schedule.`,
+    a: `${PAYDAY.totalSupplyCAT} $🍫🌮 total supply. ${PAYDAY.vaultTotalCAT} (exactly 50%) funds the 3-year holder distribution (weekly snapshots, halvings, claims). The remaining ${PAYDAY.totalSupplyCAT - PAYDAY.vaultTotalCAT} tokens are outside that vault and are not paid out through this weekly schedule.`,
   },
   {
     q: 'How does the LP multiplier work?',

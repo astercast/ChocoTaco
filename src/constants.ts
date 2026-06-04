@@ -67,7 +67,7 @@ const E = 1011 / 91   // 11.1098901098...
 
 export const PAYDAY = {
   totalSupplyCAT:    2022,
-  vaultTotalCAT:     1011,   // 50% of total supply — weekly holder distribution
+  vaultTotalCAT:     1011,   // 50% of total supply, weekly holder distribution
   totalWeeks:        156,
   year1WeeklyCAT:    E,           // 11.1099 (display as 11.11)
   year2WeeklyCAT:    E / 2,       //  5.5549 (display as  5.55)
