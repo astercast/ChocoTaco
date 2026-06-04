@@ -12,13 +12,13 @@ const NAV = [
 ]
 
 export default function Navbar() {
-  const { connected, address, connect, disconnect } = useWallet()
+  const { connected, address, connect, disconnect, pairingUri, verifying } = useWallet()
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const connecting = Boolean(pairingUri) || verifying
   const location = useLocation()
 
   async function handleConnect() {
-    setLoading(true); try { await connect() } finally { setLoading(false) }
+    try { await connect() } catch { /* surfaced in context */ }
   }
 
   const shortAddr = address ? `${address.slice(0, 6)}…${address.slice(-4)}` : null
@@ -62,8 +62,8 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <button onClick={handleConnect} disabled={loading} className="btn-cream py-2 px-3 sm:px-4 text-sm shrink-0">
-              {loading ? '…' : 'Connect'}
+            <button onClick={handleConnect} disabled={connecting} className="btn-cream py-2 px-3 sm:px-4 text-sm shrink-0">
+              {connecting ? '…' : 'Connect'}
             </button>
           )}
 

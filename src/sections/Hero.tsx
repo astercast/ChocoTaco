@@ -5,12 +5,12 @@ import { useWallet } from '../context/WalletContext'
 import { CHOCO_TACO_ASSET_ID } from '../constants'
 
 export default function Hero() {
-  const { connect, connected } = useWallet()
-  const [loading, setLoading] = useState(false)
+  const { connect, connected, pairingUri, verifying } = useWallet()
+  const connecting = Boolean(pairingUri) || verifying
   const [copied, setCopied] = useState(false)
 
   async function handleConnect() {
-    setLoading(true); try { await connect() } finally { setLoading(false) }
+    try { await connect() } catch { /* surfaced in context */ }
   }
   function copyAssetId() {
     navigator.clipboard.writeText(CHOCO_TACO_ASSET_ID)
@@ -83,8 +83,8 @@ export default function Hero() {
               {connected ? (
                 <a href="#earn" className="btn-cream">→ Open the shop</a>
               ) : (
-                <button onClick={handleConnect} disabled={loading} className="btn-cream">
-                  {loading ? 'one sec…' : '→ Connect wallet'}
+                <button onClick={handleConnect} disabled={connecting} className="btn-cream">
+                  {connecting ? 'Connecting…' : '→ Connect wallet'}
                 </button>
               )}
               <a href="https://dexie.space/offers/%F0%9F%8D%AB%F0%9F%8C%AE/XCH" target="_blank" rel="noopener noreferrer" className="btn-outline">

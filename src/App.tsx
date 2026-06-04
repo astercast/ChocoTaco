@@ -9,8 +9,9 @@ import DistributionPage from './pages/DistributionPage'
 import Footer from './sections/Footer'
 
 function PairingOverlay() {
-  const { pairingUri, dismissPairingUri } = useWallet()
-  return <QrModal uri={pairingUri} onClose={dismissPairingUri} />
+  const { pairingUri, verifying, connected, dismissPairingUri } = useWallet()
+  const busy = verifying && !connected
+  return <QrModal uri={pairingUri} busy={busy} onClose={dismissPairingUri} />
 }
 
 export default function App() {

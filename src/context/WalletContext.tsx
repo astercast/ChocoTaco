@@ -110,15 +110,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<WalletState>(DEFAULT)
 
   const connect = useCallback(async () => {
-    setState(s => ({ ...s, verifying: true, error: null, pairingUri: null }))
+    setState(s => ({ ...s, error: null, pairingUri: null, verifying: false }))
     try {
       const session = await connectWallet(uri => {
         setState(s => ({ ...s, pairingUri: uri }))
       })
-      // QR served its purpose, dismiss it
-      setState(s => ({ ...s, pairingUri: null }))
+      setState(s => ({ ...s, pairingUri: null, verifying: true }))
 
-      // Resolve bech32 address (placeholder if mock)
       const address  = session.address || await resolveAddress(session)
       const holdings = await fetchHoldings(address)
 
