@@ -25,7 +25,7 @@ const FAQS = [
   },
   {
     q: 'How does the LP multiplier work?',
-    a: "Your Cocoa Units from OG NFTs get multiplied by (1 + LP balance × 2). So holding 0.5 LP gives 2x, 1 LP gives 3x, 5 LP gives 11x, 100 LP gives 201x. There is no cap. The deeper you go into the pool the bigger your share of every weekly payday. This is the main lever for power users.",
+    a: "Your OG Cocoa Units get multiplied by 1 + √(LP balance). So 1 LP = 2x, 4 LP = 3x, 9 LP = 4x, 25 LP = 6x, 100 LP = 11x, 1000 LP = ~32x. There's no hard cap, but the diminishing returns mean a single whale can't eat the whole pool. Adding more LP always helps, it just stops scaling linearly past a certain point. This is the main lever for power users.",
   },
   {
     q: 'Wait, do I need to send you my coins?',

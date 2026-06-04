@@ -83,7 +83,7 @@ function ConnectedView() {
 
         {/* Tiny LP breakdown */}
         <div className="mt-4 mono text-xs text-cream-500 text-center">
-          you hold {lpBalance.toFixed(3)} LP · multiplier scales with LP, no cap
+          you hold {lpBalance.toFixed(3)} LP · multiplier = 1 + √LP
         </div>
       </div>
 
@@ -165,8 +165,8 @@ export default function EarnDashboard() {
             </span>
           </div>
           <p className="modern-light text-xl text-cream-300 max-w-2xl">
-            10 Cocoa Units per OG. 30 per Golden Ticket. LP multiplies your OG total.
-            More LP, bigger boost, no cap.
+            10 Cocoa Units per OG. 30 per Golden Ticket. LP multiplies your OG total
+            by 1 + √LP — diminishing returns so no whale eats the pool.
           </p>
         </motion.div>
 

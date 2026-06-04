@@ -120,7 +120,7 @@ function mockHoldings(): Holdings {
     standardOgs:   2,
     goldenOgs:     1,
     limitedPoints: 50,
-    lpBalance:     1.5,   // 1.5 LP → 4× OG multiplier
+    lpBalance:     4,     // 4 LP → 1 + √4 = 3× OG multiplier
     claimableCAT:  4.2,
   }
 }

@@ -25,19 +25,29 @@ export const OG_MINT = {
 // ─── Reward economy (Cocoa Units) ────────────────────────────────────────────
 
 export const COCOA = {
-  perOg:               10,    // standard OG NFT
-  perGolden:           30,    // golden ticket OG NFT (3× baked in)
-  perLimitedMin:       15,    // future limited edition NFTs
-  perLimitedMax:       40,
-  lpMultiplierFactor:  2,     // multiplier = 1 + (lpBalance * factor), no cap
-  lpDustThreshold:     0.001, // minimum LP CAT to qualify for any boost
-  weeklySocial:        15,    // verified social bonus (1 week)
+  perOg:           10,    // standard OG NFT
+  perGolden:       30,    // golden ticket OG NFT (3× baked in)
+  perLimitedMin:   15,    // future limited edition NFTs
+  perLimitedMax:   40,
+  lpDustThreshold: 0.001, // minimum LP CAT to qualify for any boost
+  weeklySocial:    15,    // verified social bonus (1 week)
 } as const
 
-/** Scaling LP multiplier. No cap, the more LP you hold the bigger your boost. */
+/**
+ * LP multiplier: square-root curve. Unbounded but fair.
+ *   multiplier = 1 + sqrt(lpBalance)
+ *
+ *   0 LP    → 1×       1 LP    → 2×       9 LP    → 4×
+ *   0.25 LP → 1.5×     4 LP    → 3×       25 LP   → 6×
+ *                                          100 LP  → 11×
+ *                                          1000 LP → ~32×
+ *
+ * Diminishing returns prevent a single whale from dominating the pool, while
+ * still meaningfully rewarding deep liquidity. No hard cap.
+ */
 export function computeLpMultiplier(lpBalance: number): number {
   if (lpBalance < COCOA.lpDustThreshold) return 1
-  return 1 + lpBalance * COCOA.lpMultiplierFactor
+  return 1 + Math.sqrt(lpBalance)
 }
 
 // ─── Weekly payday + distribution schedule ───────────────────────────────────

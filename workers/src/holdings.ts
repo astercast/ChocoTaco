@@ -98,6 +98,8 @@ async function readCatBalance(env: Env, address: string, assetId: string): Promi
 
 export function computeCocoaPoints(h: Holdings, weeklyBonus = 0): number {
   const ogPoints   = h.standardOgs * 10 + h.goldenOgs * 30
-  const multiplier = h.lpBalance > 0.001 ? 1 + h.lpBalance * 2 : 1  // no cap
+  // LP multiplier: 1 + sqrt(lpBalance). Mirrors src/constants.ts
+  // Unbounded but diminishing returns so no single whale dominates.
+  const multiplier = h.lpBalance > 0.001 ? 1 + Math.sqrt(h.lpBalance) : 1
   return ogPoints * multiplier + h.limitedPoints + weeklyBonus
 }
