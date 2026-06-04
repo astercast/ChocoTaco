@@ -41,16 +41,14 @@ export default function Gallery() {
           className="mb-12 flex items-end justify-between flex-wrap gap-4"
         >
           <div>
-            <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-              <span className="chip">04 · fresh out the oven</span>
-              <span className="hand text-gold text-2xl rotate-p2 inline-block">latest cooks</span>
-            </div>
-            <h2 className="display text-5xl md:text-7xl text-cream-50 leading-none">
-              Just minted.
+            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+              Fresh out
+              <br />
+              <span className="text-gold">the oven.</span>
             </h2>
-            <p className="font-serif text-lg text-cream-300 mt-3 max-w-xl">
-              Every OG that gets cooked in the kitchen lands here.
-              {' '}<span className="hand text-gold">gold ones are the Golden Tickets.</span>
+            <p className="modern-light text-lg text-cream-300 mt-4 max-w-xl">
+              Every OG that gets cooked lands here.
+              <span className="hand text-gold ml-2">gold ones are the Goldens.</span>
             </p>
           </div>
           <a href="https://mintgarden.io" target="_blank" rel="noopener noreferrer"

@@ -5,11 +5,11 @@ import { Plus, Minus } from 'lucide-react'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each, cooked on demand in the kitchen) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 50 of the OGs come out as Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
+    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each, cooked on demand in the kitchen) act as Factory Employee badges. Every Wednesday for 3 years the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 1011 tokens total, distributed across 156 weeks with annual halvings so early participation pays the most. 50 of the OGs come out as Golden Tickets that earn 3x for life. Holding LP multiplies your OG total with no cap. That's the engine.",
   },
   {
     q: 'How are rewards actually paid out?',
-    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. Your share of that week's $🍫🌮 emission is calculated and made available to claim. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, so you can let them pile up, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout.",
+    a: "Every Wednesday at 17:00 UTC the backend takes a snapshot of every wallet's OG NFTs, Limited Editions, and LP balance. Your share of that week's $🍫🌮 emission is calculated and made available to claim. The factory does NOT send anything automatically. You have to come to the site and claim it yourself. You have 3 full days after the snapshot to claim 100%. Starting on day 4, that week's portion shrinks by 10% per day. Unclaimed weeks stack on top of each other in your balance, so you can let them pile up, but each one keeps decaying on its own clock. Bottom line: pull, not push. Show up at least once a week to get the full payout. After 156 weeks (3 years) the entire 1011 vault has been distributed and weekly snapshots end.",
   },
   {
     q: 'What happens to my 0.5 XCH when I mint?',
@@ -18,6 +18,10 @@ const FAQS = [
   {
     q: 'How do Golden Tickets work?',
     a: "50 random mint slots between #001 and #500 are flagged as Golden ahead of launch. Every mint is generated fresh on demand, but if you happen to land on one of the Golden slot numbers, the metadata gets stamped with Golden: true before the NFT is even minted. Golden Tickets are worth 30 Cocoa Units instead of 10. The flag is permanent and on-chain, and the 50 reserved slot numbers are published publicly so anyone can verify.",
+  },
+  {
+    q: 'Why halvings? Why 3 years?',
+    a: "1011 $🍫🌮 total, distributed over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page so anyone can see exactly where every token went.",
   },
   {
     q: 'How does the LP multiplier work?',
@@ -77,13 +81,14 @@ export default function HowItWorks() {
           transition={{ duration: 0.5 }}
           className="mb-12 max-w-3xl"
         >
-          <div className="flex items-baseline gap-3 mb-4 flex-wrap">
-            <span className="chip">FAQ</span>
-            <span className="hand text-cream-400 text-2xl">↓ scroll if you're new</span>
-          </div>
-          <h2 className="display text-5xl md:text-7xl text-cream-50 leading-none">
-            Questions you probably <span className="display-italic text-gold">have.</span>
+          <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+            You've got
+            <br />
+            <span className="text-gold">questions.</span>
           </h2>
+          <p className="hand text-cream-400 text-2xl mt-4 rotate-n2 inline-block">
+            (good ones, probably)
+          </p>
         </motion.div>
 
         {/* FAQ list */}

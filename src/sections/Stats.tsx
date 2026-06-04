@@ -19,9 +19,10 @@ export default function Stats() {
           <span className="text-cream-300">OG badges,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">50</span>{' '}
           <span className="text-cream-300">golden tickets,</span>{' '}
-          weekly <span className="mono text-cream-300">$🍫🌮</span> paydays{' '}
-          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">forever</span>.{' '}
-          <span className="hand text-cream-400 text-2xl md:text-3xl">the math is simple.</span>
+          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">1011</span>{' '}
+          <span className="text-cream-300"><span className="mono">$🍫🌮</span> distributed over</span>{' '}
+          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>.{' '}
+          <span className="hand text-cream-400 text-2xl md:text-3xl">show up early.</span>
         </motion.p>
 
         <div className="mt-16 pt-8 border-t border-cream-500/10 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">

@@ -9,6 +9,7 @@ import Gallery from '../sections/Gallery'
 
 const MARQUEE_ITEMS = [
   '500 OG BADGES · 0.5 XCH EACH',
+  '1011 $🍫🌮 OVER 3 YEARS · HALVED YEARLY',
   '50 RANDOM GOLDEN TICKETS · COOK YOUR OWN',
   '100% OF MINT → TIBETSWAP LP',
   '$🍫🌮 PAYDAY EVERY WEDNESDAY 17:00 UTC',

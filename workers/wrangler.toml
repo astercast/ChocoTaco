@@ -10,8 +10,7 @@ CHOCO_ASSET_ID       = "46ec3dc25b32221e88fad0ee20f84f7dfff13dbee844497232cb08c8
 LP_ASSET_ID          = "3a622700d70111506823d5aa0bfd5c2d7937ed5552ef204f8a55105cf48f95ab"
 OG_COLLECTION_ID     = ""   # ← paste your MintGarden collection ID
 LIMITED_COLLECTION_ID = ""
-WEEKLY_EMISSION_W1   = "15"  # CHOCO CATs distributed in week 1
-WEEKLY_DECAY         = "0.99"
+LAUNCH_WEEK_ISO      = "2026-W01"  # ISO week of launch — emission halves yearly from here
 TREASURY_ADDRESS     = ""   # ← treasury wallet xch1… address
 ALLOWED_ORIGIN       = "https://chocotaco.xyz"  # ← your deployed site origin
 

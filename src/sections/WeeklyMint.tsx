@@ -89,15 +89,14 @@ export default function OgMint() {
             transition={{ duration: 0.5 }}
             className="md:col-span-8"
           >
-            <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-              <span className="chip">02 · the mint</span>
-              <span className="hand text-gold text-2xl rotate-p2 inline-block">cook your own</span>
-            </div>
-            <h2 className="display text-5xl md:text-7xl text-cream-50 leading-none">
-              500 hand-cooked OGs.
+            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+              Five hundred
               <br />
-              <span className="display-italic text-gold">Half an XCH each.</span>
+              <span className="text-gold">tacos.</span>
             </h2>
+            <p className="hand text-gold text-3xl rotate-n2 inline-block mt-4">
+              half an XCH a pop.
+            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0 }}

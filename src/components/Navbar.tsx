@@ -5,10 +5,9 @@ import { Link, useLocation } from 'react-router-dom'
 import { useWallet } from '../context/WalletContext'
 
 const NAV = [
-  { label: 'mint',     to: '/#mint' },
-  { label: 'claim',    to: '/claim' },
-  { label: 'shop',     to: '/#earn' },
-  { label: 'wall',     to: '/#gallery' },
+  { label: 'mint',   to: '/#mint' },
+  { label: 'claim',  to: '/claim' },
+  { label: 'wall',   to: '/#gallery' },
 ]
 
 export default function Navbar() {

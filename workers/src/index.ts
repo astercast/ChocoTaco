@@ -26,8 +26,7 @@ export interface Env {
   LP_ASSET_ID:           string
   OG_COLLECTION_ID:      string
   LIMITED_COLLECTION_ID: string
-  WEEKLY_EMISSION_W1:    string
-  WEEKLY_DECAY:          string
+  LAUNCH_WEEK_ISO:       string
   TREASURY_ADDRESS:      string
   ALLOWED_ORIGIN:        string
   TREASURY_MNEMONIC?:    string

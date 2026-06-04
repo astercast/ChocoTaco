@@ -36,37 +36,20 @@ function useCountdown(targetIso: string | null) {
   }, [targetIso, now])
 }
 
-// ─── Taco Truck art slot ─────────────────────────────────────────────────────
+// ─── Taco Truck art slot (placeholder until art lands) ──────────────────────
 
 function TacoTruckSlot() {
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-cocoa-800 rounded-2xl border border-cream-500/10 overflow-hidden">
-      {/* Warm spotlight */}
+    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-cocoa-800 rounded-2xl border border-cream-500/10 overflow-hidden flex items-center justify-center">
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 50% 70% at 50% 65%, rgba(232,156,59,0.18) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse 50% 70% at 50% 65%, rgba(232,156,59,0.12) 0%, transparent 60%)',
         }}
       />
-      {/* Subtle road perspective lines */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 opacity-40"
-           style={{
-             background: 'repeating-linear-gradient(90deg, transparent 0 50px, rgba(249,223,166,0.15) 50px 90px)',
-           }}
-      />
-      {/* Centered placeholder */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none select-none">
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-24 h-16 border border-cream-300/30 rounded-lg flex items-center justify-center"
-        >
-          <div className="w-16 h-8 border-t border-cream-300/30" />
-        </motion.div>
-        <p className="mono text-xs text-cream-500 uppercase tracking-widest">taco truck arriving</p>
-      </div>
-      {/* Bottom dashed road line */}
-      <div className="absolute bottom-0 inset-x-0 h-px bg-cream-500/20" />
+      <p className="modern-display text-4xl sm:text-6xl text-cream-300 uppercase tracking-tight">
+        claim soon
+      </p>
     </div>
   )
 }
@@ -194,18 +177,20 @@ export default function ClaimPage() {
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-10">
-          <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-            <span className="chip">claim center</span>
-            <span className="hand text-gold text-2xl rotate-n2 inline-block">every wednesday</span>
+        <div className="mb-10 flex items-end justify-between gap-6 flex-wrap">
+          <div>
+            <h1 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+              Pick up
+              <br />
+              <span className="text-gold">your chocolate.</span>
+            </h1>
+            <p className="hand text-gold text-2xl mt-4 rotate-n2 inline-block">
+              every wednesday, 17:00 UTC
+            </p>
           </div>
-          <h1 className="modern-display text-5xl md:text-7xl text-cream-50 uppercase">
-            Pick up your <span className="text-gold">chocolate.</span>
-          </h1>
-          <p className="modern-light text-lg text-cream-300 mt-4 max-w-2xl">
-            The taco truck pulls up every Wednesday at 17:00 UTC.
-            You have 3 full days to grab your full payout. After that it
-            shrinks 10% each day. Unclaimed weeks stack but each keeps decaying.
+          <p className="modern-light text-base text-cream-400 max-w-sm">
+            3 days for full payout. After that it shrinks 10% per day.
+            Unclaimed weeks stack but each keeps decaying.
           </p>
         </div>
 

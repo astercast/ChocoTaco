@@ -133,7 +133,8 @@ function ConnectedView() {
           <p>estimated weekly · ~{weeklyEstimateCAT} $🍫🌮</p>
           <p>full payout window · {PAYDAY.gracePeriodDays} days after snapshot</p>
           <p>after grace · {PAYDAY.postGraceDecayPct}% decay per day on that week's portion</p>
-          <p>unclaimed weeks stack · they never disappear, just shrink</p>
+          <p>unclaimed weeks stack · keep decaying on their own clocks</p>
+          <p>{PAYDAY.vaultTotalCAT} $🍫🌮 over {PAYDAY.totalWeeks} weeks · halves yearly</p>
         </div>
       </div>
       <Toast message={toast?.msg ?? null} variant={toast?.variant ?? 'loading'} onDismiss={() => setToast(null)} />
@@ -155,20 +156,17 @@ export default function EarnDashboard() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <div className="flex items-baseline gap-3 mb-3 flex-wrap">
-            <span className="chip">01 · the factory floor</span>
-            <span className="hand text-gold text-2xl rotate-n2 inline-block">payday every wednesday</span>
-          </div>
-          <h2 className="display text-5xl md:text-7xl text-cream-50 max-w-3xl leading-none">
-            Stack Cocoa, <span className="display-italic text-gold">claim chocolate.</span>
-          </h2>
-          <p className="font-serif text-xl text-cream-300 mt-4 max-w-2xl">
-            Every OG NFT is 10 Cocoa Units. Golden Tickets are 30. Holding LP multiplies
-            your OG total: more LP, bigger boost, no cap.
-            <br />
-            <span className="hand text-cream-400 text-lg">
-              ↑ stack more LP to mint more chocolate every week.
+          <div className="flex items-end justify-between gap-6 flex-wrap mb-4">
+            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase">
+              Floor.
+            </h2>
+            <span className="hand text-gold text-2xl md:text-3xl rotate-n2 inline-block mb-3">
+              payday every wednesday →
             </span>
+          </div>
+          <p className="modern-light text-xl text-cream-300 max-w-2xl">
+            10 Cocoa Units per OG. 30 per Golden Ticket. LP multiplies your OG total.
+            More LP, bigger boost, no cap.
           </p>
         </motion.div>
 

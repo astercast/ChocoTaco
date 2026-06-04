@@ -79,13 +79,21 @@ export function currentWeekIso(): string {
   return `${tmp.getUTCFullYear()}-W${String(week).padStart(2, '0')}`
 }
 
+/**
+ * Halving schedule: 1011 $🍫🌮 over 156 weeks
+ *   Year 1 (weeks   1-52):  11.11/wk = 577.72 total = 57.1%
+ *   Year 2 (weeks  53-104):  5.55/wk = 288.86 total = 28.6%
+ *   Year 3 (weeks 105-156):  2.78/wk = 144.43 total = 14.3%
+ * After week 156, emission = 0 (vault exhausted, distribution ends).
+ */
 export function weeklyEmission(env: Env, weekIso: string): number {
-  // Decay 1% per week from launch week
-  const launchWeek = '2026-W01'  // TODO: set to your actual launch week
-  const w1 = Number(env.WEEKLY_EMISSION_W1)
-  const decay = Number(env.WEEKLY_DECAY)
-  const weekDiff = isoWeekDiff(launchWeek, weekIso)
-  return w1 * Math.pow(decay, Math.max(0, weekDiff))
+  const launchWeek = env.LAUNCH_WEEK_ISO || '2026-W01'
+  const weekIndex  = isoWeekDiff(launchWeek, weekIso)
+  if (weekIndex < 0)   return 0
+  if (weekIndex < 52)  return 11.11
+  if (weekIndex < 104) return 5.55
+  if (weekIndex < 156) return 2.78
+  return 0
 }
 
 function isoWeekDiff(a: string, b: string): number {
