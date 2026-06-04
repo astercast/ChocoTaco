@@ -46,24 +46,36 @@ export async function computeWeeklySnapshot(env: Env): Promise<void> {
     return
   }
 
-  // 4) Build snapshot rows
+  // 4) Safety: clamp the week's effective emission to what's actually left in
+  //    the vault. If somehow we tried to emit more than remaining, we cap it
+  //    so cumulative distribution can never exceed 1011.
+  const vaultRemaining = await computeVaultRemaining(env)
+  const effectiveEmission = Math.min(emission, Math.max(0, vaultRemaining))
+
+  if (effectiveEmission <= 0) {
+    console.log('[snapshot] vault exhausted, no emission this week')
+    return
+  }
+
+  // 5) Build snapshot rows (proportional to points / total)
   const inserts = rows.map(r => {
-    const claimable = (r.points / totalPoints) * emission
+    const claimable = (r.points / totalPoints) * effectiveEmission
     return env.DB.prepare(
       `INSERT OR REPLACE INTO snapshots (week_iso, address, points, claimable_cat, claimed_at)
        VALUES (?1, ?2, ?3, ?4, NULL)`
     ).bind(weekIso, r.address, r.points, claimable)
   })
 
-  // 5) Network stats summary
-  const vaultRemaining = await computeVaultRemaining(env)
+  // 6) Network stats summary (note: vaultRemaining now reflects PRE-insert state;
+  //    the new snapshots will subtract from it on next computation)
+  const remainingAfter = vaultRemaining - effectiveEmission
   inserts.push(env.DB.prepare(
     `INSERT OR REPLACE INTO network_stats (week_iso, total_points, weekly_emission, vault_remaining, computed_at)
      VALUES (?1, ?2, ?3, ?4, ?5)`
-  ).bind(weekIso, totalPoints, emission, vaultRemaining, Date.now()))
+  ).bind(weekIso, totalPoints, effectiveEmission, remainingAfter, Date.now()))
 
   await env.DB.batch(inserts)
-  console.log(`[snapshot] ${weekIso} → ${rows.length} holders, ${totalPoints} pts, ${emission} CHOCO emitted`)
+  console.log(`[snapshot] ${weekIso} → ${rows.length} holders, ${totalPoints} pts, ${effectiveEmission.toFixed(4)} $🍫🌮 emitted, ${remainingAfter.toFixed(4)} remaining`)
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -80,19 +92,26 @@ export function currentWeekIso(): string {
 }
 
 /**
- * Halving schedule: 1011 $🍫🌮 over 156 weeks
- *   Year 1 (weeks   1-52):  11.11/wk = 577.72 total = 57.1%
- *   Year 2 (weeks  53-104):  5.55/wk = 288.86 total = 28.6%
- *   Year 3 (weeks 105-156):  2.78/wk = 144.43 total = 14.3%
- * After week 156, emission = 0 (vault exhausted, distribution ends).
+ * Halving schedule: 1011 $🍫🌮 over 156 weeks.
+ *
+ * Precise emission: total = 52E + 26E + 13E = 91E = 1011  →  E = 1011/91
+ * Using exact fractions guarantees cumulative = 1011 exactly with zero drift.
+ *
+ *   Year 1 (weeks 0-51):    E   = 11.1099/wk  =  577.7143 total  (57.14%)
+ *   Year 2 (weeks 52-103):  E/2 =  5.5549/wk  =  288.8571 total  (28.57%)
+ *   Year 3 (weeks 104-155): E/4 =  2.7775/wk  =  144.4286 total  (14.29%)
+ *
+ * After week 156: emission = 0 (vault exhausted, distribution ends).
  */
+const VAULT_E = 1011 / 91
+
 export function weeklyEmission(env: Env, weekIso: string): number {
-  const launchWeek = env.LAUNCH_WEEK_ISO || '2026-W01'
+  const launchWeek = (env as { LAUNCH_WEEK_ISO?: string }).LAUNCH_WEEK_ISO || '2026-W01'
   const weekIndex  = isoWeekDiff(launchWeek, weekIso)
   if (weekIndex < 0)   return 0
-  if (weekIndex < 52)  return 11.11
-  if (weekIndex < 104) return 5.55
-  if (weekIndex < 156) return 2.78
+  if (weekIndex < 52)  return VAULT_E
+  if (weekIndex < 104) return VAULT_E / 2
+  if (weekIndex < 156) return VAULT_E / 4
   return 0
 }
 
@@ -102,9 +121,8 @@ function isoWeekDiff(a: string, b: string): number {
   return (by - ay) * 52 + (bw - aw)
 }
 
+const VAULT_TOTAL = 1011  // total $🍫🌮 to distribute across 3 years
 async function computeVaultRemaining(env: Env): Promise<number> {
-  // Vault total is whatever you fund the treasury with. Configure once.
-  const VAULT_TOTAL = 5000
   const r = await env.DB.prepare(
     `SELECT COALESCE(SUM(claimable_cat), 0) AS total FROM snapshots`
   ).first<{ total: number }>()

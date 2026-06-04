@@ -185,12 +185,13 @@ export default function ClaimPage() {
               <span className="text-gold">your chocolate.</span>
             </h1>
             <p className="hand text-gold text-2xl mt-4 rotate-n2 inline-block">
-              every wednesday, 17:00 UTC
+              the taco truck comes every wednesday
             </p>
           </div>
           <p className="modern-light text-base text-cream-400 max-w-sm">
-            3 days for full payout. After that it shrinks 10% per day.
-            Unclaimed weeks stack but each keeps decaying.
+            Pulls up at 17:00 UTC sharp. You have 3 days for the full payout,
+            then it shrinks 10% per day. Unclaimed weeks stack in your
+            balance but each one keeps decaying on its own clock.
           </p>
         </div>
 

@@ -5,6 +5,7 @@ import QrModal from './components/QrModal'
 import HomePage from './pages/HomePage'
 import ClaimPage from './pages/ClaimPage'
 import FaqPage from './pages/FaqPage'
+import DistributionPage from './pages/DistributionPage'
 import Footer from './sections/Footer'
 
 function PairingOverlay() {
@@ -20,7 +21,8 @@ export default function App() {
         <Routes>
           <Route path="/"      element={<HomePage />} />
           <Route path="/claim" element={<ClaimPage />} />
-          <Route path="/faq"   element={<FaqPage />} />
+          <Route path="/faq"           element={<FaqPage />} />
+          <Route path="/distribution"  element={<DistributionPage />} />
         </Routes>
         <Footer />
         <PairingOverlay />

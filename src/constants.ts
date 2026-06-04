@@ -61,15 +61,20 @@ export function computeLpMultiplier(lpBalance: number): number {
 //
 // Derivation: 52E + 26E + 13E = 91E = 1011  →  E = 11.1099 ≈ 11.11
 
+// Precise emission math: total = 52E + 26E + 13E = 91E = 1011 → E = 1011/91
+// Using exact fractions guarantees cumulative distribution = 1011 with zero drift.
+const E = 1011 / 91   // 11.1098901098...
+
 export const PAYDAY = {
   vaultTotalCAT:     1011,
   totalWeeks:        156,
-  year1WeeklyCAT:    11.11,
-  year2WeeklyCAT:    5.55,
-  year3WeeklyCAT:    2.78,
-  year1TotalCAT:     577.72,
-  year2TotalCAT:     288.86,
-  year3TotalCAT:     144.43,
+  year1WeeklyCAT:    E,           // 11.1099 (display as 11.11)
+  year2WeeklyCAT:    E / 2,       //  5.5549 (display as  5.55)
+  year3WeeklyCAT:    E / 4,       //  2.7775 (display as  2.78)
+  year1TotalCAT:     E * 52,      // 577.7143
+  year2TotalCAT:     E / 2 * 52,  // 288.8571
+  year3TotalCAT:     E / 4 * 52,  // 144.4286
+  // Sum: 577.71 + 288.86 + 144.43 = 1011.00 exact
   snapshotDayUTC:    3,    // Wednesday (0 = Sun)
   snapshotHourUTC:   17,
   gracePeriodDays:   3,
@@ -83,6 +88,12 @@ export const PAYDAY = {
 /**
  * Weekly emission for a given week index (0 = launch week).
  * Returns 0 after week 156 (distribution ended).
+ *
+ * Math guarantees:
+ *   Σ(week 0..51)   = E × 52  = 577.7143  (57.14% of vault)
+ *   Σ(week 52..103) = E/2 × 52 = 288.8571  (28.57% of vault)
+ *   Σ(week 104..155)= E/4 × 52 = 144.4286  (14.29% of vault)
+ *   Total = 1011.0 exact
  */
 export function weeklyEmission(weekIndex: number): number {
   if (weekIndex < 0)   return 0
