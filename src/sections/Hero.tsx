@@ -27,45 +27,34 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto relative">
         {/* Top label row */}
-        <div className="flex items-center justify-between mb-12 mt-6">
+        <div className="flex items-center mb-12 mt-6">
           <span className="hand text-cream-300 text-2xl">est. 2026</span>
-          <span className="mono text-xs text-cream-500 hidden sm:block">
-            Made fresh on Chia
-          </span>
         </div>
 
-        {/* Headline — asymmetric, big and weird */}
+        {/* Headline */}
         <div className="relative mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="display text-[clamp(3rem,12vw,8.5rem)] text-cream-50">
-              Choco<span className="display-italic text-gold">Taco</span>.
+            <h1 className="display text-[clamp(3rem,14vw,9rem)] text-cream-50 leading-[0.9]">
+              THE
+              <br />
+              <span className="display-italic text-gold">FACTORY.</span>
             </h1>
           </motion.div>
 
-          {/* Floating sticker — "FRESH" */}
+          {/* Floating sticker — visible on every viewport, positioned so it never crops */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
             animate={{ opacity: 1, scale: 1, rotate: -8 }}
             transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-            className="absolute -top-4 right-4 md:right-12 hidden sm:block"
+            className="absolute top-2 right-2 sm:top-4 sm:right-8 md:right-12 z-10"
           >
-            <span className="sticker sticker-mint text-base px-4 py-2">
+            <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
               ★ Fresh weekly
             </span>
-          </motion.div>
-
-          {/* Hand-drawn callout pointing at "Taco" */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="absolute right-2 md:right-32 top-1/2 mt-2 hidden md:flex items-center gap-2"
-          >
-            <span className="hand text-cream-300 text-2xl rotate-n4">↗ yes, you can eat it</span>
           </motion.div>
         </div>
 
