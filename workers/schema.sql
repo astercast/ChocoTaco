@@ -35,11 +35,13 @@ CREATE TABLE IF NOT EXISTS known_holders (
   last_active  INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS golden_tickets (
-  nft_id     TEXT PRIMARY KEY,
-  index_no   INTEGER NOT NULL,
-  revealed_at INTEGER NOT NULL,
-  seed_tx    TEXT NOT NULL
+-- Golden slot reservations: 50 random mint numbers (1..500) chosen at deploy
+-- time via verifiable randomness. When a mint hits one of these numbers, the
+-- signer stamps Golden:true into the metadata.
+CREATE TABLE IF NOT EXISTS golden_slots (
+  slot_number  INTEGER PRIMARY KEY,
+  seed_hash    TEXT NOT NULL,       -- SHA256 of public seed for verifiability
+  created_at   INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS mint_reservations (

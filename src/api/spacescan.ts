@@ -14,7 +14,7 @@ import { CHOCO_LP_ASSET_ID, COCOA, SPACESCAN_API, MINTGARDEN_API } from '../cons
 
 export interface Holdings {
   standardOgs:   number       // OG NFTs without Golden Ticket flag
-  goldenOgs:     number       // OG NFTs with Golden Ticket flag (pre-minted at launch)
+  goldenOgs:     number       // OG NFTs that minted into a Golden slot (flag in metadata)
   limitedPoints: number       // sum of point values from Limited Edition NFTs
   lpBalance:     number       // CHOCO/XCH LP CAT balance (drives uncapped multiplier)
   claimableCAT:  number       // latest snapshot's pending claim (backend-supplied)

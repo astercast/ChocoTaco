@@ -13,10 +13,11 @@
  * 5. Chain confirms. The NFT (with the user's chosen traits + 25% royalty
  *    enforced by NFT1) lands in the user's wallet.
  *
- * Golden Tickets: 50 are pre-minted to treasury BEFORE launch with the
- * Golden flag baked into metadata. When a user clicks mint, the Worker rolls
- * a die against unfilled Golden slots. On a hit, the user is given a pre-built
- * Golden offer instead of a freshly generated one. They find out at mint time.
+ * Golden Tickets: all 500 mints are on-demand. The Worker reserves 50 random
+ * mint slots between 1..500 at deploy time and stores them in D1. When a user
+ * mints, the Worker checks if the next sequential mint number is a Golden slot.
+ * On a hit, it tells the signer to stamp Golden:true into the metadata. The
+ * NFT is then minted with that flag baked in. No pre-minting required.
  */
 
 import { motion, useInView } from 'framer-motion'

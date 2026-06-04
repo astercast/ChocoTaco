@@ -18,7 +18,7 @@ export const OG_MINT = {
   supply:           500,
   priceXCH:         0.5,
   royaltyPercent:   25,
-  goldenTickets:    50,   // pre-minted with Golden flag, randomly shuffled into mint order
+  goldenTickets:    50,   // 50 random slot numbers (1-500) get Golden:true stamped at mint time
   liquiditySeedXCH: 250,  // 100% of mint proceeds → TibetSwap (500 * 0.5)
 } as const
 

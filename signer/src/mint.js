@@ -60,6 +60,8 @@ function buildMetadata({ traits, mintNumber, imageIpfs, imageHttps, isGolden }) 
  * @param body  {
  *   recipient_address,    // xch1...
  *   traits,               // { shell, filling, sauce, accessory, background }
+ *   mint_number,          // 1..500, assigned by Worker (atomic)
+ *   is_golden,            // true if this mint lands on a reserved Golden slot
  *   treasury_address,     // xch1...
  *   price_xch_mojos,      // 0.5 XCH = 500_000_000_000
  *   royalty_percent,      // 25
@@ -69,12 +71,14 @@ export async function buildMintOffer(body) {
   const {
     recipient_address,
     traits = {},
+    mint_number,
+    is_golden = false,
     treasury_address,
     price_xch_mojos = 500_000_000_000,
     royalty_percent = 25,
   } = body
 
-  if (!recipient_address || !treasury_address) {
+  if (!recipient_address || !treasury_address || !mint_number) {
     throw new Error('missing_required_fields')
   }
 
@@ -85,14 +89,13 @@ export async function buildMintOffer(body) {
   // 2) Upload image to IPFS (Pinata)
   const img = await uploadImage(imageBuf, `og-${imageHash.slice(0, 8)}.png`)
 
-  // 3) Build + upload metadata
-  const mintNumber = await nextMintNumber()
-  const metadata   = buildMetadata({
+  // 3) Build + upload metadata (Golden flag stamped in if applicable)
+  const metadata = buildMetadata({
     traits,
-    mintNumber,
+    mintNumber: mint_number,
     imageIpfs:  img.ipfs,
     imageHttps: img.https,
-    isGolden:   false,
+    isGolden:   is_golden,
   })
   const metaHash = crypto.createHash('sha256').update(JSON.stringify(metadata)).digest('hex')
   const meta     = await uploadMetadata(metadata)
@@ -108,7 +111,7 @@ export async function buildMintOffer(body) {
     meta_uris:          [meta.https, meta.ipfs],
     meta_hash:          metaHash,
     royalty_percentage: royalty_percent * 100,        // basis points (10000 = 100%)
-    edition_number:     mintNumber,
+    edition_number:     mint_number,
     edition_total:      500,
     did_id:             process.env.OG_COLLECTION_DID,
     fee:                Number(process.env.MINT_FEE_MOJOS ?? 100),
@@ -142,13 +145,9 @@ export async function buildMintOffer(body) {
   }
 }
 
-// ─── Mint number counter ─────────────────────────────────────────────────────
-// Production: store in Postgres/Redis. Here: env-seeded in-process counter.
-let _mintCounter = 0
-async function nextMintNumber() {
-  if (_mintCounter === 0) _mintCounter = Number(process.env.MINT_START_NUMBER ?? 51)
-  return _mintCounter++
-}
+// Mint numbers are assigned authoritatively by the Cloudflare Worker
+// (atomic SQL count on the mint_reservations table), so the signer just
+// uses whatever number the Worker passed in.
 
 // ─── Confirmation polling ────────────────────────────────────────────────────
 async function waitForNftConfirmation(walletId, launcherIdHex, timeoutMs) {

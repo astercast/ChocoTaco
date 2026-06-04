@@ -5,7 +5,7 @@ import { Plus, Minus } from 'lucide-react'
 const FAQS = [
   {
     q: 'Okay but what IS this?',
-    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 50 of the OGs are pre-minted Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
+    a: "ChocoTaco is a Chia memecoin with a real reward loop. 500 OG NFTs (0.5 XCH each, cooked on demand in the kitchen) act as Factory Employee badges. Every Wednesday the Factory takes a snapshot, and you come claim $🍫🌮 tokens based on your Cocoa Unit points. 50 of the OGs come out as Golden Tickets that earn 3x forever. Holding LP multiplies your OG total, with no cap. That's the engine.",
   },
   {
     q: 'How are rewards actually paid out?',
@@ -17,7 +17,7 @@ const FAQS = [
   },
   {
     q: 'How do Golden Tickets work?',
-    a: "50 of the 500 OG NFTs are pre-minted with the Golden Ticket flag baked into the metadata. They're shuffled randomly into the mint order so nobody knows which mint number will be golden until it happens. Golden Tickets are worth 30 Cocoa Units instead of 10. The shiny flag is permanent and on-chain.",
+    a: "50 random mint slots between #001 and #500 are flagged as Golden ahead of launch. Every mint is generated fresh on demand, but if you happen to land on one of the Golden slot numbers, the metadata gets stamped with Golden: true before the NFT is even minted. Golden Tickets are worth 30 Cocoa Units instead of 10. The flag is permanent and on-chain, and the 50 reserved slot numbers are published publicly so anyone can verify.",
   },
   {
     q: 'How does the LP multiplier work?',

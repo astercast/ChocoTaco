@@ -12,9 +12,10 @@
  *           the OG collection DID, and 25% royalty puzzle hash
  *        d. Wrap it as an offer: treasury offers the new NFT, requests 0.5 XCH
  *        e. Sign offer with treasury hot key, return offer string
- *   4. Worker also checks if this mint should be a Golden Ticket pull
- *      (against `golden_tickets` table — 50 pre-minted spots reserved)
- *      If hit, returns a pre-built Golden offer instead of the custom one.
+ *   4. Worker also checks if this mint number lands on a reserved Golden slot
+ *      (50 random numbers 1..500 stored in `golden_slots` at deploy time).
+ *      If yes, the signer is told to stamp Golden:true into the metadata
+ *      and the user's chosen traits still apply.
  *   5. Client passes offer to WalletConnect `chia_takeOffer`
  *   6. User signs in Sage / Reference Wallet
  *   7. Chain confirms. NFT lands in user's wallet with chosen traits and the
@@ -42,8 +43,9 @@ export interface MintResult {
 
 /**
  * Mint an OG NFT with the user's chosen traits.
- * If the backend rolls a Golden Ticket, returns isGolden: true and the user
- * gets a pre-minted Golden NFT (custom traits ignored on that path).
+ * If this mint number happens to be one of the 50 reserved Golden slots,
+ * the metadata gets stamped Golden:true and isGolden: true is returned.
+ * The user's chosen traits still apply either way.
  */
 export async function mintOg(
   session: ChiaSession | null,
