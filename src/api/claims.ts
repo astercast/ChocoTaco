@@ -1,5 +1,5 @@
 /**
- * Claim flow — fetch offer from Worker → user accepts via WalletConnect
+ * Claim flow - fetch offer from Worker → user accepts via WalletConnect
  *
  *   POST /api/claim
  *     Body:  { address: string }

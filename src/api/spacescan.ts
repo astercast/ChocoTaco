@@ -1,5 +1,5 @@
 /**
- * Chain reads — on-chain holdings verification (V2)
+ * Chain reads - on-chain holdings verification (V2)
  *
  * Sources:
  *   - SpaceScan       → NFT list by address + CAT balances

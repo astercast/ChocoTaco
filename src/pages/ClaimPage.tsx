@@ -194,7 +194,7 @@ export default function ClaimPage() {
           </p>
         </div>
 
-        {/* Taco truck animation slot — drop your art here */}
+        {/* Taco truck animation slot - drop your art here */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

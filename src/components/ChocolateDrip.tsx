@@ -5,7 +5,7 @@ interface Props {
   height?: number  // px
 }
 
-// Drip drops — deterministic for SSR stability, varied for organic feel
+// Drip drops - deterministic for SSR stability, varied for organic feel
 const DRIPS = [
   { cx: 35,   h: 32,  w: 14 },
   { cx: 95,   h: 58,  w: 18 },

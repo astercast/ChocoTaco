@@ -1,5 +1,5 @@
 /**
- * OG Mint — user-customized NFT mint flow (verified against wojak-ink pattern)
+ * OG Mint - user-customized NFT mint flow (verified against wojak-ink pattern)
  *
  * Chia tech path (NFT1 standard):
  *

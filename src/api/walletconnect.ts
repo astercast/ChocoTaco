@@ -1,5 +1,5 @@
 /**
- * Chia WalletConnect v2 — production implementation
+ * Chia WalletConnect v2 - production implementation
  *
  * Singleton client lifecycle:
  *   1. initClient()           → boots SignClient once per page load
@@ -99,7 +99,7 @@ export async function connectWallet(onUri?: (uri: string) => void): Promise<Chia
 function sessionToChia(session: SessionTypes.Struct): ChiaSession {
   const accounts    = Object.values(session.namespaces).flatMap(ns => ns.accounts)
   const fingerprint = Number(accounts[0]?.split(':')[2] ?? 0)
-  // Address is resolved on first request — set placeholder until then
+  // Address is resolved on first request - set placeholder until then
   return { topic: session.topic, fingerprint, address: '', chainId: CHAIN_ID }
 }
 

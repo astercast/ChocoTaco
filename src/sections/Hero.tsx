@@ -45,7 +45,7 @@ export default function Hero() {
             </h1>
           </motion.div>
 
-          {/* Floating sticker — visible on every viewport, positioned so it never crops */}
+          {/* Floating sticker - visible on every viewport, positioned so it never crops */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
             animate={{ opacity: 1, scale: 1, rotate: -8 }}
@@ -60,7 +60,7 @@ export default function Hero() {
 
         {/* Asymmetric two-column under headline */}
         <div className="grid md:grid-cols-12 gap-8 items-end mb-12">
-          {/* Tagline — left, intentionally not centered */}
+          {/* Tagline - left, intentionally not centered */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ export default function Hero() {
             </p>
           </motion.div>
 
-          {/* CTA stack — right */}
+          {/* CTA stack - right */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Asset ID — looks like a receipt code */}
+            {/* Asset ID - looks like a receipt code */}
             <button onClick={copyAssetId} className="group flex items-center gap-2 text-cream-500 hover:text-cream-200 transition-colors mt-2">
               <span className="mono text-xs">
                 #{CHOCO_TACO_ASSET_ID.slice(0, 6)}…{CHOCO_TACO_ASSET_ID.slice(-6)}
@@ -107,7 +107,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Bottom row — live indicator + something cheeky */}
+        {/* Bottom row - live indicator + something cheeky */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

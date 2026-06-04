@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-// Placeholder feed — real version pulls from MintGarden:
+// Placeholder feed - real version pulls from MintGarden:
 //   GET https://api.mintgarden.io/collections/{OG_COLLECTION_ID}/nfts
 //   ?sort=mint_date_desc&size=12
 // Each entry below will be replaced with: { id, edition, rarity, thumbnail }

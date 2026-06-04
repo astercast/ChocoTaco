@@ -1,5 +1,5 @@
 /**
- * WalletContext — full lifecycle: connect → verify → mint → claim
+ * WalletContext - full lifecycle: connect → verify → mint → claim
  *
  * Holds the WalletConnect session in memory and exposes mint + claim methods
  * that proxy through to api/mint.ts and api/claims.ts (which use the session
@@ -74,7 +74,7 @@ const DEFAULT: WalletState = {
 
 const WalletContext = createContext<WalletCtx | null>(null)
 
-// Rough estimate — replace with /api/network-stats once Worker is live
+// Rough estimate - replace with /api/network-stats once Worker is live
 const NETWORK_POINTS_ESTIMATE = 12_000
 
 function buildHoldingsState(h: Holdings): Partial<WalletState> {

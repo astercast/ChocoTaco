@@ -35,7 +35,7 @@
 }
 
 @layer components {
-  /* Display heading — Fraunces with personality */
+  /* Display heading - Fraunces with personality */
   .display {
     font-family: 'Fraunces', Georgia, serif;
     font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
@@ -52,7 +52,7 @@
     letter-spacing: -0.01em;
   }
 
-  /* Modern sleek display — Geist with tight tracking. Used on hero, stats,
+  /* Modern sleek display - Geist with tight tracking. Used on hero, stats,
      marquee. Pairs with Fraunces serif for editorial accents elsewhere. */
   .modern {
     font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
@@ -73,7 +73,7 @@
     letter-spacing: -0.02em;
   }
 
-  /* Handwritten accent — Caveat with sane fallbacks for Safari iOS.
+  /* Handwritten accent - Caveat with sane fallbacks for Safari iOS.
      We do NOT use generic 'cursive' as fallback because Safari renders that
      as Snell Roundhand which looks like a wedding invitation. */
   .hand {
@@ -84,7 +84,7 @@
     font-synthesis: none;
   }
 
-  /* Drippy primary button — chocolate drips off the bottom on hover */
+  /* Drippy primary button - chocolate drips off the bottom on hover */
   .btn-cream {
     position: relative;
     display: inline-flex;
@@ -194,7 +194,7 @@
     position: relative;
   }
 
-  /* Drippy card — chocolate drips down the right edge */
+  /* Drippy card - chocolate drips down the right edge */
   .wrapper-drip {
     position: relative;
   }
@@ -218,7 +218,7 @@
     pointer-events: none;
   }
 
-  /* Sticker — rotated label */
+  /* Sticker - rotated label */
   .sticker {
     display: inline-flex;
     align-items: center;
@@ -253,7 +253,7 @@
     border: 1px solid rgba(249, 223, 166, 0.15);
   }
 
-  /* "Stamp" — vintage seal aesthetic */
+  /* "Stamp" - vintage seal aesthetic */
   .stamp {
     display: inline-flex;
     align-items: center;

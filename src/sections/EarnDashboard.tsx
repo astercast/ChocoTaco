@@ -166,7 +166,7 @@ export default function EarnDashboard() {
           </div>
           <p className="modern-light text-xl text-cream-300 max-w-2xl">
             10 Cocoa Units per OG. 30 per Golden Ticket. LP multiplies your OG total
-            by 1 + √LP — diminishing returns so no whale eats the pool.
+            by 1 + √LP, with diminishing returns so no whale eats the pool.
           </p>
         </motion.div>
 

@@ -74,7 +74,7 @@ export const PAYDAY = {
   snapshotHourUTC:   17,
   gracePeriodDays:   3,
   postGraceDecayPct: 10,
-  // Set this once the mint actually opens — must be a Wednesday 17:00 UTC
+  // Set this once the mint actually opens - must be a Wednesday 17:00 UTC
   // formatted as ISO week 'YYYY-Www'. Worker reads it; client uses it for
   // countdowns and the distribution chart.
   launchWeekIso:     '2026-W01',
