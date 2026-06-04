@@ -26,13 +26,8 @@ export default function Hero() {
       />
 
       <div className="max-w-6xl mx-auto relative">
-        {/* Top label row */}
-        <div className="flex items-center mb-12 mt-6">
-          <span className="hand text-cream-300 text-2xl">est. 2026</span>
-        </div>
-
         {/* Headline */}
-        <div className="relative mb-12 pr-28 sm:pr-36 md:pr-0">
+        <div className="relative mb-12 mt-6 pr-28 sm:pr-36 md:pr-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

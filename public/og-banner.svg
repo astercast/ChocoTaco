@@ -37,7 +37,7 @@
   <text x="96" y="220" fill="#fef4e2" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="96" font-weight="800" letter-spacing="-3">CHOCOTACO</text>
   <text x="96" y="300" fill="#e89c3b" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="64" font-weight="800" letter-spacing="-2">THE FACTORY</text>
   <text x="96" y="368" fill="#f4d2a3" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="32" font-weight="400">The sweetest memecoin on Chia</text>
-  <text x="96" y="418" fill="#c9a880" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="400">500 factory tacos / weekly paydays / mint to LP</text>
+  <text x="96" y="418" fill="#c9a880" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" font-weight="400">500 factory tacos / weekly paydays</text>
 
   <text x="96" y="500" fill="#e89c3b" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="34" transform="rotate(-3 96 500)">by BearMarket</text>
 
@@ -52,10 +52,6 @@
     <path d="M55 285 Q160 200 265 285 L255 320 Q160 360 65 320 Z" fill="#c05626"/>
     <path d="M70 290 Q160 240 250 290 L242 315 Q160 345 78 315 Z" fill="#7fb069"/>
     <path d="M40 280 Q160 140 280 280 L280 330 Q160 400 40 330 Z" fill="#e8b878" stroke="#5a3a24" stroke-width="3"/>
-    <path d="M200 150 Q210 200 195 250 Q188 290 205 330" fill="none" stroke="#3a2418" stroke-width="14" stroke-linecap="round"/>
-    <circle cx="205" cy="340" r="10" fill="#3a2418"/>
-    <circle cx="192" cy="360" r="7" fill="#3a2418"/>
-    <circle cx="218" cy="355" r="8" fill="#3a2418"/>
     <rect x="200" y="60" width="120" height="44" rx="22" fill="#fef4e2"/>
     <text x="260" y="90" fill="#1a0d05" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">$CT</text>
   </g>
