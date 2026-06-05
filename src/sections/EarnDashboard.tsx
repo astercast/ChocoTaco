@@ -49,7 +49,7 @@ function ConnectedView() {
     <div className="flex flex-col gap-8">
       <div className="clocked-in-banner self-start">
         <span className="wallet-badge-pulse" aria-hidden />
-        <span className="mono text-xs text-mint uppercase tracking-widest">clocked in on the factory floor</span>
+        <span className="mono text-2xs sm:text-xs text-mint uppercase tracking-widest">connected on the factory floor</span>
       </div>
       <div className="grid md:grid-cols-12 gap-8">
       {/* Receipt */}
@@ -99,21 +99,21 @@ function ConnectedView() {
           <p className="mono text-xs text-cream-500 uppercase tracking-widest mb-2">
             you are a
           </p>
-          <p className="display text-5xl md:text-6xl text-cream-50 capitalize">
+          <p className="display text-4xl sm:text-5xl md:text-6xl text-cream-50 capitalize">
             {tier}.
           </p>
         </div>
 
         <div className="border-t border-cream-500/10 pt-6">
           <div className="flex items-baseline gap-3">
-            <p className="display text-6xl md:text-7xl text-gold leading-none">
+            <p className="display text-4xl sm:text-6xl md:text-7xl text-gold leading-none">
               {claimableCAT.toFixed(2)}
             </p>
             <p className="font-serif text-2xl text-cream-300">
               <span className="mono">$🍫🌮</span>
             </p>
           </div>
-          <p className="hand text-cream-400 text-xl mt-2 rotate-n2 inline-block">
+          <p className="hand text-cream-400 text-lg sm:text-xl mt-2 rotate-n2 keep-together">
             unclaimed from past paydays
           </p>
         </div>
@@ -127,7 +127,7 @@ function ConnectedView() {
           <button
             onClick={handleClaim}
             disabled={claiming || claimableCAT <= 0}
-            className="btn-gold text-lg px-8 py-4 self-start disabled:opacity-40"
+            className="btn-gold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-auto self-start disabled:opacity-40"
           >
             {claiming ? 'pouring chocolate...' : `Claim ${claimableCAT.toFixed(2)} $🍫🌮 →`}
           </button>
@@ -155,7 +155,7 @@ export default function EarnDashboard() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="earn" className="py-24 px-6 grain factory-floor relative">
+    <section id="earn" className="section-pad grain factory-floor relative">
       <div ref={ref} className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -163,20 +163,20 @@ export default function EarnDashboard() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <div className="flex items-end justify-between gap-6 flex-wrap mb-4">
-            <div className="flex items-end gap-4">
-              <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 sm:gap-6 mb-4">
+            <div className="flex items-end gap-3 sm:gap-4">
+              <h2 className="heading-page text-cream-50 uppercase">
                 Payroll.
               </h2>
               <div className="hidden sm:block mb-2">
                 <Mascot size={72} />
               </div>
             </div>
-            <span className="hand text-gold text-2xl md:text-3xl rotate-n2 inline-block mb-3">
+            <span className="hand text-gold text-xl sm:text-2xl md:text-3xl rotate-n2 keep-together sm:mb-3">
               payday every wednesday →
             </span>
           </div>
-          <p className="modern-light text-xl text-cream-300 max-w-2xl">
+          <p className="modern-light text-base sm:text-xl text-cream-300 max-w-2xl text-pretty leading-relaxed">
             10 Cocoa Units per factory taco. 30 per Golden Ticket. LP multiplies your factory taco total
             by 1 + √LP, with diminishing returns so no whale eats the pool.
           </p>
@@ -200,7 +200,7 @@ export default function EarnDashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="wrapper wrapper-drip p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+            className="wrapper wrapper-drip p-6 sm:p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
           >
             <div className="max-w-md">
               <p className="font-serif text-2xl text-cream-100 leading-tight">

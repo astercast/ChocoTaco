@@ -51,7 +51,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-start justify-between gap-6 text-left group"
       >
-        <h3 className="font-serif text-2xl md:text-3xl text-cream-50 group-hover:text-gold transition-colors leading-tight">
+        <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-cream-50 group-hover:text-gold transition-colors leading-snug pr-2">
           {q}
         </h3>
         <span className="shrink-0 mt-2 text-cream-400">
@@ -64,7 +64,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
         transition={{ duration: 0.25 }}
         className="overflow-hidden"
       >
-        <p className="text-cream-300 text-lg leading-relaxed pt-4 max-w-2xl">
+        <p className="text-cream-300 text-base sm:text-lg leading-relaxed pt-4 max-w-2xl text-pretty">
           {a}
         </p>
       </motion.div>
@@ -77,7 +77,7 @@ export default function HowItWorks() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="py-24 px-6 grain relative">
+    <section ref={ref} className="section-pad grain relative">
       <div className="max-w-5xl mx-auto">
 
         <motion.div
@@ -102,12 +102,12 @@ export default function HowItWorks() {
           transition={{ duration: 0.5 }}
           className="mb-12 max-w-3xl"
         >
-          <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+          <h2 className="heading-page text-cream-50 uppercase">
             You've got
             <br />
             <span className="text-gold">questions.</span>
           </h2>
-          <p className="hand text-cream-400 text-2xl mt-4 rotate-n2 inline-block">
+          <p className="hand text-cream-400 text-xl sm:text-2xl mt-3 sm:mt-4 rotate-n2 keep-together">
             (good ones, probably)
           </p>
         </motion.div>

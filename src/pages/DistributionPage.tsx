@@ -118,8 +118,8 @@ function EmissionChart({ currentWeek }: { currentWeek: number }) {
 
 function StatTile({ value, label, sub }: { value: string; label: string; sub?: string }) {
   return (
-    <div className="wrapper p-6 flex flex-col gap-1">
-      <span className="modern-display text-4xl md:text-5xl text-cream-50 tabular-nums leading-none">
+    <div className="wrapper p-4 sm:p-6 flex flex-col gap-1 min-w-0">
+      <span className="modern-display text-3xl sm:text-4xl md:text-5xl text-cream-50 tabular-nums leading-none break-all sm:break-normal">
         {value}
       </span>
       <span className="mono text-2xs text-cream-500 uppercase tracking-widest mt-2">{label}</span>
@@ -189,7 +189,7 @@ export default function DistributionPage() {
     : 4
 
   return (
-    <main ref={ref} className="pt-24 pb-24 px-6 grain min-h-screen">
+    <main ref={ref} className="pt-20 sm:pt-24 pb-16 sm:pb-24 page-x grain min-h-screen">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -205,7 +205,7 @@ export default function DistributionPage() {
               <br />
               <span className="text-gold">distribution.</span>
             </h1>
-            <p className="modern-light text-lg text-cream-300 mt-4">
+            <p className="modern-light text-base sm:text-lg text-cream-300 mt-3 sm:mt-4 text-pretty leading-relaxed">
               {PAYDAY.totalSupplyCAT} $🍫🌮 exist. {PAYDAY.communityDistributedCAT} already went to the Chia community.
               The distribution vault holds the other {PAYDAY.vaultTotalCAT}, paid out across 156 weeks (3 years)
               with halvings every 52 weeks. Every vault token is publicly accounted for.
@@ -213,7 +213,7 @@ export default function DistributionPage() {
             {!launched && (
               <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
                 <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-                <span className="modern text-sm text-gold uppercase tracking-widest">
+                <span className="modern text-xs sm:text-sm text-gold uppercase tracking-widest text-pretty">
                   distribution starts after mint closes
                 </span>
               </div>

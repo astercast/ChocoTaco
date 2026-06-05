@@ -19,7 +19,7 @@ export default function WalletBadge() {
   }
 
   return (
-    <div className="wallet-badge flex items-center gap-2 sm:gap-2.5">
+    <div className="wallet-badge flex items-center gap-1.5 sm:gap-2.5 max-w-[11rem] sm:max-w-none">
       <span className="wallet-badge-pulse" aria-hidden />
       <div className="flex flex-col items-start leading-none min-w-0">
         <span className="mono text-2xs text-mint uppercase tracking-widest font-semibold">
@@ -28,7 +28,7 @@ export default function WalletBadge() {
         <button
           type="button"
           onClick={copyAddr}
-          className="mono text-xs text-cream-200 hover:text-gold transition-colors flex items-center gap-1 mt-0.5 max-w-[9rem] sm:max-w-none truncate"
+          className="mono text-2xs sm:text-xs text-cream-200 hover:text-gold transition-colors flex items-center gap-1 mt-0.5 truncate max-w-full"
           title={address}
         >
           {short}

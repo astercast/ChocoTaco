@@ -19,7 +19,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-[min(92vh,900px)] pt-20 pb-12 page-x overflow-hidden grain factory-floor">
+    <section className="relative min-h-0 sm:min-h-[min(88vh,900px)] pt-20 pb-10 sm:pb-12 page-x overflow-hidden grain factory-floor">
       {/* Off-center warm glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -28,46 +28,45 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto relative">
         {/* Headline */}
-        <div className="relative mb-12 mt-6 pr-28 sm:pr-36 md:pr-44 lg:pr-0">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="modern-display text-[clamp(3rem,14vw,10rem)] text-cream-50 uppercase">
-              The
-              <br />
-              <span className="text-gold">Factory</span>
-            </h1>
-          </motion.div>
+        <div className="relative mb-8 sm:mb-12 mt-4 sm:mt-6">
+          <div className="flex flex-col gap-4 sm:block md:pr-44 lg:pr-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="heading-page text-cream-50 uppercase">
+                The
+                <br />
+                <span className="text-gold">Factory</span>
+              </h1>
+            </motion.div>
 
-          {/* Floating sticker - visible on every viewport, positioned so it never crops */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-            animate={{ opacity: 1, scale: 1, rotate: -8 }}
-            transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
-            className="absolute top-0 right-0 sm:top-4 sm:right-8 md:right-12 z-10"
-          >
-            <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
-              ★ Fresh weekly
-            </span>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+              animate={{ opacity: 1, scale: 1, rotate: -8 }}
+              transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
+              className="self-start sm:absolute sm:top-4 sm:right-8 md:right-12 z-10"
+            >
+              <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
+                ★ Fresh weekly
+              </span>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.55, type: 'spring', stiffness: 160 }}
-            className="absolute -right-2 sm:right-2 md:right-6 top-[52%] md:top-[38%] z-0 pointer-events-none"
-          >
-            <Mascot size={88} className="sm:hidden" />
-            <Mascot size={120} className="hidden sm:block md:hidden" />
-            <Mascot size={160} className="hidden md:block lg:hidden" />
-            <Mascot size={200} className="hidden lg:block" />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.55, type: 'spring', stiffness: 160 }}
+              className="hidden md:block absolute right-6 top-[38%] z-0 pointer-events-none"
+            >
+              <Mascot size={160} className="hidden md:block lg:hidden" />
+              <Mascot size={200} className="hidden lg:block" />
+            </motion.div>
+          </div>
         </div>
 
         {/* Asymmetric two-column under headline */}
-        <div className="grid md:grid-cols-12 gap-8 items-end mb-12">
+        <div className="grid md:grid-cols-12 gap-6 sm:gap-8 items-end mb-8 sm:mb-12">
           {/* Tagline - left, intentionally not centered */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -75,14 +74,14 @@ export default function Hero() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="md:col-span-7"
           >
-            <p className="modern-light text-xl md:text-2xl text-cream-100 leading-snug max-w-xl">
+            <p className="modern-light text-lg sm:text-xl md:text-2xl text-cream-100 leading-snug max-w-xl text-pretty">
               The sweetest memecoin on Chia.
               {' '}
               <span className="text-cream-300">
                 500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays from the distribution vault.
               </span>
             </p>
-            <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">
+            <p className="hand text-gold text-xl sm:text-2xl md:text-3xl mt-3 sm:mt-4 ml-1 rotate-n2 keep-together">
               ↳ all mint proceeds → LP. all of it.
             </p>
           </motion.div>
@@ -126,12 +125,12 @@ export default function Hero() {
         >
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-            <span className="mono text-xs text-cream-500 uppercase tracking-widest">
+            <span className="mono text-2xs sm:text-xs text-cream-500 uppercase tracking-widest">
               Currently melting on Chia
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hand text-cream-400 text-xl">scroll down →</span>
+            <span className="hand text-cream-400 text-lg sm:text-xl keep-together">scroll down →</span>
           </div>
         </motion.div>
       </div>

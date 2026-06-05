@@ -26,17 +26,17 @@ export default function Gallery() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="gallery" className="py-24 px-6 grain relative">
+    <section id="gallery" className="section-pad grain relative">
       <div ref={ref} className="max-w-6xl mx-auto">
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-12 flex items-end justify-between flex-wrap gap-4"
+          className="mb-10 sm:mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-4"
         >
           <div>
-            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+            <h2 className="heading-page text-cream-50 uppercase">
               Fresh out
               <br />
               <span className="text-gold">the oven.</span>
@@ -45,17 +45,17 @@ export default function Gallery() {
               Every factory taco that gets cooked lands here.
             </p>
           </div>
-          <div className="flex items-end gap-4">
-            <Mascot size={64} />
+          <div className="flex items-center sm:items-end gap-3 sm:gap-4 w-full sm:w-auto">
+            <Mascot size={56} className="hidden sm:block shrink-0" />
             <a href="https://mintgarden.io" target="_blank" rel="noopener noreferrer"
-               className="btn-outline">
+               className="btn-outline text-sm sm:text-base w-full sm:w-auto justify-center">
               See them all on MintGarden →
             </a>
           </div>
         </motion.div>
 
         {/* Scattered grid, slight rotations make it feel hand-pinned */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {RECENT_MINTS.map((nft, i) => (
             <motion.div
               key={nft.edition}
@@ -78,7 +78,7 @@ export default function Gallery() {
         </div>
 
         {/* Closing flourish */}
-        <p className="hand text-3xl text-cream-300 text-center mt-12 rotate-n2 inline-block w-full">
+        <p className="hand text-2xl sm:text-3xl text-cream-300 text-center mt-10 sm:mt-12 rotate-n2 keep-together">
           ~ keep them coming ~
         </p>
       </div>

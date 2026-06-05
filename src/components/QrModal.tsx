@@ -82,7 +82,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           exit={{ opacity: 0, y: 8 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className="factory-ticket text-cocoa-900 max-w-[360px] w-full relative"
+          className="factory-ticket text-cocoa-900 max-w-[360px] w-full relative mx-auto"
           onClick={e => e.stopPropagation()}
         >
           {canClose && (

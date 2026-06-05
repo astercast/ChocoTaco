@@ -36,7 +36,7 @@ export default function Navbar() {
             aria-hidden
           />
           <span className="modern text-lg sm:text-xl text-cream-50 tracking-tight whitespace-nowrap leading-none">ChocoTaco</span>
-          <span className="hand text-gold text-sm sm:text-base -ml-0.5 rotate-n4 inline-block whitespace-nowrap">
+          <span className="hand text-gold text-sm sm:text-base -ml-0.5 rotate-n4 hidden min-[380px]:inline-block whitespace-nowrap">
             by BearMarket
           </span>
         </Link>

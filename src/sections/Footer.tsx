@@ -15,10 +15,10 @@ export default function Footer() {
     <footer className="relative bg-cocoa-950">
       <ChocolateDrip opacity={0.9} />
 
-      <div className="max-w-6xl mx-auto px-6 pt-20 pb-10 grain">
+      <div className="max-w-6xl mx-auto page-x pt-14 sm:pt-20 pb-8 sm:pb-10 grain">
 
         {/* Receipt section */}
-        <div className="grid md:grid-cols-12 gap-10 pt-8">
+        <div className="grid md:grid-cols-12 gap-8 sm:gap-10 pt-4 sm:pt-8">
 
           {/* Brand col */}
           <div className="md:col-span-5">
@@ -61,9 +61,9 @@ export default function Footer() {
         </div>
 
         {/* Tiny print */}
-        <div className="mt-12 pt-6 border-t border-cream-500/10 flex flex-wrap items-center justify-between gap-3 mono text-xs text-cream-600">
-          <span>© 2026 BearMarket Co. · not financial advice, just snacks</span>
-          <span>made by a wizard · powered by chia 🌱</span>
+        <div className="mt-10 sm:mt-12 pt-6 border-t border-cream-500/10 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-2 sm:gap-3 mono text-2xs sm:text-xs text-cream-600">
+          <span className="text-pretty">© 2026 BearMarket Co. · not financial advice, just snacks</span>
+          <span className="keep-together">made by a wizard · powered by chia 🌱</span>
         </div>
       </div>
     </footer>

@@ -9,15 +9,12 @@
  *   - Auto-refreshes from Worker every 60s
  */
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useWallet } from '../context/WalletContext'
 import { fetchHistory, type HistoryEntry } from '../api/claims'
 import { PAYDAY } from '../constants'
 import Toast, { type ToastVariant } from '../components/Toast'
 import ChocolateDrip from '../components/ChocolateDrip'
-import Mascot from '../components/Mascot'
-import { IMAGES } from '../constants/images'
-
 // ─── Countdown helper ────────────────────────────────────────────────────────
 
 function useCountdown(targetIso: string | null) {
@@ -38,20 +35,14 @@ function useCountdown(targetIso: string | null) {
   }, [targetIso, now])
 }
 
-// ─── Taco Truck art slot (placeholder until art lands) ──────────────────────
+// ─── Taco truck slot (art coming later) ─────────────────────────────────────
 
 function TacoTruckHero() {
   return (
-    <div
-      className="art-frame art-frame-taped w-full max-w-4xl mx-auto"
-      style={{ '--art-rotate': '-1.5deg' } as CSSProperties}
-    >
-      <img
-        src={IMAGES.tacoTruck}
-        alt="ChocoTaco truck rolls up every Wednesday"
-        className="aspect-[16/9] sm:aspect-[21/9] object-cover"
-      />
-      <span className="art-frame-label">the truck rolls wednesdays · 17:00 utc</span>
+    <div className="wrapper w-full max-w-4xl mx-auto aspect-[16/9] sm:aspect-[21/9] flex items-center justify-center p-6">
+      <p className="modern-display text-2xl sm:text-4xl md:text-5xl text-cream-300 uppercase tracking-tight text-center text-pretty">
+        TACO TRUCK UNDER CONSTRUCTION
+      </p>
     </div>
   )
 }
@@ -67,17 +58,17 @@ function CountdownCard({ targetIso }: { targetIso: string | null }) {
     { v: secs,  l: 'sec' },
   ]
   return (
-    <div className="wrapper p-6">
+    <div className="wrapper p-4 sm:p-6">
       <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
         next snapshot · wed {PAYDAY.snapshotHourUTC}:00 utc
       </p>
       {expired ? (
         <p className="modern-display text-3xl text-gold">Snapshot soon...</p>
       ) : (
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3">
           {segments.map(s => (
-            <div key={s.l} className="flex flex-col items-center">
-              <span className="modern-display text-4xl md:text-5xl text-cream-50 tabular-nums">
+            <div key={s.l} className="flex flex-col items-center min-w-0">
+              <span className="modern-display text-2xl sm:text-4xl md:text-5xl text-cream-50 tabular-nums">
                 {String(s.v).padStart(2, '0')}
               </span>
               <span className="mono text-2xs text-cream-500 uppercase tracking-widest mt-1">
@@ -175,25 +166,22 @@ export default function ClaimPage() {
   }
 
   return (
-    <main className="pt-24 pb-24 px-6 grain factory-floor min-h-screen">
+    <main className="pt-20 sm:pt-24 pb-16 sm:pb-24 page-x grain factory-floor min-h-screen">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-10 flex items-end justify-between gap-6 flex-wrap">
-          <div className="relative">
-            <div className="absolute -top-6 -right-4 sm:-right-10 md:hidden pointer-events-none">
-              <Mascot size={72} float={false} />
-            </div>
-            <h1 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+        <div className="mb-8 sm:mb-10 flex flex-col gap-5 sm:gap-6">
+          <div>
+            <h1 className="heading-page text-cream-50 uppercase">
               Pick up
               <br />
               <span className="text-gold">your chocolate.</span>
             </h1>
-            <p className="hand text-gold text-2xl mt-4 rotate-n2 inline-block">
+            <p className="hand text-gold text-xl sm:text-2xl mt-3 sm:mt-4 rotate-n2 keep-together">
               the taco truck comes every wednesday
             </p>
           </div>
-          <p className="modern-light text-base text-cream-400 max-w-sm">
+          <p className="modern-light text-sm sm:text-base text-cream-400 max-w-2xl text-pretty leading-relaxed">
             Pulls up at 17:00 UTC sharp. You have 3 days for the full payout,
             then it shrinks 10% per day. Unclaimed weeks stack in your
             balance but each one keeps decaying on its own clock.
@@ -234,12 +222,12 @@ export default function ClaimPage() {
             {/* LEFT: claimable + claim CTA + countdown */}
             <div className="md:col-span-7 flex flex-col gap-6">
               {/* Big claimable */}
-              <div className="wrapper wrapper-drip p-8">
+              <div className="wrapper wrapper-drip p-5 sm:p-8">
                 <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
                   ready to claim
                 </p>
                 <div className="flex items-baseline gap-3 flex-wrap">
-                  <span className="modern-display text-6xl md:text-8xl text-gold tabular-nums leading-none">
+                  <span className="modern-display text-4xl sm:text-6xl md:text-8xl text-gold tabular-nums leading-none">
                     {claimableCAT.toFixed(2)}
                   </span>
                   <span className="mono text-cream-300 text-xl">$🍫🌮</span>
@@ -270,7 +258,7 @@ export default function ClaimPage() {
 
               {/* Breakdown by week */}
               {snapshot?.breakdown && snapshot.breakdown.length > 0 && (
-                <div className="wrapper p-6">
+                <div className="wrapper p-4 sm:p-6">
                   <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
                     breakdown
                   </p>
@@ -288,7 +276,7 @@ export default function ClaimPage() {
               <CountdownCard targetIso={nextSnapshotIso} />
 
               {/* Wallet snapshot */}
-              <div className="wrapper p-6">
+              <div className="wrapper p-4 sm:p-6">
                 <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
                   your payroll
                 </p>
@@ -317,7 +305,7 @@ export default function ClaimPage() {
               </div>
 
               {/* History */}
-              <div className="wrapper p-6">
+              <div className="wrapper p-4 sm:p-6">
                 <p className="mono text-2xs text-cream-500 uppercase tracking-widest mb-3">
                   past claims
                 </p>

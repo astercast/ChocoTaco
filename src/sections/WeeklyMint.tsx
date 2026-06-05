@@ -78,7 +78,7 @@ export default function OgMint() {
   const remaining = OG_MINT.supply - MINTED_COUNT
 
   return (
-    <section id="mint" className="py-24 px-6 grain factory-floor relative">
+    <section id="mint" className="section-pad grain factory-floor relative">
       <div ref={ref} className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -89,12 +89,12 @@ export default function OgMint() {
             transition={{ duration: 0.5 }}
             className="md:col-span-8"
           >
-            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+            <h2 className="heading-page text-cream-50 uppercase">
               Five hundred
               <br />
               <span className="text-gold">tacos.</span>
             </h2>
-            <p className="hand text-gold text-3xl rotate-n2 inline-block mt-4">
+            <p className="hand text-gold text-2xl sm:text-3xl rotate-n2 keep-together mt-3 sm:mt-4">
               half an XCH a pop.
             </p>
           </motion.div>
@@ -102,7 +102,7 @@ export default function OgMint() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
-            className="md:col-span-4 text-cream-300 font-serif text-lg leading-relaxed"
+            className="md:col-span-4 text-cream-300 font-serif text-base sm:text-lg leading-relaxed text-pretty"
           >
             Pick your traits in the kitchen. Every XCH from the mint goes straight into TibetSwap LP.
             <span className="hand text-gold"> 50 random slots are Golden Tickets.</span>
@@ -118,7 +118,7 @@ export default function OgMint() {
         >
           {/* Preview (polaroid) */}
           <div className="md:col-span-5">
-            <div className="sticky top-24">
+            <div className="md:sticky md:top-24">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-7 bg-cream-100/40 rotate-n4 z-10" />
               <div className="bg-cream-50 p-3 rotate-n2 shadow-2xl">
                 <div className="aspect-square bg-cocoa-800 flex flex-col items-center justify-center gap-3 relative overflow-hidden">

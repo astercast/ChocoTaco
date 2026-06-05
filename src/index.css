@@ -6,7 +6,12 @@
   *, *::before, *::after { box-sizing: border-box; }
   html {
     scroll-behavior: smooth;
-    font-size: 87.5%;   /* scale everything down ~12% so more fits on screen */
+    font-size: 93.75%;  /* 15px base on mobile for readable tap targets */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  @media (min-width: 640px) {
+    html { font-size: 87.5%; }
   }
   @media (min-width: 1024px) {
     html { font-size: 90%; }
@@ -91,7 +96,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     background: #fef4e2;
     color: #1a0d05;
     font-weight: 600;
@@ -129,12 +134,15 @@
   }
   .btn-cream:active { transform: translate(0, 0); box-shadow: none; }
   .btn-cream:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  @media (min-width: 640px) {
+    .btn-cream { padding: 0.875rem 1.5rem; }
+  }
 
   .btn-outline {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     background: transparent;
     color: #fef4e2;
     font-weight: 500;
@@ -145,13 +153,16 @@
     text-decoration: none;
   }
   .btn-outline:hover { border-color: #f9dfa6; background: rgba(249, 223, 166, 0.05); }
+  @media (min-width: 640px) {
+    .btn-outline { padding: 0.875rem 1.5rem; }
+  }
 
   .btn-gold {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     background: linear-gradient(180deg, #ffb84d 0%, #e89c3b 100%);
     color: #1a0d05;
     font-weight: 700;
@@ -185,6 +196,9 @@
   .btn-gold:hover::after {
     opacity: 1;
     transform: translateY(2px);
+  }
+  @media (min-width: 640px) {
+    .btn-gold { padding: 0.875rem 1.5rem; }
   }
 
   /* Paper/wrapper card: slightly irregular radius feels hand-cut */
@@ -459,9 +473,53 @@
     100% { box-shadow: 0 0 0 0 rgba(127, 176, 105, 0); }
   }
 
-  /* Consistent page gutters */
-  .page-x { padding-left: 1rem; padding-right: 1rem; }
-  @media (min-width: 640px) {
-    .page-x { padding-left: 1.5rem; padding-right: 1.5rem; }
+  /* Consistent page gutters + safe areas */
+  .page-x {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
+  @media (min-width: 640px) {
+    .page-x {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+  }
+
+  /* Shared section rhythm */
+  .section-pad {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  @media (min-width: 640px) {
+    .section-pad {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+  }
+  @media (min-width: 768px) {
+    .section-pad { padding-top: 6rem; padding-bottom: 6rem; }
+  }
+
+  /* Responsive display headings */
+  .heading-page {
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    font-size: clamp(2.35rem, 11vw, 6rem);
+    font-feature-settings: 'ss01', 'cv01', 'cv11';
+  }
+  @media (min-width: 768px) {
+    .heading-page { font-size: clamp(3.25rem, 7vw, 8rem); }
+  }
+
+  /* Short hand phrases that should not orphan */
+  .keep-together { white-space: nowrap; }
+
+  /* Balanced wrapping for long marketing lines */
+  .text-pretty { text-wrap: pretty; }
 }
