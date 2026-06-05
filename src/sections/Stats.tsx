@@ -26,8 +26,6 @@ export default function Stats() {
           <span className="text-cream-300">golden tickets,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.totalSupplyCAT}</span>{' '}
           <span className="text-cream-300"><span className="mono">$🍫🌮</span> total,</span>{' '}
-          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.communityDistributedCAT}</span>{' '}
-          <span className="text-cream-300">already distributed,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.vaultTotalCAT}</span>{' '}
           <span className="text-cream-300">from the distribution vault over</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>.{' '}
