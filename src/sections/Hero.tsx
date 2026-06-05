@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { Copy, Check } from 'lucide-react'
 import { useWallet } from '../context/WalletContext'
+import Mascot from '../components/Mascot'
 import { CHOCO_TACO_ASSET_ID, PAYDAY } from '../constants'
 
 export default function Hero() {
@@ -18,7 +19,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-[min(92vh,900px)] pt-20 pb-12 page-x overflow-hidden grain">
+    <section className="relative min-h-[min(92vh,900px)] pt-20 pb-12 page-x overflow-hidden grain factory-floor">
       {/* Off-center warm glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -27,7 +28,7 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto relative">
         {/* Headline */}
-        <div className="relative mb-12 mt-6 pr-28 sm:pr-36 md:pr-0">
+        <div className="relative mb-12 mt-6 pr-28 sm:pr-36 md:pr-44 lg:pr-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -47,9 +48,29 @@ export default function Hero() {
             transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
             className="absolute top-0 right-0 sm:top-4 sm:right-8 md:right-12 z-10"
           >
-            <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
-              ★ Fresh weekly
-            </span>
+            <div className="flex flex-col items-end gap-2">
+              <span
+                className="factory-sign mono text-2xs text-gold uppercase tracking-widest whitespace-nowrap"
+                style={{ '--sign-rotate': '-6deg' } as CSSProperties}
+              >
+                shift · wed 17:00 utc
+              </span>
+              <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
+                ★ Fresh weekly
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.55, type: 'spring', stiffness: 160 }}
+            className="absolute -right-2 sm:right-2 md:right-6 top-[52%] md:top-[38%] z-0 pointer-events-none"
+          >
+            <Mascot size={88} className="sm:hidden" />
+            <Mascot size={120} className="hidden sm:block md:hidden" />
+            <Mascot size={160} className="hidden md:block lg:hidden" />
+            <Mascot size={200} className="hidden lg:block" />
           </motion.div>
         </div>
 
@@ -66,12 +87,13 @@ export default function Hero() {
               The sweetest memecoin on Chia.
               {' '}
               <span className="text-cream-300">
-                500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays.
-                {' '}
-                {PAYDAY.vaultTotalCAT} of {PAYDAY.totalSupplyCAT} supply in the distribution vault.
+                500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays from the distribution vault.
               </span>
             </p>
-            <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">
+            <p className="hand text-gold text-xl sm:text-2xl mt-3 ml-1 rotate-n2 inline-block max-w-full">
+              {PAYDAY.totalSupplyCAT} total · half already with Chia
+            </p>
+            <p className="hand text-cream-400 text-xl sm:text-2xl mt-1 ml-3 rotate-p2 inline-block max-w-full">
               ↳ all mint proceeds → LP. all of it.
             </p>
           </motion.div>
@@ -88,7 +110,7 @@ export default function Hero() {
                 <a href="#earn" className="btn-cream">→ Open the shop</a>
               ) : (
                 <button onClick={handleConnect} disabled={connecting} className="btn-cream">
-                  {connecting ? 'Connecting…' : '→ Connect wallet'}
+                  {connecting ? 'Clocking in…' : '→ Clock in'}
                 </button>
               )}
               <a href="https://dexie.space/offers/%F0%9F%8D%AB%F0%9F%8C%AE/XCH" target="_blank" rel="noopener noreferrer" className="btn-outline">

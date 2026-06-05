@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { useWallet } from '../context/WalletContext'
+import Mascot from '../components/Mascot'
 import { COCOA, PAYDAY } from '../constants'
 import Toast, { type ToastVariant } from '../components/Toast'
 
@@ -45,7 +46,12 @@ function ConnectedView() {
   const lpBonus  = ogPoints * (lpMultiplier - 1)
 
   return (
-    <div className="grid md:grid-cols-12 gap-8">
+    <div className="flex flex-col gap-8">
+      <div className="clocked-in-banner self-start">
+        <span className="wallet-badge-pulse" aria-hidden />
+        <span className="mono text-xs text-mint uppercase tracking-widest">clocked in on the factory floor</span>
+      </div>
+      <div className="grid md:grid-cols-12 gap-8">
       {/* Receipt */}
       <div className="md:col-span-5">
         <div className="bg-cream-50 text-cocoa-900 p-5 sm:p-6 rounded-lg shadow-2xl md:rotate-n2 max-w-full">
@@ -138,6 +144,7 @@ function ConnectedView() {
         </div>
       </div>
       <Toast message={toast?.msg ?? null} variant={toast?.variant ?? 'loading'} onDismiss={() => setToast(null)} />
+      </div>
     </div>
   )
 }
@@ -148,7 +155,7 @@ export default function EarnDashboard() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="earn" className="py-24 px-6 grain relative">
+    <section id="earn" className="py-24 px-6 grain factory-floor relative">
       <div ref={ref} className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -157,9 +164,14 @@ export default function EarnDashboard() {
           className="mb-12"
         >
           <div className="flex items-end justify-between gap-6 flex-wrap mb-4">
-            <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase">
-              Payroll.
-            </h2>
+            <div className="flex items-end gap-4">
+              <h2 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase">
+                Payroll.
+              </h2>
+              <div className="hidden sm:block mb-2">
+                <Mascot size={72} />
+              </div>
+            </div>
             <span className="hand text-gold text-2xl md:text-3xl rotate-n2 inline-block mb-3">
               payday every wednesday →
             </span>

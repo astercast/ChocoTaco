@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Brand col */}
           <div className="md:col-span-5">
             <p className="display text-2xl text-cream-50 mb-1">BearMarket Co.</p>
-            <p className="mono text-xs text-cream-500">est. 2026 · chia network</p>
+            <p className="mono text-xs text-cream-500">est. 2026 · chia network · batch #001</p>
             <p className="font-serif italic text-cream-400 mt-4 max-w-sm">
               The sweetest memecoin on Chia.
             </p>

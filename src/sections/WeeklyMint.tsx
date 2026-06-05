@@ -78,7 +78,7 @@ export default function OgMint() {
   const remaining = OG_MINT.supply - MINTED_COUNT
 
   return (
-    <section id="mint" className="py-24 px-6 grain relative">
+    <section id="mint" className="py-24 px-6 grain factory-floor relative">
       <div ref={ref} className="max-w-6xl mx-auto">
 
         {/* Header */}

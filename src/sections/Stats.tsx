@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import Mascot from '../components/Mascot'
 import { PAYDAY } from '../constants'
 
 export default function Stats() {
@@ -7,8 +8,11 @@ export default function Stats() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="py-20 px-6 relative grain">
-      <div className="max-w-6xl mx-auto">
+    <section ref={ref} className="py-20 px-6 relative grain overflow-hidden">
+      <div className="max-w-6xl mx-auto relative">
+        <div className="hidden md:block absolute -right-4 lg:right-0 top-1/2 -translate-y-1/2 opacity-90 pointer-events-none">
+          <Mascot size={140} />
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}
@@ -22,8 +26,7 @@ export default function Stats() {
           <span className="text-cream-300">golden tickets,</span>{' '}
           <span className="modern-display text-gold inline-block text-3xl md:text-5xl">{PAYDAY.vaultTotalCAT}</span>{' '}
           <span className="text-cream-300"><span className="mono">$🍫🌮</span> distributed over</span>{' '}
-          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>
-          <span className="text-cream-400"> (half of {PAYDAY.totalSupplyCAT} supply)</span>.{' '}
+          <span className="modern-display text-gold inline-block text-3xl md:text-5xl">3 years</span>.{' '}
           <span className="hand text-cream-400 text-2xl md:text-3xl">show up early.</span>
         </motion.p>
 

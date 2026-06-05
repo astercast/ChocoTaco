@@ -52,7 +52,7 @@ export function computeLpMultiplier(lpBalance: number): number {
 
 // ─── Weekly payday + distribution schedule ───────────────────────────────────
 //
-// Distribution vault: 1011 $🍫🌮 distributed over 3 years (156 weeks). totalSupplyCAT kept for reference.
+// 2022 total: 1011 communityDistributedCAT (already out) + 1011 vaultTotalCAT (3-year weekly vault).
 // Annual halvings reward early participation.
 //
 //   Year 1 (weeks   1-52): 11.11/week  ·  577.72 total  ·  57.1% of vault
@@ -66,8 +66,9 @@ export function computeLpMultiplier(lpBalance: number): number {
 const E = 1011 / 91   // 11.1098901098...
 
 export const PAYDAY = {
-  totalSupplyCAT:    2022,
-  vaultTotalCAT:     1011,   // 50% of totalSupplyCAT, weekly distribution vault
+  totalSupplyCAT:           2022,
+  communityDistributedCAT:  1011,   // already distributed to the Chia community
+  vaultTotalCAT:            1011,   // other half — weekly distribution vault
   totalWeeks:        156,
   year1WeeklyCAT:    E,           // 11.1099 (display as 11.11)
   year2WeeklyCAT:    E / 2,       //  5.5549 (display as  5.55)

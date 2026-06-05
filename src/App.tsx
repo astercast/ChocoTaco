@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { WalletProvider, useWallet } from './context/WalletContext'
 import Navbar from './components/Navbar'
-import QrModal from './components/QrModal'
+import QrModal, { type ConnectPhase } from './components/QrModal'
 import HomePage from './pages/HomePage'
 import ClaimPage from './pages/ClaimPage'
 import FaqPage from './pages/FaqPage'
@@ -9,9 +9,27 @@ import DistributionPage from './pages/DistributionPage'
 import Footer from './sections/Footer'
 
 function PairingOverlay() {
-  const { pairingUri, verifying, connected, dismissPairingUri } = useWallet()
-  const busy = verifying && !connected
-  return <QrModal uri={pairingUri} busy={busy} onClose={dismissPairingUri} />
+  const {
+    pairingUri, verifying, connected, connectSuccess,
+    address, dismissConnectModal,
+  } = useWallet()
+
+  let phase: ConnectPhase | null = null
+  if (connectSuccess) phase = 'success'
+  else if (verifying && !connected) phase = 'syncing'
+  else if (pairingUri) phase = 'qr'
+
+  if (!phase) return null
+
+  return (
+    <QrModal
+      phase={phase}
+      uri={pairingUri}
+      address={address}
+      onClose={dismissConnectModal}
+      canClose={phase !== 'syncing'}
+    />
+  )
 }
 
 export default function App() {

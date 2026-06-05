@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useWallet } from '../context/WalletContext'
+import { IMAGES } from '../constants/images'
+import WalletBadge from './WalletBadge'
 
 const NAV = [
   { label: 'mint',          to: '/#mint' },
@@ -12,22 +14,28 @@ const NAV = [
 ]
 
 export default function Navbar() {
-  const { connected, address, connect, disconnect, pairingUri, verifying } = useWallet()
+  const { connected, connect, pairingUri, verifying, connectSuccess } = useWallet()
   const [open, setOpen] = useState(false)
-  const connecting = Boolean(pairingUri) || verifying
+  const connecting = Boolean(pairingUri) || (verifying && !connected)
   const location = useLocation()
 
   async function handleConnect() {
     try { await connect() } catch { /* surfaced in context */ }
   }
 
-  const shortAddr = address ? `${address.slice(0, 6)}…${address.slice(-4)}` : null
-
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-cocoa-900/85 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 bg-cocoa-900/92 backdrop-blur-md nav-factory border-b border-cream-500/8">
       <div className="max-w-6xl mx-auto page-x h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
-        <Link to="/" className="flex items-baseline gap-1.5 sm:gap-2 group shrink-0">
-          <span className="modern text-lg sm:text-xl text-cream-50 tracking-tight whitespace-nowrap">ChocoTaco</span>
+        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+          <img
+            src={IMAGES.mascot}
+            alt=""
+            width={32}
+            height={32}
+            className="mascot w-7 h-7 sm:w-8 sm:h-8 -rotate-6 group-hover:rotate-0 transition-transform"
+            aria-hidden
+          />
+          <span className="modern text-lg sm:text-xl text-cream-50 tracking-tight whitespace-nowrap leading-none">ChocoTaco</span>
           <span className="hand text-gold text-sm sm:text-base -ml-0.5 rotate-n4 inline-block whitespace-nowrap">
             by BearMarket
           </span>
@@ -54,16 +62,14 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           {connected ? (
-            <div className="flex items-center gap-2">
-              <span className="mono text-xs text-cream-500 hidden sm:block">{shortAddr}</span>
-              <button onClick={disconnect}
-                className="text-xs py-1.5 px-3 rounded-full border border-cream-500/30 text-cream-400 hover:border-chili hover:text-chili transition-colors">
-                ✕
-              </button>
-            </div>
+            <WalletBadge />
           ) : (
-            <button onClick={handleConnect} disabled={connecting} className="btn-cream py-2 px-3 sm:px-4 text-sm shrink-0">
-              {connecting ? '…' : 'Connect'}
+            <button
+              onClick={handleConnect}
+              disabled={connecting}
+              className="btn-cream py-2 px-3 sm:px-4 text-sm shrink-0"
+            >
+              {connecting ? 'Clocking in…' : connectSuccess ? 'Clocked in ✓' : 'Clock in'}
             </button>
           )}
 

@@ -14,6 +14,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import Mascot from '../components/Mascot'
 import { PAYDAY, weeklyEmission, weekIndexFromIso } from '../constants'
 
 interface NetworkStats {
@@ -196,26 +197,31 @@ export default function DistributionPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-10 flex flex-col md:flex-row md:items-start md:justify-between gap-8"
         >
-          <h1 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
-            The whole
-            <br />
-            <span className="text-gold">distribution.</span>
-          </h1>
-          <p className="modern-light text-lg text-cream-300 mt-4 max-w-2xl">
-            Distribution vault: 50% of {PAYDAY.totalSupplyCAT} total supply ({PAYDAY.vaultTotalCAT} $🍫🌮)
-            paid out across 156 weeks (3 years). Halvings every 52 weeks so early holders earn the most.
-            Every distribution vault token is publicly accounted for.
-          </p>
-          {!launched && (
-            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              <span className="modern text-sm text-gold uppercase tracking-widest">
-                distribution starts after mint closes
-              </span>
-            </div>
-          )}
+          <div className="max-w-2xl">
+            <h1 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
+              The whole
+              <br />
+              <span className="text-gold">distribution.</span>
+            </h1>
+            <p className="modern-light text-lg text-cream-300 mt-4">
+              {PAYDAY.totalSupplyCAT} $🍫🌮 exist. {PAYDAY.communityDistributedCAT} already went to the Chia community.
+              The distribution vault holds the other {PAYDAY.vaultTotalCAT}, paid out across 156 weeks (3 years)
+              with halvings every 52 weeks. Every vault token is publicly accounted for.
+            </p>
+            {!launched && (
+              <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/5">
+                <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                <span className="modern text-sm text-gold uppercase tracking-widest">
+                  distribution starts after mint closes
+                </span>
+              </div>
+            )}
+          </div>
+          <div className="hidden sm:flex shrink-0 pt-2">
+            <Mascot size={120} />
+          </div>
         </motion.div>
 
         {/* Headline stat tiles */}

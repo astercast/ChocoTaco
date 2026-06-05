@@ -6,7 +6,7 @@
  * to ask the wallet to sign offers).
  */
 import {
-  createContext, useContext, useState, useCallback, useEffect,
+  createContext, useContext, useState, useCallback, useEffect, useRef,
   type ReactNode,
 } from 'react'
 import {
@@ -15,7 +15,7 @@ import {
 } from '../constants'
 import {
   connectWallet, resolveAddress, disconnectWallet,
-  tryRestoreSession, isUserRejected, wcErrorMessage,
+  tryRestoreSession, initClient, isUserRejected, wcErrorMessage,
   type ChiaSession,
 } from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
@@ -41,6 +41,8 @@ export interface WalletState {
   verifying:         boolean
   error:             string | null
   pairingUri:        string | null
+  connectSuccess:    boolean
+  freshConnect:      boolean
 }
 
 interface WalletCtx extends WalletState {
@@ -48,8 +50,8 @@ interface WalletCtx extends WalletState {
   disconnect:        () => void
   claimRewards:      () => Promise<{ success: boolean; amount?: number; error?: string }>
   mint:              (traits?: MintTraits) => Promise<MintResult>
-  dismissPairingUri: () => void
-  refreshSnapshot:   () => Promise<void>
+  dismissConnectModal: () => void
+  refreshSnapshot:     () => Promise<void>
 }
 
 const DEFAULT: WalletState = {
@@ -71,6 +73,8 @@ const DEFAULT: WalletState = {
   verifying:         false,
   error:             null,
   pairingUri:        null,
+  connectSuccess:    false,
+  freshConnect:      false,
 }
 
 const WalletContext = createContext<WalletCtx | null>(null)
@@ -108,9 +112,28 @@ function buildHoldingsState(h: Holdings): Partial<WalletState> {
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<WalletState>(DEFAULT)
+  const connectLock = useRef(false)
+  const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const flashConnectSuccess = useCallback(() => {
+    if (successTimer.current) clearTimeout(successTimer.current)
+    setState(s => ({ ...s, connectSuccess: true }))
+    successTimer.current = setTimeout(() => {
+      setState(s => ({ ...s, connectSuccess: false, freshConnect: false }))
+    }, 2400)
+  }, [])
 
   const connect = useCallback(async () => {
-    setState(s => ({ ...s, error: null, pairingUri: null, verifying: false }))
+    if (connectLock.current) return
+    connectLock.current = true
+    setState(s => ({
+      ...s,
+      error: null,
+      pairingUri: null,
+      verifying: false,
+      connectSuccess: false,
+      freshConnect: true,
+    }))
     try {
       const session = await connectWallet(uri => {
         setState(s => ({ ...s, pairingUri: uri }))
@@ -129,9 +152,16 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         verifying:  false,
         error:      null,
       }))
+      flashConnectSuccess()
     } catch (err) {
       if (isUserRejected(err)) {
-        setState(s => ({ ...s, verifying: false, pairingUri: null, error: null }))
+        setState(s => ({
+          ...s,
+          verifying: false,
+          pairingUri: null,
+          error: null,
+          freshConnect: false,
+        }))
         return
       }
       setState(s => ({
@@ -139,10 +169,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         connected:  false,
         verifying:  false,
         pairingUri: null,
+        freshConnect: false,
         error:      wcErrorMessage(err) || 'Connection failed',
       }))
+    } finally {
+      connectLock.current = false
     }
-  }, [])
+  }, [flashConnectSuccess])
 
   const disconnect = useCallback(() => {
     if (state.session) disconnectWallet(state.session).catch(() => {})
@@ -164,8 +197,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     return mintOg(state.session, traits)
   }, [state.session])
 
-  const dismissPairingUri = useCallback(() => {
-    setState(s => ({ ...s, pairingUri: null }))
+  const dismissConnectModal = useCallback(() => {
+    setState(s => {
+      if (s.verifying) return s
+      return { ...s, pairingUri: null, connectSuccess: false }
+    })
   }, [])
 
   const refreshSnapshot = useCallback(async () => {
@@ -188,7 +224,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       try {
         const session = await tryRestoreSession()
         if (!session || cancelled) return
-        setState(s => ({ ...s, verifying: true, error: null }))
+        setState(s => ({ ...s, verifying: true, error: null, freshConnect: false }))
         const address = session.address || await resolveAddress(session)
         const holdings = await fetchHoldings(address)
         if (cancelled) return
@@ -208,6 +244,23 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     return () => { cancelled = true }
   }, [])
 
+  // Drop UI when Sage kills the WC session
+  useEffect(() => {
+    let cancelled = false
+    initClient()
+      .then(c => {
+        if (cancelled) return
+        const onDrop = () => setState(DEFAULT)
+        c.on('session_delete', onDrop)
+        c.on('session_expire', onDrop)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+      if (successTimer.current) clearTimeout(successTimer.current)
+    }
+  }, [])
+
   // Auto-refresh snapshot every 60s while connected
   useEffect(() => {
     if (!state.connected || !state.address) return
@@ -218,7 +271,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   return (
     <WalletContext.Provider value={{
-      ...state, connect, disconnect, claimRewards, mint, dismissPairingUri, refreshSnapshot,
+      ...state, connect, disconnect, claimRewards, mint, dismissConnectModal, refreshSnapshot,
     }}>
       {children}
     </WalletContext.Provider>

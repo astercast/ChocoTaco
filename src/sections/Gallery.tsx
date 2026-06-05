@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import Mascot from '../components/Mascot'
 
 // Placeholder feed - real version pulls from MintGarden:
 //   GET https://api.mintgarden.io/collections/{OG_COLLECTION_ID}/nfts
@@ -44,10 +45,13 @@ export default function Gallery() {
               Every factory taco that gets cooked lands here.
             </p>
           </div>
-          <a href="https://mintgarden.io" target="_blank" rel="noopener noreferrer"
-             className="btn-outline">
-            See them all on MintGarden →
-          </a>
+          <div className="flex items-end gap-4">
+            <Mascot size={64} />
+            <a href="https://mintgarden.io" target="_blank" rel="noopener noreferrer"
+               className="btn-outline">
+              See them all on MintGarden →
+            </a>
+          </div>
         </motion.div>
 
         {/* Scattered grid, slight rotations make it feel hand-pinned */}

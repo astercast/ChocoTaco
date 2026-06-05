@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 import { Plus, Minus } from 'lucide-react'
+import { IMAGES } from '../constants/images'
 import { PAYDAY } from '../constants'
 
 const FAQS = [
@@ -21,8 +22,12 @@ const FAQS = [
     a: "50 random mint slots between #001 and #500 are flagged as Golden ahead of launch. Every mint is generated fresh on demand, but if you happen to land on one of the Golden slot numbers, the metadata gets stamped with Golden: true before the NFT is even minted. Golden Tickets are worth 30 Cocoa Units instead of 10. The flag is permanent and on-chain, and the 50 reserved slot numbers are published publicly so anyone can verify.",
   },
   {
+    q: 'How many $🍫🌮 exist?',
+    a: `${PAYDAY.totalSupplyCAT} total. ${PAYDAY.communityDistributedCAT} were already distributed to the Chia community. The other ${PAYDAY.vaultTotalCAT} sit in the distribution vault and pay out weekly to factory taco holders over 3 years.`,
+  },
+  {
     q: 'Why halvings? Why 3 years?',
-    a: `50% of the ${PAYDAY.totalSupplyCAT} token supply (${PAYDAY.vaultTotalCAT} $🍫🌮) is paid out over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire distribution vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page so anyone can see exactly where every token went.`,
+    a: `The distribution vault pays out ${PAYDAY.vaultTotalCAT} $🍫🌮 over exactly 156 weeks. Year 1 emits 11.11/week, year 2 halves to 5.55/week, year 3 halves again to 2.78/week. Early holders earn up to 4× more per Cocoa Unit than year-3 holders. By week 156 the entire distribution vault is gone and weekly snapshots stop. The whole distribution chart is on the /distribution page so anyone can see exactly where every token went.`,
   },
   {
     q: 'How does the LP multiplier work?',
@@ -74,6 +79,21 @@ export default function HowItWorks() {
   return (
     <section ref={ref} className="py-24 px-6 grain relative">
       <div className="max-w-5xl mx-auto">
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mb-10 flex justify-center sm:justify-start"
+        >
+          <div
+            className="art-frame art-frame-taped w-full max-w-xs sm:max-w-sm"
+            style={{ '--art-rotate': '3deg' } as CSSProperties}
+          >
+            <img src={IMAGES.tacoBox} alt="ChocoTaco box" />
+            <span className="art-frame-label">fresh from the factory</span>
+          </div>
+        </motion.div>
 
         {/* Left-aligned, mixed type headline */}
         <motion.div

@@ -9,12 +9,14 @@
  *   - Auto-refreshes from Worker every 60s
  */
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { useWallet } from '../context/WalletContext'
 import { fetchHistory, type HistoryEntry } from '../api/claims'
 import { PAYDAY } from '../constants'
 import Toast, { type ToastVariant } from '../components/Toast'
 import ChocolateDrip from '../components/ChocolateDrip'
+import Mascot from '../components/Mascot'
+import { IMAGES } from '../constants/images'
 
 // ─── Countdown helper ────────────────────────────────────────────────────────
 
@@ -38,18 +40,18 @@ function useCountdown(targetIso: string | null) {
 
 // ─── Taco Truck art slot (placeholder until art lands) ──────────────────────
 
-function TacoTruckSlot() {
+function TacoTruckHero() {
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-cocoa-800 rounded-2xl border border-cream-500/10 overflow-hidden flex items-center justify-center">
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 50% 70% at 50% 65%, rgba(232,156,59,0.12) 0%, transparent 60%)',
-        }}
+    <div
+      className="art-frame art-frame-taped w-full max-w-4xl mx-auto"
+      style={{ '--art-rotate': '-1.5deg' } as CSSProperties}
+    >
+      <img
+        src={IMAGES.tacoTruck}
+        alt="ChocoTaco truck rolls up every Wednesday"
+        className="aspect-[16/9] sm:aspect-[21/9] object-cover"
       />
-      <p className="modern-display text-4xl sm:text-6xl text-cream-300 uppercase tracking-tight">
-        claim soon
-      </p>
+      <span className="art-frame-label">the truck rolls wednesdays · 17:00 utc</span>
     </div>
   )
 }
@@ -173,12 +175,15 @@ export default function ClaimPage() {
   }
 
   return (
-    <main className="pt-24 pb-24 px-6 grain min-h-screen">
+    <main className="pt-24 pb-24 px-6 grain factory-floor min-h-screen">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="mb-10 flex items-end justify-between gap-6 flex-wrap">
-          <div>
+          <div className="relative">
+            <div className="absolute -top-6 -right-4 sm:-right-10 md:hidden pointer-events-none">
+              <Mascot size={72} float={false} />
+            </div>
             <h1 className="modern-display text-6xl md:text-8xl text-cream-50 uppercase leading-[0.9]">
               Pick up
               <br />
@@ -202,7 +207,7 @@ export default function ClaimPage() {
           transition={{ duration: 0.6 }}
           className="mb-10"
         >
-          <TacoTruckSlot />
+          <TacoTruckHero />
         </motion.div>
 
         <ChocolateDrip className="mb-8" opacity={0.7} />
@@ -220,7 +225,7 @@ export default function ClaimPage() {
               {error && <p className="text-chili text-sm mt-3">{error}</p>}
             </div>
             <button onClick={connect} disabled={verifying} className="btn-cream">
-              {verifying ? 'checking...' : '→ Connect wallet'}
+              {verifying ? 'Clocking in…' : '→ Clock in'}
             </button>
           </div>
         ) : (
