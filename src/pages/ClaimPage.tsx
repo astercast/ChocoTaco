@@ -225,7 +225,7 @@ export default function ClaimPage() {
               {error && <p className="text-chili text-sm mt-3">{error}</p>}
             </div>
             <button onClick={connect} disabled={verifying} className="btn-cream">
-              {verifying ? 'Clocking in…' : '→ Clock in'}
+              {verifying ? 'Connecting…' : '→ Connect wallet'}
             </button>
           </div>
         ) : (

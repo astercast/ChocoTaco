@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { WalletProvider, useWallet } from './context/WalletContext'
 import Navbar from './components/Navbar'
+import ScrollToTop from './components/ScrollToTop'
 import QrModal, { type ConnectPhase } from './components/QrModal'
 import HomePage from './pages/HomePage'
 import ClaimPage from './pages/ClaimPage'
@@ -36,6 +37,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <WalletProvider>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/"      element={<HomePage />} />

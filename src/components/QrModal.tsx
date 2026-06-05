@@ -16,7 +16,7 @@ interface Props {
 
 const PHASE_COPY: Record<ConnectPhase, { title: string; sub: string }> = {
   qr: {
-    title: 'Clock in',
+    title: 'Connect wallet',
     sub: 'Scan with Sage, or copy the link below',
   },
   syncing: {
@@ -96,10 +96,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
           )}
 
           <div className="factory-ticket-header">
-            <span className="mono text-2xs uppercase tracking-[0.2em] text-cocoa-600">
-              employee check-in
-            </span>
-            <p className="modern text-xl text-cocoa-900 tracking-tight mt-1">{copy.title}</p>
+            <p className="modern text-xl text-cocoa-900 tracking-tight">{copy.title}</p>
             <p className="modern-light text-sm text-cocoa-700 mt-1">{copy.sub}</p>
           </div>
 

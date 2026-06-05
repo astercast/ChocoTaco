@@ -69,7 +69,7 @@ export default function Navbar() {
               disabled={connecting}
               className="btn-cream py-2 px-3 sm:px-4 text-sm shrink-0"
             >
-              {connecting ? 'Clocking in…' : connectSuccess ? 'Clocked in ✓' : 'Clock in'}
+              {connecting ? 'Connecting…' : connectSuccess ? 'Connected ✓' : 'Connect'}
             </button>
           )}
 

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState, type CSSProperties } from 'react'
+import { useState } from 'react'
 import { Copy, Check } from 'lucide-react'
 import { useWallet } from '../context/WalletContext'
 import Mascot from '../components/Mascot'
@@ -48,17 +48,9 @@ export default function Hero() {
             transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
             className="absolute top-0 right-0 sm:top-4 sm:right-8 md:right-12 z-10"
           >
-            <div className="flex flex-col items-end gap-2">
-              <span
-                className="factory-sign mono text-2xs text-gold uppercase tracking-widest whitespace-nowrap"
-                style={{ '--sign-rotate': '-6deg' } as CSSProperties}
-              >
-                shift · wed 17:00 utc
-              </span>
-              <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
-                ★ Fresh weekly
-              </span>
-            </div>
+            <span className="sticker sticker-mint text-xs sm:text-base px-2.5 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap">
+              ★ Fresh weekly
+            </span>
           </motion.div>
 
           <motion.div
@@ -110,7 +102,7 @@ export default function Hero() {
                 <a href="#earn" className="btn-cream">→ Open the shop</a>
               ) : (
                 <button onClick={handleConnect} disabled={connecting} className="btn-cream">
-                  {connecting ? 'Clocking in…' : '→ Clock in'}
+                  {connecting ? 'Connecting…' : '→ Connect wallet'}
                 </button>
               )}
               <a href="https://dexie.space/offers/%F0%9F%8D%AB%F0%9F%8C%AE/XCH" target="_blank" rel="noopener noreferrer" className="btn-outline">
