@@ -16,9 +16,9 @@ function PairingOverlay() {
   } = useWallet()
 
   let phase: ConnectPhase | null = null
-  if (connectSuccess) phase = 'success'
+  if (connectSuccess && connected) phase = 'success'
   else if (verifying && !connected) phase = 'syncing'
-  else if (pairingUri || (freshConnect && !connected)) phase = 'qr'
+  else if (pairingUri || (freshConnect && !connected && !verifying)) phase = 'qr'
 
   if (!phase) return null
 

@@ -115,11 +115,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const connectLock = useRef(false)
   const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const flashConnectSuccess = useCallback(() => {
+  const scheduleConnectSuccessClear = useCallback(() => {
     if (successTimer.current) clearTimeout(successTimer.current)
-    setState(s => ({ ...s, connectSuccess: true }))
     successTimer.current = setTimeout(() => {
-      setState(s => ({ ...s, connectSuccess: false, freshConnect: false }))
+      setState(s => ({ ...s, connectSuccess: false }))
     }, 2400)
   }, [])
 
@@ -146,13 +145,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setState(s => ({
         ...s,
         ...buildHoldingsState(holdings),
-        connected:  true,
-        session:    { ...session, address },
+        connected:      true,
+        session:        { ...session, address },
         address,
-        verifying:  false,
-        error:      null,
+        verifying:      false,
+        error:          null,
+        connectSuccess: true,
+        freshConnect:   false,
       }))
-      flashConnectSuccess()
+      scheduleConnectSuccessClear()
     } catch (err) {
       if (isUserRejected(err)) {
         setState(s => ({
@@ -175,7 +176,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     } finally {
       connectLock.current = false
     }
-  }, [flashConnectSuccess])
+  }, [scheduleConnectSuccessClear])
 
   const disconnect = useCallback(() => {
     if (state.session) disconnectWallet(state.session).catch(() => {})

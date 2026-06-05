@@ -23,7 +23,7 @@ export default function WalletBadge() {
       <span className="wallet-badge-pulse" aria-hidden />
       <div className="flex flex-col items-start leading-none min-w-0">
         <span className="mono text-2xs text-mint uppercase tracking-widest font-semibold">
-          clocked in
+          connected
         </span>
         <button
           type="button"

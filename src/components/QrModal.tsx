@@ -103,7 +103,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
           <div className="factory-ticket-body">
             {phase === 'qr' && (
               <>
-                <div className="rounded-lg p-3 bg-cream-100/60 border border-cocoa-900/8 flex items-center justify-center min-h-[280px]">
+                <div className="rounded-lg p-3 bg-cream-100/60 border border-cocoa-900/8 flex flex-col items-center justify-center min-h-[280px] gap-3">
                   {dataUrl ? (
                     <motion.img
                       initial={{ opacity: 0 }}
@@ -114,7 +114,12 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
                       className="w-full max-w-[260px] rounded-md"
                     />
                   ) : (
-                    <div className="w-[260px] h-[260px] bg-cocoa-900/5 animate-pulse rounded-md" />
+                    <>
+                      <div className="w-[260px] h-[260px] bg-cocoa-900/5 animate-pulse rounded-md" />
+                      <p className="mono text-2xs text-cocoa-500 uppercase tracking-widest">
+                        preparing qr…
+                      </p>
+                    </>
                   )}
                 </div>
                 {uri && (
@@ -142,7 +147,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
             {phase === 'success' && (
               <div className="flex flex-col items-center gap-4 py-8">
                 <div className="stamp text-mint border-mint/60 text-sm px-5 py-2">
-                  ✓ clocked in
+                  ✓ connected
                 </div>
                 <Mascot size={96} float={false} />
                 {shortAddr && (
