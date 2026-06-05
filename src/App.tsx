@@ -12,13 +12,14 @@ import Footer from './sections/Footer'
 function PairingOverlay() {
   const {
     pairingUri, verifying, connected, connectSuccess, freshConnect,
-    address, dismissConnectModal,
+    address, error, dismissConnectModal,
   } = useWallet()
 
   let phase: ConnectPhase | null = null
   if (connectSuccess && connected) phase = 'success'
   else if (verifying && !connected) phase = 'syncing'
-  else if (pairingUri || (freshConnect && !connected && !verifying)) phase = 'qr'
+  else if (pairingUri) phase = 'qr'
+  else if (freshConnect && !connected) phase = error ? 'error' : 'init'
 
   if (!phase) return null
 
@@ -27,6 +28,7 @@ function PairingOverlay() {
       phase={phase}
       uri={pairingUri}
       address={address}
+      error={error}
       onClose={dismissConnectModal}
       canClose={phase !== 'syncing'}
     />

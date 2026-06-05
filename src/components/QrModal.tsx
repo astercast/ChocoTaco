@@ -4,17 +4,22 @@ import { X, Copy, Check } from 'lucide-react'
 import QRCode from 'qrcode'
 import Mascot from './Mascot'
 
-export type ConnectPhase = 'qr' | 'syncing' | 'success'
+export type ConnectPhase = 'init' | 'qr' | 'syncing' | 'success' | 'error'
 
 interface Props {
   phase:   ConnectPhase
   uri:     string | null
   address: string | null
+  error:   string | null
   onClose: () => void
   canClose?: boolean
 }
 
 const PHASE_COPY: Record<ConnectPhase, { title: string; sub: string }> = {
+  init: {
+    title: 'Connect wallet',
+    sub: 'Starting WalletConnect…',
+  },
   qr: {
     title: 'Connect wallet',
     sub: 'Scan with Sage, or copy the link below',
@@ -27,9 +32,13 @@ const PHASE_COPY: Record<ConnectPhase, { title: string; sub: string }> = {
     title: 'You\'re in',
     sub: 'Wallet connected. Welcome to the factory floor.',
   },
+  error: {
+    title: 'Connection failed',
+    sub: 'Something went wrong. Close and try again.',
+  },
 }
 
-export default function QrModal({ phase, uri, address, onClose, canClose = true }: Props) {
+export default function QrModal({ phase, uri, address, error, onClose, canClose = true }: Props) {
   const [dataUrl, setDataUrl] = useState<string | null>(null)
   const [copied,  setCopied]  = useState(false)
   const copy = PHASE_COPY[phase]
@@ -47,13 +56,13 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
       color: { dark: '#1a0d05', light: '#fef9ef' },
     })
       .then(url => { if (!cancelled) setDataUrl(url) })
-      .catch(console.error)
+      .catch(() => { if (!cancelled) setDataUrl(null) })
     return () => { cancelled = true }
   }, [uri, phase])
 
   useEffect(() => {
     setCopied(false)
-  }, [phase])
+  }, [phase, uri])
 
   function copyLink() {
     if (!uri) return
@@ -101,6 +110,15 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
           </div>
 
           <div className="factory-ticket-body">
+            {phase === 'init' && (
+              <div className="flex flex-col items-center gap-4 py-12">
+                <div className="w-10 h-10 rounded-full border-2 border-gold border-t-transparent animate-spin" />
+                <p className="mono text-2xs text-cocoa-500 uppercase tracking-widest">
+                  preparing pairing…
+                </p>
+              </div>
+            )}
+
             {phase === 'qr' && (
               <>
                 <div className="rounded-lg p-3 bg-cream-100/60 border border-cocoa-900/8 flex flex-col items-center justify-center min-h-[280px] gap-3">
@@ -117,7 +135,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
                     <>
                       <div className="w-[260px] h-[260px] bg-cocoa-900/5 animate-pulse rounded-md" />
                       <p className="mono text-2xs text-cocoa-500 uppercase tracking-widest">
-                        preparing qr…
+                        rendering qr…
                       </p>
                     </>
                   )}
@@ -140,7 +158,7 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
                   <Mascot size={88} float={false} />
                   <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full border-2 border-gold border-t-transparent animate-spin bg-cream-50" />
                 </div>
-                <p className="hand text-cocoa-700 text-xl rotate-n2">punching your time card…</p>
+                <p className="hand text-cocoa-700 text-xl rotate-n2">reading your wallet…</p>
               </div>
             )}
 
@@ -156,6 +174,17 @@ export default function QrModal({ phase, uri, address, onClose, canClose = true 
                   </p>
                 )}
                 <p className="hand text-gold text-xl">see you on the factory floor</p>
+              </div>
+            )}
+
+            {phase === 'error' && (
+              <div className="flex flex-col items-center gap-4 py-8 px-2">
+                <p className="modern-light text-sm text-chili text-center leading-relaxed">
+                  {error ?? 'Connection failed'}
+                </p>
+                <button onClick={onClose} className="btn-outline text-sm mt-2">
+                  Close
+                </button>
               </div>
             )}
           </div>

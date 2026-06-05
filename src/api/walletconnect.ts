@@ -62,6 +62,24 @@ let client:        SignClient | null = null
 let activeSession: SessionTypes.Struct | null = null
 let initPromise:   Promise<SignClient> | null = null
 
+const PAIRING_START_MS = 30_000
+const APPROVAL_TIMEOUT_MS = 120_000
+
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const id = setTimeout(() => reject(new Error(message)), ms)
+    promise.then(
+      v => { clearTimeout(id); resolve(v) },
+      e => { clearTimeout(id); reject(e) },
+    )
+  })
+}
+
+export function hasActiveSession(): boolean {
+  if (!activeSession) return false
+  return activeSession.expiry > Date.now() / 1000
+}
+
 export function wcErrorMessage(err: unknown): string {
   if (err instanceof Error) return err.message
   if (err && typeof err === 'object') {
@@ -188,29 +206,75 @@ export async function tryRestoreSession(): Promise<ChiaSession | null> {
   }
 }
 
+async function deleteActiveSession(c: SignClient): Promise<void> {
+  if (!activeSession) return
+  const topic = activeSession.topic
+  activeSession = null
+  await c.session.delete(topic, { code: 6000, message: 'Stale session' }).catch(() => null)
+}
+
+async function sessionFromActive(c: SignClient): Promise<ChiaSession | null> {
+  if (!hasActiveSession()) return null
+  const existing = sessionToChia(activeSession!)
+  if (existing.address) return existing
+  try {
+    const address = await withTimeout(
+      resolveAddress(existing),
+      12_000,
+      'Saved wallet session expired. Pair again with Sage.',
+    )
+    return { ...existing, address }
+  } catch {
+    await deleteActiveSession(c)
+    return null
+  }
+}
+
 export async function connectWallet(onUri?: (uri: string) => void): Promise<ChiaSession> {
   if (!PROJECT_ID) {
-    if (import.meta.env.DEV) return mockSession()
+    if (import.meta.env.DEV) {
+      onUri?.('wc:chocotaco-dev-mock@2?relay-protocol=irn&symKey=dev')
+      return mockSession()
+    }
     throw new Error('Missing VITE_WALLETCONNECT_PROJECT_ID env var')
   }
 
-  const c = await initClient()
+  const c = await withTimeout(
+    initClient(),
+    20_000,
+    'WalletConnect failed to start. Refresh the page and try again.',
+  )
 
-  if (activeSession) {
-    const existing = sessionToChia(activeSession)
-    if (existing.address) return existing
-    const address = await resolveAddress(existing)
-    return { ...existing, address }
+  const restored = await sessionFromActive(c)
+  if (restored) return restored
+
+  let uriDelivered = false
+  const deliverUri = (uri: string | undefined) => {
+    if (!uri || uriDelivered) return
+    uriDelivered = true
+    onUri?.(uri)
   }
 
-  const { uri, approval } = await c.connect({
-    requiredNamespaces: REQUIRED_NAMESPACES,
-    optionalNamespaces: OPTIONAL_NAMESPACES,
-  })
+  const { uri, approval } = await withTimeout(
+    c.connect({
+      requiredNamespaces: REQUIRED_NAMESPACES,
+      optionalNamespaces: OPTIONAL_NAMESPACES,
+    }),
+    PAIRING_START_MS,
+    'Could not start WalletConnect pairing. Check your network and try again.',
+  )
 
-  if (uri && onUri) onUri(uri)
+  deliverUri(uri)
 
-  const session = await approval()
+  if (!uriDelivered) {
+    throw new Error('Could not get WalletConnect pairing link. Refresh and try again.')
+  }
+
+  const session = await withTimeout(
+    approval(),
+    APPROVAL_TIMEOUT_MS,
+    'Connection timed out. Open Sage and approve the pairing request.',
+  )
   activeSession = session
   const base = sessionToChia(session)
   const address = base.address || await resolveAddress(base)

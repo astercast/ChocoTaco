@@ -15,7 +15,7 @@ import {
 } from '../constants'
 import {
   connectWallet, resolveAddress, disconnectWallet,
-  tryRestoreSession, initClient, isUserRejected, wcErrorMessage,
+  tryRestoreSession, initClient, hasActiveSession, isUserRejected, wcErrorMessage,
   type ChiaSession,
 } from '../api/walletconnect'
 import { fetchHoldings, type Holdings } from '../api/spacescan'
@@ -125,17 +125,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const connect = useCallback(async () => {
     if (connectLock.current) return
     connectLock.current = true
+    const reusingSession = hasActiveSession()
     setState(s => ({
       ...s,
       error: null,
       pairingUri: null,
-      verifying: false,
+      verifying: reusingSession,
       connectSuccess: false,
       freshConnect: true,
     }))
     try {
       const session = await connectWallet(uri => {
-        setState(s => ({ ...s, pairingUri: uri }))
+        setState(s => ({ ...s, pairingUri: uri, verifying: false }))
       })
       setState(s => ({ ...s, pairingUri: null, verifying: true }))
 
@@ -167,11 +168,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
       setState(s => ({
         ...s,
-        connected:  false,
-        verifying:  false,
-        pairingUri: null,
-        freshConnect: false,
-        error:      wcErrorMessage(err) || 'Connection failed',
+        connected:    false,
+        verifying:    false,
+        pairingUri:   null,
+        freshConnect: true,
+        error:        wcErrorMessage(err) || 'Connection failed',
       }))
     } finally {
       connectLock.current = false
@@ -201,7 +202,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const dismissConnectModal = useCallback(() => {
     setState(s => {
       if (s.verifying) return s
-      return { ...s, pairingUri: null, connectSuccess: false, freshConnect: false }
+      return { ...s, pairingUri: null, connectSuccess: false, freshConnect: false, error: null }
     })
   }, [])
 
@@ -217,6 +218,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }))
     }
   }, [state.address])
+
+  // Warm up WalletConnect so the first Connect click is not stuck on init
+  useEffect(() => {
+    initClient().catch(() => {})
+  }, [])
 
   // Restore WalletConnect session after refresh (Caster-101 pattern)
   useEffect(() => {
