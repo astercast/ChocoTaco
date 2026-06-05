@@ -200,7 +200,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const dismissConnectModal = useCallback(() => {
     setState(s => {
       if (s.verifying) return s
-      return { ...s, pairingUri: null, connectSuccess: false }
+      return { ...s, pairingUri: null, connectSuccess: false, freshConnect: false }
     })
   }, [])
 

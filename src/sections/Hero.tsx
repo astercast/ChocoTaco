@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Copy, Check } from 'lucide-react'
 import { useWallet } from '../context/WalletContext'
 import Mascot from '../components/Mascot'
-import { CHOCO_TACO_ASSET_ID, PAYDAY } from '../constants'
+import { CHOCO_TACO_ASSET_ID } from '../constants'
 
 export default function Hero() {
   const { connect, connected, pairingUri, verifying } = useWallet()
@@ -82,10 +82,7 @@ export default function Hero() {
                 500 factory tacos, weekly <span className="mono">$🍫🌮</span> paydays from the distribution vault.
               </span>
             </p>
-            <p className="hand text-gold text-xl sm:text-2xl mt-3 ml-1 rotate-n2 inline-block max-w-full">
-              {PAYDAY.totalSupplyCAT} total · half already with Chia
-            </p>
-            <p className="hand text-cream-400 text-xl sm:text-2xl mt-1 ml-3 rotate-p2 inline-block max-w-full">
+            <p className="hand text-gold text-2xl sm:text-3xl mt-4 ml-1 rotate-n2 inline-block max-w-full">
               ↳ all mint proceeds → LP. all of it.
             </p>
           </motion.div>

@@ -68,7 +68,7 @@ const E = 1011 / 91   // 11.1098901098...
 export const PAYDAY = {
   totalSupplyCAT:           2022,
   communityDistributedCAT:  1011,   // already distributed to the Chia community
-  vaultTotalCAT:            1011,   // other half — weekly distribution vault
+  vaultTotalCAT:            1011,   // other half, weekly distribution vault
   totalWeeks:        156,
   year1WeeklyCAT:    E,           // 11.1099 (display as 11.11)
   year2WeeklyCAT:    E / 2,       //  5.5549 (display as  5.55)

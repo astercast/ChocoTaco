@@ -187,7 +187,7 @@
     transform: translateY(2px);
   }
 
-  /* Paper/wrapper card — slightly irregular radius feels hand-cut */
+  /* Paper/wrapper card: slightly irregular radius feels hand-cut */
   .wrapper {
     background: #2a1810;
     border: 1px solid rgba(249, 223, 166, 0.1);
@@ -201,7 +201,7 @@
     filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45));
   }
 
-  /* Polaroid / taped photo — for our own art assets */
+  /* Polaroid / taped photo for our own art assets */
   .art-frame {
     position: relative;
     background: #fef4e2;
@@ -302,7 +302,7 @@
     border: 1px solid rgba(249, 223, 166, 0.15);
   }
 
-  /* Navbar — factory floor edge */
+  /* Navbar factory floor edge */
   .nav-factory::after {
     content: '';
     position: absolute;
